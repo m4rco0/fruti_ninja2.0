@@ -1,5 +1,6 @@
 package competidor;
 import cataFruta.ElemDinamico;
+import cataFruta.Elemento;
 import estruturas.Arvore;
 import estruturas.Grama;
 import frutas.Frutas;
@@ -23,16 +24,14 @@ public class Competidor extends ElemDinamico {
 	
 	/**
 	 * Construtor que inicia o competidor com atributos.
-	 * @param nome O nome do competidor.
-	 * @param x A posição inicial x do jogador.
-	 * @param y A posição inicial y do jogador.
-	 * @param capacidadeMochila A capacidade da mochila , que defino o tanto de frutas que o jogador pode carregar.
-	 * @param altura A altura do competidor.
-	 * @param largura A largura do competidor.
-	 * @param qts_mov A quantidade de movimento do jogador.
+	 * @param nome  - O nome do competidor.
+	 * @param x - A posição inicial x do jogador.
+	 * @param y - A posição inicial y do jogador.
+	 * @param capacidadeMochila -  A capacidade da mochila , que defino o tanto de frutas que o jogador pode carregar.
+	 * @param qts_mov -  A quantidade de movimento do jogador.
 	 *
 	 */
-	public Competidor(String nome, int x, int y, int capacidadeMochila, int altura, int largura, int qts_mov) {
+	public Competidor(String nome, int x, int y, int capacidadeMochila,int qts_mov) {
 		super(x,y);
 		this.nome = nome;
 		this.capacidadeMochila = capacidadeMochila;
@@ -46,46 +45,61 @@ public class Competidor extends ElemDinamico {
 	/**
 	 * Obtém o nome do competidor.
 	 * 
-	 * @return O nome do competidor.
+	 * @return nome
 	 */
 	public String getNome() {
 		return this.nome;
 	}
 	
+	/**
+	 * Metodo que recebe o terreno e move o jogador para direita
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para direita
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 * 
+	 * @param terreno
+	 */
 	public void moverDireita(Terreno terreno) {
-		if(terreno.getElemento(this.x, this.y + 1) instanceof Grama) {
+		if(terreno.getElemento(this.x, this.y+1) instanceof Grama) {
 			terreno.removerElem(this.x, this.y+1);
-			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y+1, this);
-			terreno.inserirElem(this.x, this.x, new Grama(this.x, this.y));
-			System.out.printf("%s (%d,%d) moveu-se para (%d, %d)\n", this.nome, this.x, this.y, this.x, this.y+1);
-			this.setPos(this.x, this.y+1);
-		}else if(terreno.getElemento(this.x, this.y+1) instanceof Competidor) {
-			Competidor competidor = (Competidor) terreno.getElemento(this.x, this.y+1);
-			System.out.printf("Empurrar %s", competidor.getNome());
-		} 
-			
-		
+			terreno.removerElem(this.x, this.y);
+			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+			this.setPos(this.x, this.y +1);
+		}
 		this.qts_mov--;
 	}
 	
 	public void moverEsquerda(Terreno terreno) {
 		if(terreno.getElemento(this.x, this.y-1) instanceof Grama) {
 			terreno.removerElem(this.x, this.y-1);
+			terreno.inserirElem(this.x, this.y -1, this);
 			terreno.removerElem(this.x, this.y);
-			terreno.inserirElem(this.x, this.y-1, this);
-			terreno.inserirElem(this.x, this.x, new Grama(this.x, this.y));
-			System.out.printf("%s (%d,%d) moveu-se para (%d, %d)\n", this.nome, this.x, this.y, this.x, this.y-1);
-			this.setPos(this.x, this.y-1);
+			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+			this.setPos(this.x, this.y -1);
 		}
 	}
 	
 	public void moverCima(Terreno terreno) {
-		
+		if(terreno.getElemento(this.x-1, this.y) instanceof Grama) {
+			terreno.removerElem(this.x-1, this.y);
+			terreno.inserirElem(this.x-1, this.y, this);
+			terreno.removerElem(this.x, this.y);
+			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+			this.setPos(this.x-1, this.y);
+		}
 	}
 	
 	public void moverBaixo(Terreno terreno) {
-		
+		if(terreno.getElemento(this.x+1, this.y) instanceof Grama) {
+			terreno.removerElem(this.x+1, this.y);
+			terreno.inserirElem(this.x+1, this.y, this);
+			terreno.removerElem(this.x, this.y);
+			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+			this.setPos(this.x+1, this.y);
+		}
 	}
 	
 	/**

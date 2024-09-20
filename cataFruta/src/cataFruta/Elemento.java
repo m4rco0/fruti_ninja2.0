@@ -28,11 +28,6 @@ public abstract class Elemento {
 		return this.y;
 	}
 	/**
-	 * Metodo para mudar a posição do elemento.
-	 * @param x - novo x para se mover
-	 * @param y - novo y para se mover
-	 */
-	/**
 	 * metodo para proximas classes
 	 * @return
 	 */

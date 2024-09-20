@@ -13,6 +13,7 @@ public class MeuJogo {
 	private Terreno terreno;
 	private Competidor competidor1;
 	private Competidor competidor2;
+	
 	public MeuJogo(int dimensao, int qtsPedras, int arvoreMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada,int capacidadeMochila) {
 		terreno = new Terreno(dimensao);
 		inicializarCompetidores();
@@ -23,8 +24,8 @@ public class MeuJogo {
 	}
 	private void inicializarCompetidores() {
 		Random num = new Random();
-		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), 10, 1, 1, 2);
-		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, 1, 1, 2);
+		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), 10, 2);
+		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, 2);
 		terreno.inserirElem(competidor1.getX(), competidor1.getY(), competidor1);
 		terreno.inserirElem(competidor2.getX(), competidor2.getY(), competidor2);
 	}

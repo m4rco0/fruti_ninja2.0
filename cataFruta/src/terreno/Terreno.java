@@ -80,7 +80,7 @@ public  class   Terreno {
 						System.out.printf("%s", c.getNome());
 					}
 				}else {
-					System.out.printf("Grama");
+					System.out.printf("NULL");
 				}
 				if(j < this.getDimensao())
 					System.out.printf(" |");
@@ -111,7 +111,7 @@ public  class   Terreno {
 	 * @param elem O elemento que vai ser inserido
 	 */
 	public void inserirElem(int x, int y, Elemento elem) {
-	    if(this.mapa[x][y] == null || this.mapa[x][y] instanceof Grama)
+	    if(this.mapa[x][y] == null)
         	    this.mapa[x][y] = elem;
             else
                 System.out.println("Espaço ja esta ocupado");
@@ -122,7 +122,7 @@ public  class   Terreno {
 		return null;
 
 	}
-	public Competidor getCompetiodr(int x, int y) {
+	public Competidor getCompetidor(int x, int y) {
 		return (Competidor) this.mapa[x][y];
 	}
 	/**
@@ -131,7 +131,7 @@ public  class   Terreno {
 	 * @param y - posição y do elemento
 	 */
      public void removerElem(int x, int y) {
-         this.mapa[x][y] = null;
+    	 this.mapa[x][y] = null;
      }
      
      public Frutas pegarFruta(int x, int y) {
