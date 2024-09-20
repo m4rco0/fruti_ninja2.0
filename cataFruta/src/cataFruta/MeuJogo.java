@@ -20,6 +20,7 @@ public class MeuJogo {
 		inicilizarTerreno(qtsPedras,arvoreMaracuja, maracuja, arvoreLaranja,laranja, arvoreAbacate, abacate, arvCoco, coco, arvAcerola, acerola, arvAmora, Amora, arvGoiaba, goiaba, bichada);
 	}
 	private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada) {
+		terreno.colocarPedras(qtsPedras);
 		terreno.colocarGrama();
 	}
 	private void inicializarCompetidores() {
@@ -61,7 +62,7 @@ public class MeuJogo {
 		
 	}
 	public static void main(String[] args) {
-		MeuJogo jogo = new MeuJogo(5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		MeuJogo jogo = new MeuJogo(5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		jogo.iniciarJogo();
 	}
 	

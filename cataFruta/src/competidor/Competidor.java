@@ -1,8 +1,6 @@
 package competidor;
-import cataFruta.ElemDinamico;
-import cataFruta.Elemento;
-import estruturas.Arvore;
-import estruturas.Grama;
+import cataFruta.*;
+import estruturas.*;
 import frutas.Frutas;
 import terreno.Terreno;
 import java.lang.Math;
@@ -68,6 +66,8 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x, this.y +1);
+		} else if (terreno.getElemento(this.x, this.y+1) instanceof Pedra) {
+			
 		}
 		this.qts_mov--;
 	}
@@ -79,7 +79,10 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x, this.y -1);
+		} else if (terreno.getElemento(this.x, this.y -1) instanceof Pedra) {
+			
 		}
+		this.qts_mov--;
 	}
 	
 	public void moverCima(Terreno terreno) {
@@ -89,7 +92,10 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x-1, this.y);
+		} else if (terreno.getElemento(this.x-1, this.y) instanceof Pedra) {
+			
 		}
+		this.qts_mov--;
 	}
 	
 	public void moverBaixo(Terreno terreno) {
@@ -99,7 +105,10 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x+1, this.y);
+		} else if (terreno.getElemento(this.x+1, this.y) instanceof Pedra) {
+			
 		}
+		this.qts_mov--;
 	}
 	
 	/**

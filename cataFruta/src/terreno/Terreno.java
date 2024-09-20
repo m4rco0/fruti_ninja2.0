@@ -1,5 +1,5 @@
 package terreno;
-
+import estruturas.*;
 import java.util.Random;
 
 import cataFruta.*;
@@ -21,7 +21,7 @@ public  class   Terreno {
 		this.dimensao = dimensao;
 		this.setMapa(new Elemento[dimensao][dimensao]);
 	}
-	
+
 	public void colocarGrama() {
 		for (int i = 0; i < this.getDimensao(); i++) {
 			for(int j = 0 ; j < this.getDimensao(); j++) {
@@ -42,6 +42,20 @@ public  class   Terreno {
 				posy = rand.nextInt(terreno.getDimensao()-1);
 			}
 			terreno.inserirElem(posx, posy, arvore);
+		}
+	}
+
+	public void colocarPedras(int qtsPedras) {
+		Random dado = new Random();
+		for(int i = 0; i < qtsPedras; i++) {
+			int posx = dado.nextInt(this.getDimensao());
+			int posy = dado.nextInt(this.getDimensao());
+
+			while(this.mapa[posx][posy] != null) {
+				posx = dado.nextInt(this.getDimensao());
+				posy = dado.nextInt(this.getDimensao());
+			}
+			this.inserirElem(posx, posy, new Pedra(posx, posy));
 		}
 	}
 	/**
@@ -65,19 +79,18 @@ public  class   Terreno {
 	public Elemento[][] getMapa() {
 		return this.mapa;
 	}
-	
-	
+
+
 	public void exibirMapa() {
 		for(int i = 0; i < this.getDimensao(); i++) {
 			for(int j = 0; j < this.getDimensao(); j++) {
 				if(this.mapa[i][j] != null) {
-					if(this.mapa[i][j] instanceof Grama)
-					{
-						System.out.printf("%s", this.mapa[i][j].getTipo());
-					} if (this.mapa[i][j] instanceof Competidor)
+					if (this.mapa[i][j] instanceof Competidor)
 					{
 						Competidor c = (Competidor) this.getMapa()[i][j];
 						System.out.printf("%s", c.getNome());
+					} else if(this.mapa[i][j] instanceof Elemento) {
+						System.out.printf("%s", this.mapa[i][j].getTipo());
 					}
 				}else {
 					System.out.printf("NULL");
@@ -111,11 +124,11 @@ public  class   Terreno {
 	 * @param elem O elemento que vai ser inserido
 	 */
 	public void inserirElem(int x, int y, Elemento elem) {
-	    if(this.mapa[x][y] == null)
-        	    this.mapa[x][y] = elem;
-            else
-                System.out.println("Espaço ja esta ocupado");
-     }
+		if(this.mapa[x][y] == null)
+			this.mapa[x][y] = elem;
+		else
+			System.out.println("Espaço ja esta ocupado");
+	}
 	public Elemento getElemento(int x, int y) {
 		if((x >= 0 && x < this.getDimensao()) && (y >= 0 && y < this.getDimensao()))
 			return this.getMapa()[x][y];
@@ -130,26 +143,26 @@ public  class   Terreno {
 	 * @param x - posição x do elemento
 	 * @param y - posição y do elemento
 	 */
-     public void removerElem(int x, int y) {
-    	 this.mapa[x][y] = null;
-     }
-     
-     public Frutas pegarFruta(int x, int y) {
-    	if(this.getMapa()[x][y] instanceof Frutas) {
-    		Frutas fruta = (Frutas) this.getElemento(x, y);
-    		this.removerElem(x, x);
-    		return fruta;
-    	}
-    	return null;
-     }
-     
-     /**
-      * Exibe o elemento no mapa
-      * @param x - posição x do elemento
-      * @param y - posição y do elemento
-      * @return Elemento 
-      */
-     public Elemento exibeElem(int x, int y) {
-         return this.mapa[x][y];
-     }
+	public void removerElem(int x, int y) {
+		this.mapa[x][y] = null;
+	}
+
+	public Frutas pegarFruta(int x, int y) {
+		if(this.getMapa()[x][y] instanceof Frutas) {
+			Frutas fruta = (Frutas) this.getElemento(x, y);
+			this.removerElem(x, x);
+			return fruta;
+		}
+		return null;
+	}
+
+	/**
+	 * Exibe o elemento no mapa
+	 * @param x - posição x do elemento
+	 * @param y - posição y do elemento
+	 * @return Elemento 
+	 */
+	public Elemento exibeElem(int x, int y) {
+		return this.mapa[x][y];
+	}
 }
