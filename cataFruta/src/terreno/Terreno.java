@@ -1,11 +1,10 @@
 package terreno;
 import estruturas.*;
+import frutas.*;
 import java.util.Random;
 
 import cataFruta.*;
 import competidor.Competidor;
-import estruturas.Arvore;
-import estruturas.Grama;
 import frutas.Frutas;
 /**
  * Classe que constroi um terreno para inserir elementos e remover do mapa
@@ -22,6 +21,7 @@ public  class   Terreno {
 		this.setMapa(new Elemento[dimensao][dimensao]);
 	}
 
+	// funções de inicializar terreno
 	public void colocarGrama() {
 		for (int i = 0; i < this.getDimensao(); i++) {
 			for(int j = 0 ; j < this.getDimensao(); j++) {
@@ -48,6 +48,7 @@ public  class   Terreno {
 	public void colocarPedras(int qtsPedras) {
 		Random dado = new Random();
 		for(int i = 0; i < qtsPedras; i++) {
+			//gero posições aleatorias
 			int posx = dado.nextInt(this.getDimensao());
 			int posy = dado.nextInt(this.getDimensao());
 
@@ -55,7 +56,18 @@ public  class   Terreno {
 				posx = dado.nextInt(this.getDimensao());
 				posy = dado.nextInt(this.getDimensao());
 			}
+			// insiro no terreno apos encontrar
 			this.inserirElem(posx, posy, new Pedra(posx, posy));
+		}
+	}
+	
+	public void colocarAvores(int arvLaranja, int arvMaracuja, int arvAbacate, int arvAcerlola, int arvAmora, int arvGoiaba) {
+		Random rand = new Random();
+		int posx, posy;
+		for(int i = 0; i < arvLaranja; i++) {
+			posx = rand.nextInt(this.getDimensao());
+			posy = rand.nextInt(this.getDimensao());
+			ArvoreLaranja arv = new ArvoreLaranja(posx, posy, "Laranja", new Laranja(posx, posy, false));
 		}
 	}
 	/**
@@ -134,9 +146,6 @@ public  class   Terreno {
 			return this.getMapa()[x][y];
 		return null;
 
-	}
-	public Competidor getCompetidor(int x, int y) {
-		return (Competidor) this.mapa[x][y];
 	}
 	/**
 	 * Remove um elemento do mapa

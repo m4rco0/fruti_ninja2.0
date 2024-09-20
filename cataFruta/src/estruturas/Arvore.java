@@ -8,7 +8,6 @@ import frutas.Frutas;
  * @author marcola
  */
 public abstract class Arvore extends ElemEstaticos{
-	private String tipoArvore;
 	private Frutas fruta;
 	
 	/**
@@ -20,18 +19,9 @@ public abstract class Arvore extends ElemEstaticos{
 	 */
 	public Arvore(int x, int y, String tipoArvore, Frutas fruta) {
 		super(x,y);
-		this.setTipoArvore(tipoArvore);
 		this.fruta = fruta;
 	}
 	
-	// metodos setters
-	/**
-	 * Metodo para setar o tipo de arvore do construtor
-	 * @param tipoArvore
-	 */
-	public void setTipoArvore(String tipoArvore) {
-		this.tipoArvore = tipoArvore;
-	}
 	/**
 	 * Pega o tipo da arvore
 	 * @return tipoArvore
