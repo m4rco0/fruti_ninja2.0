@@ -21,30 +21,52 @@ public  class   Terreno {
 		this.setMapa(new Elemento[dimensao][dimensao]);
 	}
 
+	/**
+     * Verifica se uma posição está disponível no mapa
+     * @param x posição x no mapa
+     * @param y posição y no mapa
+     * @return true se a posição está disponível, false caso contrário
+     */
+	public boolean posicaoDisponivel(int x, int y) {
+		if(this.mapa[x][y] == null)
+			return true;
+		return false;
+	}
+	
+	
 	// funções de inicializar terreno
 	public void colocarGrama() {
 		for (int i = 0; i < this.getDimensao(); i++) {
 			for(int j = 0 ; j < this.getDimensao(); j++) {
-				if(this.mapa[i][j] == null) {
+				if(this.posicaoDisponivel(i, j)) {
 					Grama grama = new Grama(i, j);
 					this.inserirElem(i, j, grama);
 				}
 			}
 		}
 	}
-	public void colocarArvores(Arvore arvore, int qtsArv, Terreno terreno) {
-		Random rand = new Random();
-		for(int i = 0; i < qtsArv; i++) {
-			int posx = rand.nextInt(terreno.getDimensao()-1);
-			int posy = rand.nextInt(terreno.getDimensao()-1);
-			while(terreno.mapa[posx][posy] != null) {
-				posx = rand.nextInt(terreno.getDimensao()-1);
-				posy = rand.nextInt(terreno.getDimensao()-1);
-			}
-			terreno.inserirElem(posx, posy, arvore);
+	 
+	/**
+     * Adiciona uma árvore em uma posição específica do mapa
+     * @param arvore A árvore a ser adicionada
+     * @param x posição x no mapa
+     * @param y posição y no mapa
+     * @return true se a árvore foi adicionada com sucesso, false caso contrário
+     */
+	public boolean colocarArvores(Arvore arvore, int x, int y) {
+		if(this.posicaoDisponivel(x, y)) {
+			mapa[x][y] = arvore;
+			return true;
 		}
+		return false;
 	}
-
+	/**
+	 * Coloca um número especificado de pedras em posições aleatórias no terreno.
+	 * As pedras são posicionadas em locais aleatórios no mapa, garantido que a posição
+	 * escolhida esteja vazia antes de inserir uma pedra.
+	 *
+	 * @param qtsPedras O número de pedras a serem colocadas no terreno.
+	 */
 	public void colocarPedras(int qtsPedras) {
 		Random dado = new Random();
 		for(int i = 0; i < qtsPedras; i++) {
@@ -61,15 +83,33 @@ public  class   Terreno {
 		}
 	}
 	
-	public void colocarAvores(int arvLaranja, int arvMaracuja, int arvAbacate, int arvAcerlola, int arvAmora, int arvGoiaba) {
-		Random rand = new Random();
-		int posx, posy;
-		for(int i = 0; i < arvLaranja; i++) {
-			posx = rand.nextInt(this.getDimensao());
-			posy = rand.nextInt(this.getDimensao());
-			ArvoreLaranja arv = new ArvoreLaranja(posx, posy, "Laranja", new Laranja(posx, posy, false));
-		}
-	}
+	 /**
+     * Adiciona uma árvore em uma posição específica do mapa
+     * @param arvore A árvore a ser adicionada
+     * @param x posição x no mapa
+     * @param y posição y no mapa
+     * @return true se a árvore foi adicionada com sucesso, false caso contrário
+     */
+    public boolean adicionaArvore(Arvore arvore, int x, int y) {
+        if (posicaoDisponivel(x, y)) {
+            mapa[x][y] = arvore;
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean setarArvores(Arvore arvore, int qtsArvores) {
+    	Random rand = new Random();
+    	int tentativas =0;
+    	while(tentativas < this.getDimensao()*2) {
+    		int x = rand.nextInt(this.getDimensao());
+    		int y = rand.nextInt(this.getDimensao());
+    		if(this.adicionaArvore(arvore, x, y))
+    			return true;
+    		
+    	}
+    	return false;
+    }
 	/**
 	 * Pega a dimensao do mapa
 	 * @return dimensao - int

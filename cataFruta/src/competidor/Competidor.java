@@ -4,6 +4,7 @@ import estruturas.*;
 import frutas.Frutas;
 import terreno.Terreno;
 import java.lang.Math;
+import java.util.Random;
 /**
  * Classe que representa um Competidor no jogo. um elemento dinâmico que pode se mover e interagir
  * com outros elementos do jogo. Cada competidor possui um nome, forca, capacidade maximo de uma mochila, altura e largura.
@@ -18,7 +19,6 @@ public class Competidor extends ElemDinamico {
 	private int qts_mov;
 	private boolean drog;
 	private Mochila mochila;
-	private int forcaDef;
 	
 	/**
 	 * Construtor que inicia o competidor com atributos.
@@ -38,7 +38,6 @@ public class Competidor extends ElemDinamico {
 		this.qts_mov = qts_mov;
 		this.drog = false;
 		this.mochila = new Mochila(capacidadeMochila);
-		this.setForcaDef(1);
 	}
 	/**
 	 * Obtém o nome do competidor.
@@ -66,12 +65,23 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x, this.y +1);
-		} else if (terreno.getElemento(this.x, this.y+1) instanceof Pedra) {
-			
+		} else if (terreno.getElemento(this.x, this.y+1) instanceof Competidor) {
+			Competidor empurrado = (Competidor) terreno.getElemento(this.x, this.y+1); 
+			this.empurrao(empurrado, this.x, this.y+1);
 		}
 		this.qts_mov--;
 	}
 	
+	/**
+	 * Metodo que recebe o terreno e move o jogador para esquerda
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para esquerda
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 * 
+	 * @param terreno
+	 */
 	public void moverEsquerda(Terreno terreno) {
 		if(terreno.getElemento(this.x, this.y-1) instanceof Grama) {
 			terreno.removerElem(this.x, this.y-1);
@@ -79,12 +89,23 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x, this.y -1);
-		} else if (terreno.getElemento(this.x, this.y -1) instanceof Pedra) {
-			
+		} else if (terreno.getElemento(this.x, this.y -1) instanceof Competidor) {
+			Competidor empurrado = (Competidor) terreno.getElemento(this.x, this.y-1); 
+			this.empurrao(empurrado, this.x, this.y-1);
 		}
 		this.qts_mov--;
 	}
 	
+	/**
+	 * Metodo que recebe o terreno e move o jogador para cima
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para cima
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 * 
+	 * @param terreno
+	 */
 	public void moverCima(Terreno terreno) {
 		if(terreno.getElemento(this.x-1, this.y) instanceof Grama) {
 			terreno.removerElem(this.x-1, this.y);
@@ -92,12 +113,23 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x-1, this.y);
-		} else if (terreno.getElemento(this.x-1, this.y) instanceof Pedra) {
-			
+		} else if (terreno.getElemento(this.x-1, this.y) instanceof Competidor) {
+			Competidor empurrado = (Competidor) terreno.getElemento(this.x-1, this.y); 
+			this.empurrao(empurrado, this.x-1, this.y);
 		}
 		this.qts_mov--;
 	}
 	
+	/**
+	 * Metodo que recebe o terreno e move o jogador para baixo
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para baixo
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 * 
+	 * @param terreno
+	 */
 	public void moverBaixo(Terreno terreno) {
 		if(terreno.getElemento(this.x+1, this.y) instanceof Grama) {
 			terreno.removerElem(this.x+1, this.y);
@@ -105,8 +137,9 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(this.x, this.y);
 			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 			this.setPos(this.x+1, this.y);
-		} else if (terreno.getElemento(this.x+1, this.y) instanceof Pedra) {
-			
+		} else if (terreno.getElemento(this.x+1, this.y) instanceof Competidor) {
+			Competidor empurrado = (Competidor) terreno.getElemento(this.x+1, this.y); 
+			this.empurrao(empurrado, this.x+1, this.y);
 		}
 		this.qts_mov--;
 	}
@@ -173,11 +206,6 @@ public class Competidor extends ElemDinamico {
 	public void limparEfeito() {
 		this.drog = false;
 	}
-	/**
-	 * Obtém o tipo do elemento, que é COmpetidor.
-	 * 
-	 * @return Uma strinco om o nome "Competidor".
-	 */
 	
 	/**
 	 * Metodo especial para consumir a fruta.
@@ -208,35 +236,51 @@ public class Competidor extends ElemDinamico {
 	public void pegarFruta(Arvore arvore) {
 		this.mochila.addFruta(arvore.pegaFruta());
 		this.setForca(this.getForca() + 1);
-		this.setForcaDef(this.getForcaDef() + 1);
 		System.out.println("[+]"+ arvore.getTipo() + "fruto pego");
 	}
+	/**
+	 * Metodor para pegar uma fruta do chão e colocar na mochila
+	 * @param fruta
+	 */
 	public void pegarFrutaChao(Frutas fruta) {
 		this.mochila.addFruta(fruta);
 	}
+	
 	public int getForcaDef() {
-		return forcaDef;
-	}
-	public void setForcaDef(int forcaDef) {
-		this.forcaDef = forcaDef;
+		return this.mochila.getSize();
 	}
 	
+	
+	/**
+	 * Metodo que empurra um competidor em certa posição
+	 * @param competidor
+	 * @param x
+	 * @param y
+	 */
 	public void empurrao(Competidor competidor, int x, int y) {
+		Random rand = new Random();
 		int f_a = this.getForca();
 		int f_d = competidor.getForcaDef();
 		int empurrao = (int) Math.round(Math.log(f_a +1) / Math.log(2) - Math.log(f_d +1)/ Math.log(2));
 		int frutasDerrubadas = Math.max(0, empurrao);
+		System.out.println("O jogador "+ this.nome + "empurrou " +competidor.nome + " e ele perdeu " + frutasDerrubadas + " frutas");
 		for (int i = 0; i < frutasDerrubadas; i++) {
-			competidor.mochila.removeIndexFrut(i);
+			int index = rand.nextInt(competidor.getCapacidadeMochila());
+			competidor.mochila.removeIndexFrut(index);
 		}
 	}
 	
-	@Override
-	public String getTipo() {
-		return "Competidor";
-	}
+	/**
+	 * Seta o movimento de um jogador
+	 * @param nextInt - quantos movimentos
+	 */
 	public void setMov(int nextInt) {
 		// TODO Auto-generated method stub
 		this.qts_mov = nextInt;
 	}
+	@Override
+	public String getTipo() {
+		return "Competidor";
+	}
+
 }

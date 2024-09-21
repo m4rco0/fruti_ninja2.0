@@ -14,15 +14,59 @@ public class MeuJogo {
 	private Competidor competidor1;
 	private Competidor competidor2;
 	
+	/**
+	 * Construtor que cria o jogo recebendo a dimensão e a quantidade de objetos para o mapa
+	 * @param dimensao - tamanho da matriz quadrada
+	 * @param qtsPedras - quantidade de pedras no mapa
+	 * @param arvoreMaracuja
+	 * @param maracuja
+	 * @param arvoreLaranja
+	 * @param laranja
+	 * @param arvoreAbacate
+	 * @param abacate
+	 * @param arvCoco
+	 * @param coco
+	 * @param arvAcerola
+	 * @param acerola
+	 * @param arvAmora
+	 * @param Amora
+	 * @param arvGoiaba
+	 * @param goiaba
+	 * @param bichada
+	 * @param capacidadeMochila
+	 */
 	public MeuJogo(int dimensao, int qtsPedras, int arvoreMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada,int capacidadeMochila) {
 		terreno = new Terreno(dimensao);
 		inicializarCompetidores();
 		inicilizarTerreno(qtsPedras,arvoreMaracuja, maracuja, arvoreLaranja,laranja, arvoreAbacate, abacate, arvCoco, coco, arvAcerola, acerola, arvAmora, Amora, arvGoiaba, goiaba, bichada);
 	}
+	/**
+	 * Função que inicializar os objetos no terreno como arvores frutas e pedras
+	 * @param qtsPedras
+	 * @param qtsArvMaracuja
+	 * @param maracuja
+	 * @param arvoreLaranja
+	 * @param laranja
+	 * @param arvoreAbacate
+	 * @param abacate
+	 * @param arvCoco
+	 * @param coco
+	 * @param arvAcerola
+	 * @param acerola
+	 * @param arvAmora
+	 * @param Amora
+	 * @param arvGoiaba
+	 * @param goiaba
+	 * @param bichada
+	 */
 	private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada) {
 		terreno.colocarPedras(qtsPedras);
 		terreno.colocarGrama();
 	}
+	
+	/**
+	 * Metodo que cria os jogadores e colocam em posições aleatorias do mapa
+	 */
 	private void inicializarCompetidores() {
 		Random num = new Random();
 		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), 10, 2);
@@ -30,6 +74,11 @@ public class MeuJogo {
 		terreno.inserirElem(competidor1.getX(), competidor1.getY(), competidor1);
 		terreno.inserirElem(competidor2.getX(), competidor2.getY(), competidor2);
 	}
+	
+	/**
+	 * Metodo  onde fica o loop do game que recebe as entradas do jogador até algum jogador consigua coletar as frutas necessarias para ganhar.
+	 * 
+	 */
 	public void iniciarJogo() {
 		Scanner scanner = new Scanner(System.in);
 		boolean jogoRodando =true;
@@ -61,15 +110,25 @@ public class MeuJogo {
 		scanner.close();
 		
 	}
+	
 	public static void main(String[] args) {
 		MeuJogo jogo = new MeuJogo(5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		jogo.iniciarJogo();
 	}
-	
+	/**
+	 * Metodo que olha se o competidor ganhou ou não apos a sua jogadar acabar
+	 * @param competidor - competidor que pode ser oganhador
+	 * @return true se ganhou.
+	 */
 	private boolean checarVitoria(Competidor competidor) {
         return competidor.getPontos() >= 3;
     }
 	
+	/**
+	 *  Metodo que executa round de cada jogador
+	 * @param competidor - competidor que vai se mover
+	 * @param scanner - teclas de caminhar
+	 */
 	private void executarRound(Competidor competidor, Scanner scanner) {
 		System.out.println("Vez de " + competidor.getNome());
 		System.out.println("Movimentos restantes " +competidor.getMov());
