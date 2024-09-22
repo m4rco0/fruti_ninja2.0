@@ -35,7 +35,11 @@ public abstract class Arvore extends ElemEstaticos{
 	 * @return true se recebeu.
 	 * @return false se nao recebeu.
 	 */
-	
+	public void setPos(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.fruta.setPos(x, y);
+	}
 	public Frutas pegaFruta() {
 		Frutas fruto = this.fruta;
 		this.fruta = null;

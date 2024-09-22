@@ -58,9 +58,9 @@ public class Mochila {
 	}
 	
 	/**
-	 * Verifica se a mochila esta cheia
-	 * @return true se estiver atingindo a capacidade maxima.
-	 *
+	 * Retorna o tamanho da mochila
+	 * 
+	 * @return int size - quantas frutas estão na mochila
 	 */
 	public int getSize() {
 		return frutas.size();
@@ -71,12 +71,11 @@ public class Mochila {
 	 * @return true se removeu, false se nao removeu
 	 * 
 	 */
-	public boolean removeIndexFrut(int i) {
-		if (this.isCheia()) {
-			this.frutas.remove(i);
-			return true;
+	public Frutas removeIndexFrut(int i) {
+		if(this.getSize() > i) {
+			return this.frutas.get(i);
 		}
-		return false;
+		return null;
 	}
 	
 	/*

@@ -68,7 +68,9 @@ public class Competidor extends ElemDinamico {
 			this.setPos(this.x, this.y +1);
 		} else if (terreno.getElemento(this.x, this.y+1) instanceof Competidor) {
 			Competidor empurrado = (Competidor) terreno.getElemento(this.x, this.y+1); 
-			this.empurrao(empurrado, this.x, this.y+1);
+			this.empurrao(empurrado, this.x, this.y+1, terreno);
+		} else if (terreno.getElemento(this.x, this.y+1) instanceof Pedra) {
+			
 		}
 		this.qts_mov--;
 	}
@@ -92,7 +94,7 @@ public class Competidor extends ElemDinamico {
 			this.setPos(this.x, this.y -1);
 		} else if (terreno.getElemento(this.x, this.y -1) instanceof Competidor) {
 			Competidor empurrado = (Competidor) terreno.getElemento(this.x, this.y-1); 
-			this.empurrao(empurrado, this.x, this.y-1);
+			this.empurrao(empurrado, this.x, this.y-1, terreno);
 		}
 		this.qts_mov--;
 	}
@@ -116,7 +118,7 @@ public class Competidor extends ElemDinamico {
 			this.setPos(this.x-1, this.y);
 		} else if (terreno.getElemento(this.x-1, this.y) instanceof Competidor) {
 			Competidor empurrado = (Competidor) terreno.getElemento(this.x-1, this.y); 
-			this.empurrao(empurrado, this.x-1, this.y);
+			this.empurrao(empurrado, this.x-1, this.y, terreno);
 		}
 		this.qts_mov--;
 	}
@@ -140,7 +142,7 @@ public class Competidor extends ElemDinamico {
 			this.setPos(this.x+1, this.y);
 		} else if (terreno.getElemento(this.x+1, this.y) instanceof Competidor) {
 			Competidor empurrado = (Competidor) terreno.getElemento(this.x+1, this.y); 
-			this.empurrao(empurrado, this.x+1, this.y);
+			this.empurrao(empurrado, this.x+1, this.y, terreno);
 		}
 		this.qts_mov--;
 	}
@@ -258,17 +260,43 @@ public class Competidor extends ElemDinamico {
 	 * @param x
 	 * @param y
 	 */
-	public void empurrao(Competidor competidor, int x, int y) {
-		Random rand = new Random();
-		int f_a = this.getForca();
-		int f_d = competidor.getForcaDef();
-		int empurrao = (int) Math.round(Math.log(f_a +1) / Math.log(2) - Math.log(f_d +1)/ Math.log(2));
-		int frutasDerrubadas = Math.max(0, empurrao);
-		System.out.println("O jogador "+ this.nome + "empurrou " +competidor.nome + " e ele perdeu " + frutasDerrubadas + " frutas");
-		for (int i = 0; i < frutasDerrubadas; i++) {
-			int index = rand.nextInt(competidor.getCapacidadeMochila());
-			competidor.mochila.removeIndexFrut(index);
-		}
+	public void empurrao(Competidor competidor, int x, int y, Terreno terreno) {
+	    Random rand = new Random();
+	    int f_a = this.getForca();
+	    int f_d = competidor.mochila.getSize();
+	    int empurrao = (int) Math.round(Math.log(f_a + 1) / Math.log(2) - Math.log(f_d + 1) / Math.log(2));
+	    int frutasDerrubadas = Math.max(0, empurrao);
+	    if(competidor.mochila.getSize() == 0) {
+	    	System.out.println("A mochila de " + competidor.nome + "está vazia.");
+	    	return;
+	    }
+	    for (int i = 0; i < frutasDerrubadas; i++) {
+	        int index = rand.nextInt(competidor.mochila.getSize());
+	        Frutas derrubada = competidor.mochila.removeIndexFrut(index);
+	        if (derrubada == null) {
+	            System.out.println("Nenhuma fruta foi removida. Índice: " + index);
+	            return;
+	        }
+
+	        // Tentar colocar a fruta derrubada em uma posição de grama ao redor do competidor empurrado
+	        boolean frutaColocada = false;
+	        for (int dx = -1; dx <= 1 && !frutaColocada; dx++) {
+	            for (int dy = -1; dy <= 1 && !frutaColocada; dy++) {
+	                int newX = x + dx;
+	                int newY = y + dy;
+	                if ((dx != 0 || dy != 0) && terreno.posicaoDisponivel(newX, newY) && terreno.getElemento(newX, newY) instanceof Grama) {
+	                    terreno.derrubarFruta(derrubada, newX, newY);
+	                    System.out.println("Fruta " + derrubada.getTipo() + " colocada em (" + newX + ", " + newY + ")");
+	                    frutaColocada = true;
+	                }
+	            }
+	        }
+
+	        // Se não encontrar uma posição de grama disponível, a fruta é perdida (ou pode ser tratada de outra forma)
+	        if (!frutaColocada) {
+	            System.out.println("Não foi possível colocar a fruta " + derrubada.getTipo() + " derrubada.");
+	        }
+	    }
 	}
 	
 	/**

@@ -92,13 +92,19 @@ public  class   Terreno {
      */
     public boolean adicionaArvore(Arvore arvore, int x, int y) {
         if (posicaoDisponivel(x, y)) {
+        	arvore.setPos(x, y);
             this.mapa[x][y] = arvore;
-            System.out.println("Adicionou a arvore");
             return true;
         }
         return false;
     }
     
+    /**
+     * Metodo para encontrar uma posição vaga para a arvore
+     * @param arvore
+     * @return true - se achou e false se não conseguiu achar
+     *  
+     */
     public boolean setarArvores(Arvore arvore) {
     	Random rand = new Random();
     	int tentativas =0;
@@ -112,6 +118,11 @@ public  class   Terreno {
     	return false;
     }
     
+    /**
+     * Metodo que criar a quantidades de arvores e coloca na posição do mapa 
+     * @param tipo String - tipo da arvore laranja, maracuja ...
+     * @param  qtsArvores int - quantidades de arvores de um certo tipo para inserir
+     */
     public void criarArvores(String tipo, int qtsArvores) {
     	if(tipo == "laranja") {
     		for(int i = 0; i < qtsArvores; i++) {
@@ -153,6 +164,16 @@ public  class   Terreno {
     		}
     	}
     
+    /**
+     * Metodo para criar cada tipo de arvore passando o tipo de arvore quantidades para o metodo criarArvores
+     * @param arvMaracuja
+     * @param arvLaranja
+     * @param arvAbacate
+     * @param arvCoco
+     * @param arvAcerola
+     * @param arvAmora
+     * @param arvGoiaba
+     */
     public void adicionarArvores(int arvMaracuja, int arvLaranja, int arvAbacate, int arvCoco, int arvAcerola, int arvAmora, int arvGoiaba) {
     	this.criarArvores("maracuja", arvMaracuja);
     	this.criarArvores("laranja", arvLaranja);
@@ -248,7 +269,13 @@ public  class   Terreno {
 	public void removerElem(int x, int y) {
 		this.mapa[x][y] = null;
 	}
-
+	
+	/**
+	 * Remove a fruta do chão do terreno para o competidor pegar
+	 * @param x - posição x da fruta
+	 * @param y - posição y da fruta
+	 * @return fruta - a fruta que o usuario vai colocar na mochila.
+	 */
 	public Frutas pegarFruta(int x, int y) {
 		if(this.getMapa()[x][y] instanceof Frutas) {
 			Frutas fruta = (Frutas) this.getElemento(x, y);
@@ -256,6 +283,54 @@ public  class   Terreno {
 			return fruta;
 		}
 		return null;
+	}
+	/**
+	 * Insere a fruta no chão do mapa
+	 * @param fruta
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean derrubarFruta(Frutas fruta, int x, int y) {
+	    if (this.posicaoDisponivel(x, y)) {
+	        this.inserirElem(x, y, fruta);
+	        return true;
+	    }
+	    return false;
+	}
+
+	public void colocarFruta(Frutas fruta) {
+		Random rand = new Random();
+		int x = rand.nextInt(this.getDimensao());
+		int y = rand.nextInt(this.getDimensao());
+		while(!this.posicaoDisponivel(x, y)) {
+			x = rand.nextInt(this.getDimensao());
+			y = rand.nextInt(this.getDimensao());
+		}
+		this.inserirElem(x, y, fruta);
+	}
+	
+	public void gerarFrutas(int qtsMaracuja, int qtsLaranja, int qtsAbacate, int qtsCoco, int qtsAmora, int qtsAcerola) {
+		for(int i = 0; i < qtsMaracuja; i++) {
+			Maracuja fruta = new Maracuja(0,0, false);
+			this.colocarFruta(fruta);
+		}
+		for(int i = 0; i < qtsAbacate; i++) {
+			Abacate fruta = new Abacate(0,0, false);
+			this.colocarFruta(fruta);
+		}
+		for(int i = 0; i < qtsAcerola; i++) {
+			Acerola fruta = new Acerola(0,0, false);
+			this.colocarFruta(fruta);
+		}
+		for(int i = 0; i < qtsCoco; i++) {
+			Coco fruta = new Coco(0,0, false);
+			this.colocarFruta(fruta);
+		}
+		for(int i = 0; i < qtsAmora; i++) {
+			Maracuja fruta = new Maracuja(0,0, false);
+			this.colocarFruta(fruta);
+		}
 	}
 
 	/**

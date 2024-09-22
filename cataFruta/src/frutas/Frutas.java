@@ -30,7 +30,11 @@ public abstract class  Frutas extends ElemDinamico {
 	public int getPontos() {
 		return this.pontos;
 	}
-			
+	
+	public void setPos(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 	/**
 	 * Fala se a fruta é bichada ou não
 	 * @return

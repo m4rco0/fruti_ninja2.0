@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 public class MeuJogo {
 	private Terreno terreno;
+	private int round;
 	private Competidor competidor1;
 	private Competidor competidor2;
 	
@@ -37,7 +38,7 @@ public class MeuJogo {
 	 */
 	public MeuJogo(int dimensao, int qtsPedras, int arvoreMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada,int capacidadeMochila) {
 		terreno = new Terreno(dimensao);
-		inicializarCompetidores();
+		inicializarCompetidores(capacidadeMochila);
 		inicilizarTerreno(qtsPedras,arvoreMaracuja, maracuja, arvoreLaranja,laranja, arvoreAbacate, abacate, arvCoco, coco, arvAcerola, acerola, arvAmora, Amora, arvGoiaba, goiaba, bichada);
 	}
 	/**
@@ -62,16 +63,17 @@ public class MeuJogo {
 	private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada) {
 		terreno.colocarPedras(qtsPedras);
 		terreno.adicionarArvores(qtsArvMaracuja, arvoreLaranja, arvoreAbacate, arvCoco, arvAcerola, arvAmora, arvGoiaba);
+		terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola);
 		terreno.colocarGrama();
 	}
 	
 	/**
 	 * Metodo que cria os jogadores e colocam em posições aleatorias do mapa
 	 */
-	private void inicializarCompetidores() {
+	private void inicializarCompetidores(int capacidadeMochila) {
 		Random num = new Random();
-		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), 10, 2);
-		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, 2);
+		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), 0, capacidadeMochila);
+		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 0, capacidadeMochila);
 		terreno.inserirElem(competidor1.getX(), competidor1.getY(), competidor1);
 		terreno.inserirElem(competidor2.getX(), competidor2.getY(), competidor2);
 	}
@@ -84,7 +86,7 @@ public class MeuJogo {
 		Scanner scanner = new Scanner(System.in);
 		boolean jogoRodando =true;
 		Random random = new Random();
-		int round = 1;
+		this.round = 1;
 		
 		while(jogoRodando) {
 			if(competidor1.getMov() <= 0) {
@@ -92,7 +94,7 @@ public class MeuJogo {
 			} else if (competidor2.getMov() <= 0) {
 				competidor2.setMov(random.nextInt(6) + random.nextInt(6));
 			}
-			System.out.println("Round "+round);
+			System.out.println("Round "+this.round);
 			exibirTerreno();
 			executarRound(competidor1, scanner);
 			if(checarVitoria(competidor1)) {
@@ -106,14 +108,14 @@ public class MeuJogo {
 				jogoRodando = false;
 				break;
 			}
-			round++;
+			this.round++;
 		}
 		scanner.close();
 		
 	}
 	
 	public static void main(String[] args) {
-		MeuJogo jogo = new MeuJogo(5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+		MeuJogo jogo = new MeuJogo(5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10);
 		jogo.iniciarJogo();
 	}
 	/**
@@ -150,9 +152,6 @@ public class MeuJogo {
 				break;
 			case 'S':
 				competidor.moverBaixo(terreno);
-				break;
-			case 'E':
-				passou = true;
 				break;
 			default:
 				System.out.println("Movimento invalido");
