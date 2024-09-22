@@ -115,7 +115,7 @@ public class MeuJogo {
 	}
 	
 	public static void main(String[] args) {
-		MeuJogo jogo = new MeuJogo(5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10);
+		MeuJogo jogo = new MeuJogo(5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
 		jogo.iniciarJogo();
 	}
 	/**

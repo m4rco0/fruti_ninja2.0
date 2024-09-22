@@ -60,20 +60,36 @@ public class Competidor extends ElemDinamico {
 	 * @param terreno
 	 */
 	public void moverDireita(Terreno terreno) {
-		if(terreno.getElemento(this.x, this.y+1) instanceof Grama) {
-			terreno.removerElem(this.x, this.y+1);
-			terreno.inserirElem(this.x, this.y+1, this);
-			terreno.removerElem(this.x, this.y);
-			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-			this.setPos(this.x, this.y +1);
-		} else if (terreno.getElemento(this.x, this.y+1) instanceof Competidor) {
-			Competidor empurrado = (Competidor) terreno.getElemento(this.x, this.y+1); 
-			this.empurrao(empurrado, this.x, this.y+1, terreno);
-		} else if (terreno.getElemento(this.x, this.y+1) instanceof Pedra) {
-			
-		}
-		this.qts_mov--;
+	    int novaY = this.y + 1;
+
+	    // Verifica se a posição novaY está dentro dos limites do terreno
+	    if (novaY < terreno.getDimensao()) {
+	        if (terreno.getElemento(this.x, novaY) instanceof Grama) {
+	            terreno.removerElem(this.x, novaY);
+	            terreno.inserirElem(this.x, novaY, this);
+	            terreno.removerElem(this.x, this.y);
+	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	            this.setPos(this.x, novaY);
+	        } else if (terreno.getElemento(this.x, novaY) instanceof Competidor) {
+	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, novaY); 
+	            this.empurrao(empurrado, this.x, novaY, terreno);
+	        } else if (terreno.getElemento(this.x, novaY) instanceof Pedra) {
+	            int puloY = this.y + 2;
+
+	            // Verifica se a posição puloY está dentro dos limites do terreno
+	            if (puloY < terreno.getDimensao() && this.qts_mov >= 3 && terreno.getElemento(this.x, puloY) instanceof Grama) {
+	                this.qts_mov -= 3;
+	                terreno.removerElem(this.x, this.y);
+	                terreno.removerElem(this.x, puloY);
+	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	                terreno.inserirElem(this.x, puloY, this);
+	                this.setPos(this.x, puloY);
+	            }
+	        }
+	    }
+	    this.qts_mov -=1;
 	}
+
 	
 	/**
 	 * Metodo que recebe o terreno e move o jogador para esquerda
@@ -86,18 +102,36 @@ public class Competidor extends ElemDinamico {
 	 * @param terreno
 	 */
 	public void moverEsquerda(Terreno terreno) {
-		if(terreno.getElemento(this.x, this.y-1) instanceof Grama) {
-			terreno.removerElem(this.x, this.y-1);
-			terreno.inserirElem(this.x, this.y -1, this);
-			terreno.removerElem(this.x, this.y);
-			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-			this.setPos(this.x, this.y -1);
-		} else if (terreno.getElemento(this.x, this.y -1) instanceof Competidor) {
-			Competidor empurrado = (Competidor) terreno.getElemento(this.x, this.y-1); 
-			this.empurrao(empurrado, this.x, this.y-1, terreno);
-		}
-		this.qts_mov--;
+	    int novaY = this.y - 1;
+
+	    // Verifica se a posição novaY está dentro dos limites do terreno
+	    if (novaY >= 0) {
+	        if (terreno.getElemento(this.x, novaY) instanceof Grama) {
+	            terreno.removerElem(this.x, novaY);
+	            terreno.inserirElem(this.x, novaY, this);
+	            terreno.removerElem(this.x, this.y);
+	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	            this.setPos(this.x, novaY);
+	        } else if (terreno.getElemento(this.x, novaY) instanceof Competidor) {
+	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, novaY); 
+	            this.empurrao(empurrado, this.x, novaY, terreno);
+	        } else if (terreno.getElemento(this.x, novaY) instanceof Pedra) {
+	            int puloY = this.y - 2;
+
+	            // Verifica se a posição puloY está dentro dos limites do terreno
+	            if (puloY >= 0 && this.qts_mov >= 3 && terreno.getElemento(this.x, puloY) instanceof Grama) {
+	                this.qts_mov -= 3;
+	                terreno.removerElem(this.x, this.y);
+	                terreno.removerElem(this.x, puloY);
+	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	                terreno.inserirElem(this.x, puloY, this);
+	                this.setPos(this.x, puloY);
+	            }
+	        }
+	    }
+	    this.qts_mov--;
 	}
+
 	
 	/**
 	 * Metodo que recebe o terreno e move o jogador para cima
@@ -110,18 +144,36 @@ public class Competidor extends ElemDinamico {
 	 * @param terreno
 	 */
 	public void moverCima(Terreno terreno) {
-		if(terreno.getElemento(this.x-1, this.y) instanceof Grama) {
-			terreno.removerElem(this.x-1, this.y);
-			terreno.inserirElem(this.x-1, this.y, this);
-			terreno.removerElem(this.x, this.y);
-			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-			this.setPos(this.x-1, this.y);
-		} else if (terreno.getElemento(this.x-1, this.y) instanceof Competidor) {
-			Competidor empurrado = (Competidor) terreno.getElemento(this.x-1, this.y); 
-			this.empurrao(empurrado, this.x-1, this.y, terreno);
-		}
-		this.qts_mov--;
+	    int novaX = this.x - 1;
+
+	    // Verifica se a posição novaX está dentro dos limites do terreno
+	    if (novaX >= 0) {
+	        if (terreno.getElemento(novaX, this.y) instanceof Grama) {
+	            terreno.removerElem(novaX, this.y);
+	            terreno.inserirElem(novaX, this.y, this);
+	            terreno.removerElem(this.x, this.y);
+	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	            this.setPos(novaX, this.y);
+	        } else if (terreno.getElemento(novaX, this.y) instanceof Competidor) {
+	            Competidor empurrado = (Competidor) terreno.getElemento(novaX, this.y); 
+	            this.empurrao(empurrado, novaX, this.y, terreno);
+	        } else if (terreno.getElemento(novaX, this.y) instanceof Pedra) {
+	            int puloX = this.x - 2;
+
+	            // Verifica se a posição puloX está dentro dos limites do terreno
+	            if (puloX >= 0 && this.qts_mov >= 3 && terreno.getElemento(puloX, this.y) instanceof Grama) {
+	                this.qts_mov -= 3;
+	                terreno.removerElem(this.x, this.y);
+	                terreno.removerElem(puloX, this.y);
+	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	                terreno.inserirElem(puloX, this.y, this);
+	                this.setPos(puloX, this.y);
+	            }
+	        }
+	    }
+	    this.qts_mov--;
 	}
+
 	
 	/**
 	 * Metodo que recebe o terreno e move o jogador para baixo
@@ -134,18 +186,36 @@ public class Competidor extends ElemDinamico {
 	 * @param terreno
 	 */
 	public void moverBaixo(Terreno terreno) {
-		if(terreno.getElemento(this.x+1, this.y) instanceof Grama) {
-			terreno.removerElem(this.x+1, this.y);
-			terreno.inserirElem(this.x+1, this.y, this);
-			terreno.removerElem(this.x, this.y);
-			terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-			this.setPos(this.x+1, this.y);
-		} else if (terreno.getElemento(this.x+1, this.y) instanceof Competidor) {
-			Competidor empurrado = (Competidor) terreno.getElemento(this.x+1, this.y); 
-			this.empurrao(empurrado, this.x+1, this.y, terreno);
-		}
-		this.qts_mov--;
+	    int novaX = this.x + 1;
+
+	    // Verifica se a posição novaX está dentro dos limites do terreno
+	    if (novaX < terreno.getDimensao()) {
+	        if (terreno.getElemento(novaX, this.y) instanceof Grama) {
+	            terreno.removerElem(novaX, this.y);
+	            terreno.inserirElem(novaX, this.y, this);
+	            terreno.removerElem(this.x, this.y);
+	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	            this.setPos(novaX, this.y);
+	        } else if (terreno.getElemento(novaX, this.y) instanceof Competidor) {
+	            Competidor empurrado = (Competidor) terreno.getElemento(novaX, this.y); 
+	            this.empurrao(empurrado, novaX, this.y, terreno);
+	        } else if (terreno.getElemento(novaX, this.y) instanceof Pedra) {
+	            int puloX = this.x + 2;
+
+	            // Verifica se a posição puloX está dentro dos limites do terreno
+	            if (puloX < terreno.getDimensao() && this.qts_mov >= 3 && terreno.getElemento(puloX, this.y) instanceof Grama) {
+	                this.qts_mov -= 3;
+	                terreno.removerElem(this.x, this.y);
+	                terreno.removerElem(puloX, this.y);
+	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
+	                terreno.inserirElem(puloX, this.y, this);
+	                this.setPos(puloX, this.y);
+	            }
+	        }
+	    }
+	    this.qts_mov--;
 	}
+
 	
 	/**
 	 * Obtém a quantidade de forca do Competidor.
