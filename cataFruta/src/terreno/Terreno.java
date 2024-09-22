@@ -87,21 +87,22 @@ public  class   Terreno {
      * Adiciona uma árvore em uma posição específica do mapa
      * @param arvore A árvore a ser adicionada
      * @param x posição x no mapa
-     * @param y posição y no mapa
+     * @param y posição y no mapax
      * @return true se a árvore foi adicionada com sucesso, false caso contrário
      */
     public boolean adicionaArvore(Arvore arvore, int x, int y) {
         if (posicaoDisponivel(x, y)) {
-            mapa[x][y] = arvore;
+            this.mapa[x][y] = arvore;
+            System.out.println("Adicionou a arvore");
             return true;
         }
         return false;
     }
     
-    public boolean setarArvores(Arvore arvore, int qtsArvores) {
+    public boolean setarArvores(Arvore arvore) {
     	Random rand = new Random();
     	int tentativas =0;
-    	while(tentativas < this.getDimensao()*2) {
+    	while(tentativas < this.getDimensao()) {
     		int x = rand.nextInt(this.getDimensao());
     		int y = rand.nextInt(this.getDimensao());
     		if(this.adicionaArvore(arvore, x, y))
@@ -109,6 +110,58 @@ public  class   Terreno {
     		
     	}
     	return false;
+    }
+    
+    public void criarArvores(String tipo, int qtsArvores) {
+    	if(tipo == "laranja") {
+    		for(int i = 0; i < qtsArvores; i++) {
+    			ArvoreLaranja arv = new ArvoreLaranja(0, 0, "laranja", new Laranja(0, 0, false));
+    			this.setarArvores(arv);	
+    		}
+    	} else if (tipo == "maracuja") {
+    		for(int i = 0; i < qtsArvores; i++) {
+    			ArvoreMaracuja arv = new ArvoreMaracuja(0, 0, "maracuja", new Maracuja(0, 0, false));
+    			this.setarArvores(arv);
+    		}
+    	} else if (tipo == "abacate") {
+    		for(int i = 0; i < qtsArvores; i++) {
+    			ArvoreAbacate arv = new ArvoreAbacate(0, 0, "abacate", new Abacate(0, 0, false));
+    			this.setarArvores(arv);
+    		}
+    	} else if (tipo == "coco") {
+    		for(int i = 0; i < qtsArvores; i++) {
+    			ArvoreCoco arv = new ArvoreCoco(0, 0, "coco", new Coco(0, 0, false));
+    			this.setarArvores(arv);
+    			
+    		}
+    	}else if (tipo == "acerola") {
+    			for(int i = 0; i < qtsArvores; i++) {
+        			ArvoreAcerola arv = new ArvoreAcerola(0, 0, "acerola", new Acerola(0, 0, false));
+        			this.setarArvores(arv);
+        			
+        		}
+    		} else if (tipo == "amora") {
+    			for(int i = 0; i < qtsArvores; i++) {
+        			ArvoreAmora arv = new ArvoreAmora(0, 0, "amora", new Amora(0, 0, false));
+        			this.setarArvores(arv);
+        		}
+    		} else if (tipo == "goiaba") {
+    			for(int i = 0; i < qtsArvores; i++) {
+    				ArvoreGoiaba arv = new ArvoreGoiaba(0,0, "goiaba", new Goiaba(0,0, false));
+    				this.setarArvores(arv);
+    			}
+    		}
+    	}
+    
+    public void adicionarArvores(int arvMaracuja, int arvLaranja, int arvAbacate, int arvCoco, int arvAcerola, int arvAmora, int arvGoiaba) {
+    	this.criarArvores("maracuja", arvMaracuja);
+    	this.criarArvores("laranja", arvLaranja);
+    	this.criarArvores("abacate", arvAbacate);
+    	this.criarArvores("coco", arvCoco);
+    	this.criarArvores("acerola", arvAcerola);
+    	this.criarArvores("amora", arvAmora);
+    	this.criarArvores("goiaba", arvGoiaba);
+    	
     }
 	/**
 	 * Pega a dimensao do mapa

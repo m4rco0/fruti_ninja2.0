@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class Competidor extends ElemDinamico {
 	private String nome;
+	
 	private int forca;
 	private int capacidadeMochila;
 	private int pontos;
