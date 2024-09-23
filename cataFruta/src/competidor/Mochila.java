@@ -78,11 +78,23 @@ public class Mochila {
 		return null;
 	}
 	
+	public void mostrar() {
+		if (frutas.isEmpty()) {
+            System.out.println("A mochila está vazia.");
+        } else {
+            for (Frutas fruta : frutas) {
+                System.out.printf("%s ", fruta.getTipo());
+            }
+            System.out.println();
+        }
+	}
 	/*
 	 * Metodo que fala se a mochila ta cheia ou n
 	 * @return true se estiver cheia false se estiver vazia
 	 * 
 	 */
+	
+	
 	public boolean isCheia() {
 		return this.frutas.size() >= this.capacidadeMaxima;
 	}

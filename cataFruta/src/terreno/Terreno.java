@@ -277,7 +277,7 @@ public  class   Terreno {
 	 * @return fruta - a fruta que o usuario vai colocar na mochila.
 	 */
 	public Frutas pegarFruta(int x, int y) {
-		if(this.getMapa()[x][y] instanceof Frutas) {
+		if(this.getElemento(x, y) instanceof Frutas) {
 			Frutas fruta = (Frutas) this.getElemento(x, y);
 			this.removerElem(x, x);
 			return fruta;
@@ -331,15 +331,10 @@ public  class   Terreno {
 			Maracuja fruta = new Maracuja(0,0, false);
 			this.colocarFruta(fruta);
 		}
+		for(int i = 0; i < qtsLaranja; i++) {
+			Laranja fruta = new Laranja(0,0,false);
+			this.colocarFruta(fruta);
+		}
 	}
 
-	/**
-	 * Exibe o elemento no mapa
-	 * @param x - posição x do elemento
-	 * @param y - posição y do elemento
-	 * @return Elemento 
-	 */
-	public Elemento exibeElem(int x, int y) {
-		return this.mapa[x][y];
-	}
 }

@@ -17,8 +17,8 @@ public class Competidor extends ElemDinamico {
 	private int forca;
 	private int capacidadeMochila;
 	private int pontos;
+	private int roundParado;
 	private int qts_mov;
-	private boolean drog;
 	private Mochila mochila;
 	
 	/**
@@ -37,7 +37,7 @@ public class Competidor extends ElemDinamico {
 		this.setForca(1);
 		this.pontos = 0;
 		this.qts_mov = qts_mov;
-		this.drog = false;
+		this.roundParado = 0;
 		this.mochila = new Mochila(capacidadeMochila);
 	}
 	/**
@@ -61,7 +61,12 @@ public class Competidor extends ElemDinamico {
 	 */
 	public void moverDireita(Terreno terreno) {
 	    int novaY = this.y + 1;
-
+	    
+	    if(this.roundParado > 0) {
+	    	System.out.println(this.nome + " está parado embaixo de uma árvore por mais " + this.roundParado + " rounds.");
+	        return;
+	    }
+	    
 	    // Verifica se a posição novaY está dentro dos limites do terreno
 	    if (novaY < terreno.getDimensao()) {
 	        if (terreno.getElemento(this.x, novaY) instanceof Grama) {
@@ -85,6 +90,19 @@ public class Competidor extends ElemDinamico {
 	                terreno.inserirElem(this.x, puloY, this);
 	                this.setPos(this.x, puloY);
 	            }
+	        } else if (terreno.getElemento(this.x, novaY) instanceof Arvore) {
+	        	Arvore arv = (Arvore) terreno.getElemento(this.x, novaY);
+	        	this.pegarFrutaArv(arv);
+	        } else if (terreno.getElemento(this.x, this.y+1) instanceof Frutas) {
+	        	Frutas fruta = terreno.pegarFruta(this.x, novaY);
+	        	if(fruta.getTipo() == "Laranja")
+	        		this.pontos++;
+	        	this.mochila.addFruta(fruta);
+	        	terreno.removerElem(this.x, this.y+1);
+	        	terreno.removerElem(this.x, this.y);
+	        	terreno.inserirElem(this.x, this.y+1, this);
+	        	terreno.colocarGrama();
+	        	this.setPos(this.x, this.y+1);
 	        }
 	    }
 	    this.qts_mov -=1;
@@ -127,6 +145,17 @@ public class Competidor extends ElemDinamico {
 	                terreno.inserirElem(this.x, puloY, this);
 	                this.setPos(this.x, puloY);
 	            }
+	        }else if (terreno.getElemento(this.x, novaY) instanceof Frutas) {
+            	Frutas fruta = terreno.pegarFruta(this.x, novaY);
+            	if(fruta.getTipo() == "Laranja")
+            		this.pontos++;
+	        	this.mochila.addFruta(fruta);
+	        	terreno.removerElem(this.x, this.y);
+	        	terreno.removerElem(this.x, novaY);
+	        	terreno.inserirElem(this.x, novaY, this);
+	        	this.setPos(this.x, novaY);
+	        	terreno.colocarGrama();
+	        	
 	        }
 	    }
 	    this.qts_mov--;
@@ -169,6 +198,16 @@ public class Competidor extends ElemDinamico {
 	                terreno.inserirElem(puloX, this.y, this);
 	                this.setPos(puloX, this.y);
 	            }
+	        }else if (terreno.getElemento(novaX, this.y) instanceof Frutas) {
+	        	Frutas fruta = terreno.pegarFruta(novaX, this.y);
+	        	if(fruta.getTipo() == "Laranja")
+	        		this.pontos++;
+	        	this.mochila.addFruta(fruta);
+	        	terreno.removerElem(novaX, this.y);
+	        	terreno.removerElem(this.x, this.y);
+	        	terreno.inserirElem(novaX, this.y, this);
+	        	terreno.colocarGrama();
+	        	this.setPos(novaX, this.y);
 	        }
 	    }
 	    this.qts_mov--;
@@ -211,12 +250,25 @@ public class Competidor extends ElemDinamico {
 	                terreno.inserirElem(puloX, this.y, this);
 	                this.setPos(puloX, this.y);
 	            }
+	        }else if (terreno.getElemento(novaX, this.y) instanceof Frutas) {
+	        	Frutas fruta = terreno.pegarFruta(novaX, this.y);
+	        	this.mochila.addFruta(fruta);
+	        	if(fruta.getTipo() == "Laranja")
+	        		this.pontos++;
+	        	terreno.removerElem(novaX, this.y);
+	        	terreno.removerElem(this.x, this.y);
+	        	terreno.inserirElem(novaX, this.y, this);
+	        	terreno.colocarGrama();
+	        	this.setPos(novaX, this.y);
 	        }
 	    }
 	    this.qts_mov--;
 	}
 
 	
+	public void exibirFrutas() {
+		this.mochila.mostrar();
+	}
 	/**
 	 * Obtém a quantidade de forca do Competidor.
 	 * @return a forca do jogador.
@@ -268,17 +320,6 @@ public class Competidor extends ElemDinamico {
 	 * @return	true se comeu a fruta bichada.
 	 * @return false se nao comeu fruta bichada.
 	 */
-	public boolean getDrog() {
-		return this.drog;
-	}
-	
-	/**
-	 * Metodo para limpar o efeito da fruta bichada.
-	 * 
-	 */
-	public void limparEfeito() {
-		this.drog = false;
-	}
 	
 	/**
 	 * Metodo especial para consumir a fruta.
@@ -293,11 +334,11 @@ public class Competidor extends ElemDinamico {
 		} else if (fruta.getTipo() == "Abacate") {
 			this.setForca(this.getForca() * 2);
 		} else if (fruta.getTipo() == "Laranja") {
-			this.limparEfeito();
+			this.roundParado = 0;
 		}
 		
 		if(fruta.isBichada())
-			this.drog = true;
+			this.roundParado++;
 		this.mochila.removeFruta(fruta);
 		System.out.println("[-]"+fruta.getTipo()+ "removido");
 	}
@@ -306,9 +347,10 @@ public class Competidor extends ElemDinamico {
 	 * Competidor pega a fruta do chao e remove do terreno.
 	 * @param fruta a fruta pega pelo jogador
 	 */
-	public void pegarFruta(Arvore arvore) {
+	public void pegarFrutaArv(Arvore arvore) {
 		this.mochila.addFruta(arvore.pegaFruta());
 		this.setForca(this.getForca() + 1);
+		this.roundParado = 2;
 		System.out.println("[+]"+ arvore.getTipo() + "fruto pego");
 	}
 	/**
@@ -331,44 +373,37 @@ public class Competidor extends ElemDinamico {
 	 * @param y
 	 */
 	public void empurrao(Competidor competidor, int x, int y, Terreno terreno) {
-	    Random rand = new Random();
-	    int f_a = this.getForca();
-	    int f_d = competidor.mochila.getSize();
-	    int empurrao = (int) Math.round(Math.log(f_a + 1) / Math.log(2) - Math.log(f_d + 1) / Math.log(2));
-	    int frutasDerrubadas = Math.max(0, empurrao);
-	    if(competidor.mochila.getSize() == 0) {
-	    	System.out.println("A mochila de " + competidor.nome + "está vazia.");
-	    	return;
-	    }
-	    for (int i = 0; i < frutasDerrubadas; i++) {
-	        int index = rand.nextInt(competidor.mochila.getSize());
-	        Frutas derrubada = competidor.mochila.removeIndexFrut(index);
-	        if (derrubada == null) {
-	            System.out.println("Nenhuma fruta foi removida. Índice: " + index);
-	            return;
-	        }
-
-	        // Tentar colocar a fruta derrubada em uma posição de grama ao redor do competidor empurrado
-	        boolean frutaColocada = false;
-	        for (int dx = -1; dx <= 1 && !frutaColocada; dx++) {
-	            for (int dy = -1; dy <= 1 && !frutaColocada; dy++) {
-	                int newX = x + dx;
-	                int newY = y + dy;
-	                if ((dx != 0 || dy != 0) && terreno.posicaoDisponivel(newX, newY) && terreno.getElemento(newX, newY) instanceof Grama) {
-	                    terreno.derrubarFruta(derrubada, newX, newY);
-	                    System.out.println("Fruta " + derrubada.getTipo() + " colocada em (" + newX + ", " + newY + ")");
-	                    frutaColocada = true;
-	                }
-	            }
-	        }
-
-	        // Se não encontrar uma posição de grama disponível, a fruta é perdida (ou pode ser tratada de outra forma)
-	        if (!frutaColocada) {
-	            System.out.println("Não foi possível colocar a fruta " + derrubada.getTipo() + " derrubada.");
-	        }
-	    }
+		System.out.println("Empurrar " + competidor.nome + " tem " + competidor.mochila.getSize() + " frutas");
 	}
 	
+	public void exibirMochila() {
+		System.out.println("Conteudo da mochila:");
+		mochila.mostrar();
+	}
+	
+	/**
+	 * Getter de rounds parados
+	 * @return roundsParado
+	 */
+	public int getRoundsParado() {
+		return this.roundParado;
+	}
+	
+	/**
+	 * Setter de rounds parados
+	 * @param roundsParados
+	 */
+	public void setRoundsParado(int roundsParados) {
+		this.roundParado = roundsParados;
+	}
+	/**
+	 * Diminuir apenas 1 dos rounds parados, se for maior que 0
+	 */
+	public void decrementarRoundsParado() {
+        if (this.roundParado > 0) {
+            this.roundParado--;
+        }
+    }
 	/**
 	 * Seta o movimento de um jogador
 	 * @param nextInt - quantos movimentos
@@ -377,6 +412,8 @@ public class Competidor extends ElemDinamico {
 		// TODO Auto-generated method stub
 		this.qts_mov = nextInt;
 	}
+	
+	
 	@Override
 	public String getTipo() {
 		return "Competidor";

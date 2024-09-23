@@ -42,7 +42,6 @@ public abstract class Arvore extends ElemEstaticos{
 	}
 	public Frutas pegaFruta() {
 		Frutas fruto = this.fruta;
-		this.fruta = null;
 		return fruto;
 	}
 	

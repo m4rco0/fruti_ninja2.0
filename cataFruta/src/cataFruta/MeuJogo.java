@@ -72,8 +72,8 @@ public class MeuJogo {
 	 */
 	private void inicializarCompetidores(int capacidadeMochila) {
 		Random num = new Random();
-		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), 0, capacidadeMochila);
-		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 0, capacidadeMochila);
+		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
+		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
 		terreno.inserirElem(competidor1.getX(), competidor1.getY(), competidor1);
 		terreno.inserirElem(competidor2.getX(), competidor2.getY(), competidor2);
 	}
@@ -91,7 +91,8 @@ public class MeuJogo {
 		while(jogoRodando) {
 			if(competidor1.getMov() <= 0) {
 				competidor1.setMov(random.nextInt(6) + random.nextInt(6));
-			} else if (competidor2.getMov() <= 0) {
+			} 
+			if (competidor2.getMov() <= 0) {
 				competidor2.setMov(random.nextInt(6) + random.nextInt(6));
 			}
 			System.out.println("Round "+this.round);
@@ -109,13 +110,14 @@ public class MeuJogo {
 				break;
 			}
 			this.round++;
+			competidor1.decrementarRoundsParado();
+			competidor2.decrementarRoundsParado();
 		}
 		scanner.close();
-		
 	}
 	
 	public static void main(String[] args) {
-		MeuJogo jogo = new MeuJogo(5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
+		MeuJogo jogo = new MeuJogo(5, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
 		jogo.iniciarJogo();
 	}
 	/**
@@ -137,7 +139,12 @@ public class MeuJogo {
 		System.out.println("Movimentos restantes " +competidor.getMov());
 		boolean passou = false;
 		
+		
 		while(competidor.getMov() > 0 || passou != false) {
+			if(competidor.getRoundsParado() > 0) {
+				System.out.println(competidor.getNome() + " está parado por " + competidor.getRoundsParado() + " round(s).");
+				return;
+			}
 			System.out.println("Escolha uma direção para mover (WASD): ");
 			char movimento = scanner.next().toUpperCase().charAt(0);
 			switch(movimento) {
@@ -152,6 +159,9 @@ public class MeuJogo {
 				break;
 			case 'S':
 				competidor.moverBaixo(terreno);
+				break;
+			case 'I':
+				competidor.exibirMochila();
 				break;
 			default:
 				System.out.println("Movimento invalido");
