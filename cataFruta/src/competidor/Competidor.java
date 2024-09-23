@@ -156,6 +156,9 @@ public class Competidor extends ElemDinamico {
 	        	this.setPos(this.x, novaY);
 	        	terreno.colocarGrama();
 	        	
+	        } else if (terreno.getElemento(this.x, novaY) instanceof Arvore) {
+	        	Arvore arv = (Arvore) terreno.getElemento(this.x, novaY);
+	        	this.pegarFrutaArv(arv);
 	        }
 	    }
 	    this.qts_mov--;
@@ -208,6 +211,9 @@ public class Competidor extends ElemDinamico {
 	        	terreno.inserirElem(novaX, this.y, this);
 	        	terreno.colocarGrama();
 	        	this.setPos(novaX, this.y);
+	        } else if (terreno.getElemento(novaX, this.y) instanceof Arvore) {
+	        	Arvore arv = (Arvore) terreno.getElemento(novaX, this.y);
+	        	this.pegarFrutaArv(arv);
 	        }
 	    }
 	    this.qts_mov--;
@@ -260,6 +266,9 @@ public class Competidor extends ElemDinamico {
 	        	terreno.inserirElem(novaX, this.y, this);
 	        	terreno.colocarGrama();
 	        	this.setPos(novaX, this.y);
+	        } else if (terreno.getElemento(novaX, this.y) instanceof Arvore) {
+	        	Arvore arv = (Arvore) terreno.getElemento(novaX, this.y);
+	        	this.pegarFrutaArv(arv);
 	        }
 	    }
 	    this.qts_mov--;
