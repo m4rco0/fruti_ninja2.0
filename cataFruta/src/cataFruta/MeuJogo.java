@@ -9,7 +9,8 @@ import java.util.Scanner;
  * @author marcola.
  * @param args
  */
-public class MeuJogo {
+public class
+MeuJogo {
 	private Terreno terreno;
 	private int round;
 	private Competidor competidor1;
@@ -73,9 +74,12 @@ public class MeuJogo {
 	private void inicializarCompetidores(int capacidadeMochila) {
 		Random num = new Random();
 		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
-		competidor2 = new Competidor("COmppetidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
+		competidor2 = new Competidor("Competidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
 		terreno.inserirElem(competidor1.getX(), competidor1.getY(), competidor1);
 		terreno.inserirElem(competidor2.getX(), competidor2.getY(), competidor2);
+	}
+	public Terreno getTerreno() {
+		return terreno;
 	}
 	
 	/**
@@ -138,8 +142,8 @@ public class MeuJogo {
 		System.out.println("Vez de " + competidor.getNome());
 		System.out.println("Movimentos restantes " +competidor.getMov());
 		boolean passou = false;
-		
-		
+
+
 		while(competidor.getMov() > 0 || passou != false) {
 			if(competidor.getRoundsParado() > 0) {
 				System.out.println(competidor.getNome() + " está parado por " + competidor.getRoundsParado() + " round(s).");

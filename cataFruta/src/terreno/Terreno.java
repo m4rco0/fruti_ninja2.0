@@ -206,6 +206,7 @@ public  class   Terreno {
 		return this.mapa;
 	}
 
+	public boolean hasMapa(int i, int j) { return this.mapa[i][j] != null; }
 
 	public void exibirMapa() {
 		for(int i = 0; i < this.getDimensao(); i++) {
