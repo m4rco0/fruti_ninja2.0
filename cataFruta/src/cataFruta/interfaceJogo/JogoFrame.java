@@ -10,7 +10,7 @@ import cataFruta.MeuJogo;
 import terreno.Terreno;
 
 public class JogoFrame extends JFrame {
-    private MeuJogo jogo;
+    //private MeuJogo jogo;
     private terreno.Terreno terreno = new Terreno(5);
 
     public JogoFrame() {
@@ -19,7 +19,7 @@ public class JogoFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
+        //jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
 
         initUI();
     }
