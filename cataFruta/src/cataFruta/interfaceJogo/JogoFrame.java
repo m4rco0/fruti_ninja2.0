@@ -2,6 +2,7 @@ package interfaceJogo;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ import cataFruta.MeuJogo;
 import terreno.Terreno;
 
 public class JogoFrame extends JFrame {
-//    private MeuJogo jogo;
+    private MeuJogo jogo;
     private terreno.Terreno terreno = new Terreno(5);
 
     public JogoFrame() {
@@ -18,7 +19,7 @@ public class JogoFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-//        jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
+        jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
 
         initUI();
     }
@@ -27,7 +28,6 @@ public class JogoFrame extends JFrame {
         terreno.colocarPedras(qtsPedras);
         terreno.adicionarArvores(qtsArvMaracuja, arvoreLaranja, arvoreAbacate, arvCoco, arvAcerola, arvAmora, arvGoiaba);
         terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola);
-        terreno.colocarGrama();
     }
 
     private void initUI() {
@@ -35,6 +35,7 @@ public class JogoFrame extends JFrame {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.GREEN);
 
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
@@ -46,7 +47,7 @@ public class JogoFrame extends JFrame {
         // Inicia jogo
         JButton startButton = new JButton("Iniciar Jogo");
         startButton.addActionListener(e -> {
-//      jogo.iniciarJogo();
+            jogo.iniciarJogo();
             textArea.setText("Jogo iniciado!");
         });
         mainPanel.add(startButton, BorderLayout.SOUTH);
@@ -58,35 +59,31 @@ public class JogoFrame extends JFrame {
         controlsPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-// Configurações comuns para todos os botões
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.fill = GridBagConstraints.NONE;
 
-// Botão "W" (linha 0, coluna 1)
-        gbc.gridx = 1;  // Coluna 1 (centralizado)
-        gbc.gridy = 0;  // Linha 0
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         controlsPanel.add(new JButton("W"), gbc);
 
-// Botão "A" (linha 1, coluna 0)
-        gbc.gridx = 0;  // Coluna 0
-        gbc.gridy = 1;  // Linha 1
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         controlsPanel.add(new JButton("A"), gbc);
 
-// Botão "S" (linha 1, coluna 1)
-        gbc.gridx = 1;  // Coluna 1
-        gbc.gridy = 1;  // Linha 1
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         controlsPanel.add(new JButton("S"), gbc);
 
-// Botão "D" (linha 1, coluna 2)
-        gbc.gridx = 2;  // Coluna 2
-        gbc.gridy = 1;  // Linha 1
+        gbc.gridx = 2;
+        gbc.gridy = 1;
         controlsPanel.add(new JButton("D"), gbc);
-    //Adiciona os botões no abaixo no painel
+
+        //Adiciona os botões no abaixo no painel
         JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
         parentPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
         parentPanel.add(controlsPanel, BorderLayout.SOUTH);
-    // Adiciona o painel ao painel principal
+        // Adiciona o painel ao painel principal
         mainPanel.add(parentPanel, BorderLayout.EAST);
         add(mainPanel);
 
