@@ -21,25 +21,20 @@ public abstract class Arvore extends ElemEstaticos{
 		super(x,y);
 		this.fruta = fruta;
 	}
-	
 	/**
-	 * Pega o tipo da arvore
-	 * @return tipoArvore
-	 */
-	
-
-	/**
-	 * Metodo para pegar o fruto da arvore e entregar para o Jogador isso faz com que a arvore fique sem fruto 
-	 * mudando para null, fazer para alterar em 5 rodada apos
-	 * @param competidor O competidor que vai receber a fruta.
-	 * @return true se recebeu.
-	 * @return false se nao recebeu.
+	 * Seta a posição do jogador
+	 * @param x - posição x no mapa
+	 * @param y - posição y no mapa
 	 */
 	public void setPos(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.fruta.setPos(x, y);
 	}
+	/**
+	 * Devolve um fruto da arvore
+	 * @return fruto da arvores
+	 */
 	public Frutas pegaFruta() {
 		Frutas fruto = this.fruta;
 		return fruto;

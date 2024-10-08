@@ -5,6 +5,9 @@ public class Abacate extends Frutas{
 		super(x,y, 0, bichada);
 	}
 
+	/**
+	 * Retorna o tipo da frutas
+	 */
 	@Override
 	public String getTipo() {
 		return "Abacate";

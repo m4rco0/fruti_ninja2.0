@@ -78,6 +78,9 @@ public class Mochila {
 		return null;
 	}
 	
+	/**
+	 * Metodo para mostrar as frutas da mochila
+	 */
 	public void mostrar() {
 		if (frutas.isEmpty()) {
             System.out.println("A mochila está vazia.");
@@ -93,8 +96,6 @@ public class Mochila {
 	 * @return true se estiver cheia false se estiver vazia
 	 * 
 	 */
-	
-	
 	public boolean isCheia() {
 		return this.frutas.size() >= this.capacidadeMaxima;
 	}

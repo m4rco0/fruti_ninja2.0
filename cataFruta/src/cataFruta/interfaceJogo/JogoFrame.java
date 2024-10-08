@@ -1,5 +1,6 @@
-package interfaceJogo;
-
+package cataFruta.interfaceJogo;
+import arquivos.LerArq;
+import cataFruta.interfaceJogo.TerrenoPanel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -8,30 +9,31 @@ import java.util.Random;
 import java.util.Scanner;
 import cataFruta.MeuJogo;
 import terreno.Terreno;
-
+import arquivos.*;
 public class JogoFrame extends JFrame {
     //private MeuJogo jogo;
     private terreno.Terreno terreno = new Terreno(5);
-
+    
     public JogoFrame() {
         setTitle("Cata Fruta");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        //jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
+        //MeuJogo jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
 
         initUI();
     }
 
-    private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba) {
+    private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba) {
         terreno.colocarPedras(qtsPedras);
         terreno.adicionarArvores(qtsArvMaracuja, arvoreLaranja, arvoreAbacate, arvCoco, arvAcerola, arvAmora, arvGoiaba);
-        terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola);
+        terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola, goiaba);
     }
 
     private void initUI() {
-        this.inicilizarTerreno(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    	LerArq arq = new LerArq();
+        this.inicilizarTerreno(arq.getPedras(),arq.getQuantidadeArvores("maracuja"), arq.getQuantidadeFrutas("maracuja"),arq.getQuantidadeArvores("laranja"),arq.getQuantidadeFrutas("laranja"), arq.getQuantidadeArvores("abacate"), arq.getQuantidadeFrutas("abacate"), arq.getQuantidadeArvores("coco"), arq.getQuantidadeFrutas("coco"), arq.getQuantidadeArvores("acerola"), arq.getQuantidadeFrutas("acerola"), arq.getQuantidadeArvores("amora"), arq.getQuantidadeFrutas("amora"), arq.getQuantidadeArvores("goiaba"), arq.getQuantidadeFrutas("goiaba"));
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -41,13 +43,13 @@ public class JogoFrame extends JFrame {
         textArea.setEditable(false);
         mainPanel.add(new JScrollPane(textArea), BorderLayout.CENTER);
 
-        interfaceJogo.TerrenoPanel board = new interfaceJogo.TerrenoPanel(terreno);
+        TerrenoPanel board = new TerrenoPanel(terreno);
         mainPanel.add(board, BorderLayout.CENTER);
 
         // Inicia jogo
         JButton startButton = new JButton("Iniciar Jogo");
         startButton.addActionListener(e -> {
-            jogo.iniciarJogo();
+            //jogo.iniciarJogo();
             textArea.setText("Jogo iniciado!");
         });
         mainPanel.add(startButton, BorderLayout.SOUTH);

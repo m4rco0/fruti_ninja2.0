@@ -10,6 +10,9 @@ public class ArvoreAmora extends Arvore{
 		super(x, y, tipoArvore, amora);
 	}
 	
+	/**
+	 * Metodo que retorna o tipo da fruta
+	 */
 	public String getTipo() {
 		return "ArvoreAmora";
 	}

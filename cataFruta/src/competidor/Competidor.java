@@ -13,7 +13,6 @@ import java.util.Random;
  */
 public class Competidor extends ElemDinamico {
 	private String nome;
-	
 	private int forca;
 	private int capacidadeMochila;
 	private int pontos;
@@ -69,11 +68,9 @@ public class Competidor extends ElemDinamico {
 	    
 	    // Verifica se a posição novaY está dentro dos limites do terreno
 	    if (novaY < terreno.getDimensao()) {
-	        if (terreno.getElemento(this.x, novaY) instanceof Grama) {
-	            terreno.removerElem(this.x, novaY);
+	        if (terreno.getElemento(this.x, novaY) == null) {
+	        	terreno.removerElem(this.x,this.y);
 	            terreno.inserirElem(this.x, novaY, this);
-	            terreno.removerElem(this.x, this.y);
-	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 	            this.setPos(this.x, novaY);
 	        } else if (terreno.getElemento(this.x, novaY) instanceof Competidor) {
 	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, novaY); 
@@ -82,7 +79,7 @@ public class Competidor extends ElemDinamico {
 	            int puloY = this.y + 2;
 
 	            // Verifica se a posição puloY está dentro dos limites do terreno
-	            if (puloY < terreno.getDimensao() && this.qts_mov >= 3 && terreno.getElemento(this.x, puloY) instanceof Grama) {
+	            if (puloY < terreno.getDimensao() && this.qts_mov >= 3 && terreno.getElemento(this.x, puloY) == null ) {
 	                this.qts_mov -= 3;
 	                terreno.removerElem(this.x, this.y);
 	                terreno.removerElem(this.x, puloY);
@@ -101,7 +98,6 @@ public class Competidor extends ElemDinamico {
 	        	terreno.removerElem(this.x, this.y+1);
 	        	terreno.removerElem(this.x, this.y);
 	        	terreno.inserirElem(this.x, this.y+1, this);
-	        	terreno.colocarGrama();
 	        	this.setPos(this.x, this.y+1);
 	        }
 	    }
@@ -124,11 +120,9 @@ public class Competidor extends ElemDinamico {
 
 	    // Verifica se a posição novaY está dentro dos limites do terreno
 	    if (novaY >= 0) {
-	        if (terreno.getElemento(this.x, novaY) instanceof Grama) {
-	            terreno.removerElem(this.x, novaY);
+	        if (terreno.getElemento(this.x, novaY) !=null) {
 	            terreno.inserirElem(this.x, novaY, this);
 	            terreno.removerElem(this.x, this.y);
-	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
 	            this.setPos(this.x, novaY);
 	        } else if (terreno.getElemento(this.x, novaY) instanceof Competidor) {
 	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, novaY); 
@@ -154,7 +148,6 @@ public class Competidor extends ElemDinamico {
 	        	terreno.removerElem(this.x, novaY);
 	        	terreno.inserirElem(this.x, novaY, this);
 	        	this.setPos(this.x, novaY);
-	        	terreno.colocarGrama();
 	        	
 	        } else if (terreno.getElemento(this.x, novaY) instanceof Arvore) {
 	        	Arvore arv = (Arvore) terreno.getElemento(this.x, novaY);
@@ -209,7 +202,6 @@ public class Competidor extends ElemDinamico {
 	        	terreno.removerElem(novaX, this.y);
 	        	terreno.removerElem(this.x, this.y);
 	        	terreno.inserirElem(novaX, this.y, this);
-	        	terreno.colocarGrama();
 	        	this.setPos(novaX, this.y);
 	        } else if (terreno.getElemento(novaX, this.y) instanceof Arvore) {
 	        	Arvore arv = (Arvore) terreno.getElemento(novaX, this.y);
@@ -264,7 +256,6 @@ public class Competidor extends ElemDinamico {
 	        	terreno.removerElem(novaX, this.y);
 	        	terreno.removerElem(this.x, this.y);
 	        	terreno.inserirElem(novaX, this.y, this);
-	        	terreno.colocarGrama();
 	        	this.setPos(novaX, this.y);
 	        } else if (terreno.getElemento(novaX, this.y) instanceof Arvore) {
 	        	Arvore arv = (Arvore) terreno.getElemento(novaX, this.y);
@@ -324,11 +315,6 @@ public class Competidor extends ElemDinamico {
 		return this.qts_mov;
 	}
 	
-	/**
-	 * Metodo para ver se comeu uma fruta bichada.
-	 * @return	true se comeu a fruta bichada.
-	 * @return false se nao comeu fruta bichada.
-	 */
 	
 	/**
 	 * Metodo especial para consumir a fruta.
@@ -370,6 +356,10 @@ public class Competidor extends ElemDinamico {
 		this.mochila.addFruta(fruta);
 	}
 	
+	/**
+	 * Metodo para saber a força de um jogador
+	 * @return
+	 */
 	public int getForcaDef() {
 		return this.mochila.getSize();
 	}
@@ -385,6 +375,9 @@ public class Competidor extends ElemDinamico {
 		System.out.println("Empurrar " + competidor.nome + " tem " + competidor.mochila.getSize() + " frutas");
 	}
 	
+	/**
+	 * Printa o conteudo da mmochila
+	 */
 	public void exibirMochila() {
 		System.out.println("Conteudo da mochila:");
 		mochila.mostrar();
@@ -423,6 +416,9 @@ public class Competidor extends ElemDinamico {
 	}
 	
 	
+	/**
+	 * Tipo da classe
+	 */
 	@Override
 	public String getTipo() {
 		return "Competidor";

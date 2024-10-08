@@ -9,6 +9,9 @@ import frutas.Abacate;
 			super(x, y, tipoArvore, abacate);
 		}
 		
+		/**
+		 * Metodo que retorna o tipo da Arvore
+		 */
 		public String getTipo() {
 			return "ArvoreAbacate";
 		}

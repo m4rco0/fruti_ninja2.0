@@ -32,19 +32,6 @@ public  class   Terreno {
 			return true;
 		return false;
 	}
-	
-	
-	// funções de inicializar terreno
-	public void colocarGrama() {
-		for (int i = 0; i < this.getDimensao(); i++) {
-			for(int j = 0 ; j < this.getDimensao(); j++) {
-				if(this.posicaoDisponivel(i, j)) {
-					Grama grama = new Grama(i, j);
-					this.inserirElem(i, j, grama);
-				}
-			}
-		}
-	}
 	 
 	/**
      * Adiciona uma árvore em uma posição específica do mapa
@@ -229,8 +216,8 @@ public  class   Terreno {
 		}
 	}
 	/**
-	 * 
-	 * @param mapa
+	 * Metodo para setar um mapa completo
+	 * @param mapa mapa que vai ser inserido
 	 */
 	public void setMapa(Elemento[][] mapa) {
 		this.mapa = mapa;
@@ -256,6 +243,12 @@ public  class   Terreno {
 		else
 			System.out.println("Espaço ja esta ocupado");
 	}
+	/**
+	 * Metodo para pegar um elemento do mapa
+	 * @param x pos 
+	 * @param y pos
+	 * @return Elemento
+	 */
 	public Elemento getElemento(int x, int y) {
 		if((x >= 0 && x < this.getDimensao()) && (y >= 0 && y < this.getDimensao()))
 			return this.getMapa()[x][y];
@@ -285,8 +278,10 @@ public  class   Terreno {
 		}
 		return null;
 	}
+
+	
 	/**
-	 * Insere a fruta no chão do mapa
+	 * 
 	 * @param fruta
 	 * @param x
 	 * @param y
@@ -300,6 +295,11 @@ public  class   Terreno {
 	    return false;
 	}
 
+	
+	/**
+	 * Coloca frutas em posições aleatorias
+	 * @param fruta a fruta que vai no chãos
+	 */
 	public void colocarFruta(Frutas fruta) {
 		Random rand = new Random();
 		int x = rand.nextInt(this.getDimensao());
@@ -311,7 +311,16 @@ public  class   Terreno {
 		this.inserirElem(x, y, fruta);
 	}
 	
-	public void gerarFrutas(int qtsMaracuja, int qtsLaranja, int qtsAbacate, int qtsCoco, int qtsAmora, int qtsAcerola) {
+	/**
+	 * Metodo geradore de frutas no chão, gera todos os tipos de frutas e coloca cada uma em uma posição aleatoria no mapa.
+	 * @param qtsMaracuja
+	 * @param qtsLaranja
+	 * @param qtsAbacate
+	 * @param qtsCoco
+	 * @param qtsAmora
+	 * @param qtsAcerola
+	 */
+	public void gerarFrutas(int qtsMaracuja, int qtsLaranja, int qtsAbacate, int qtsCoco, int qtsAmora, int qtsAcerola, int qtsGoiaba) {
 		for(int i = 0; i < qtsMaracuja; i++) {
 			Maracuja fruta = new Maracuja(0,0, false);
 			this.colocarFruta(fruta);
@@ -334,6 +343,10 @@ public  class   Terreno {
 		}
 		for(int i = 0; i < qtsLaranja; i++) {
 			Laranja fruta = new Laranja(0,0,false);
+			this.colocarFruta(fruta);
+		}
+		for(int i = 0; i < qtsGoiaba; i++) {
+			Goiaba fruta = new Goiaba(0,0,false);
 			this.colocarFruta(fruta);
 		}
 	}

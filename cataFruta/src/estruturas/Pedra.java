@@ -9,6 +9,10 @@ public class Pedra  extends ElemEstaticos{
 		super(x,y);
 	}
 	
+	/**
+	 * Retorna o tipo de pedra
+	 * @return "Pedra"
+	 */
 	public String getTipo() {
 		return "Pedra";
 	}

@@ -1,6 +1,5 @@
 package cataFruta;
 import competidor.*;
-import estruturas.*;
 import terreno.*;
 import java.util.Random;
 import java.util.Scanner;
@@ -64,12 +63,12 @@ MeuJogo {
 	private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba, double bichada) {
 		terreno.colocarPedras(qtsPedras);
 		terreno.adicionarArvores(qtsArvMaracuja, arvoreLaranja, arvoreAbacate, arvCoco, arvAcerola, arvAmora, arvGoiaba);
-		terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola);
-		terreno.colocarGrama();
+		terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola, goiaba);
 	}
 	
 	/**
 	 * Metodo que cria os jogadores e colocam em posições aleatorias do mapa
+	 * @param capacidadeMochila o tamanho da mochila.
 	 */
 	private void inicializarCompetidores(int capacidadeMochila) {
 		Random num = new Random();
@@ -173,6 +172,9 @@ MeuJogo {
 			exibirTerreno();
 		}
 	}
+	/**
+	 * Printa o terreno todo
+	 */
 	private void exibirTerreno() {
         terreno.exibirMapa();
     }

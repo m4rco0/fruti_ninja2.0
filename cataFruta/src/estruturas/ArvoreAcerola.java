@@ -10,6 +10,9 @@ public class ArvoreAcerola extends Arvore{
 		super(x, y, tipoArvore, acerola);
 	}
 	
+	/**
+	 * Metodo que retorna o tipo da Arvore
+	 */
 	public String getTipo() {
 		return "ArvoreAmora";
 	}

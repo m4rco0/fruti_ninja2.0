@@ -1,4 +1,4 @@
-package interfaceJogo;
+package cataFruta.interfaceJogo;
 
 import javax.swing.*;
 import java.awt.*;
