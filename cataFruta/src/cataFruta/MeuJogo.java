@@ -119,10 +119,6 @@ MeuJogo {
 		scanner.close();
 	}
 	
-	public static void main(String[] args) {
-		MeuJogo jogo = new MeuJogo(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10);
-		jogo.iniciarJogo();
-	}
 	/**
 	 * Metodo que olha se o competidor ganhou ou não apos a sua jogadar acabar
 	 * @param competidor - competidor que pode ser oganhador

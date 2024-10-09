@@ -12,7 +12,7 @@ import terreno.Terreno;
 import arquivos.*;
 public class JogoFrame extends JFrame {
     //private MeuJogo jogo;
-    private terreno.Terreno terreno = new Terreno(5);
+    private terreno.Terreno terreno;
     
     public JogoFrame() {
         setTitle("Cata Fruta");
@@ -33,6 +33,7 @@ public class JogoFrame extends JFrame {
 
     private void initUI() {
     	LerArq arq = new LerArq();
+    	this.terreno = new Terreno(arq.getDimensao());
         this.inicilizarTerreno(arq.getPedras(),arq.getQuantidadeArvores("maracuja"), arq.getQuantidadeFrutas("maracuja"),arq.getQuantidadeArvores("laranja"),arq.getQuantidadeFrutas("laranja"), arq.getQuantidadeArvores("abacate"), arq.getQuantidadeFrutas("abacate"), arq.getQuantidadeArvores("coco"), arq.getQuantidadeFrutas("coco"), arq.getQuantidadeArvores("acerola"), arq.getQuantidadeFrutas("acerola"), arq.getQuantidadeArvores("amora"), arq.getQuantidadeFrutas("amora"), arq.getQuantidadeArvores("goiaba"), arq.getQuantidadeFrutas("goiaba"));
 
         JPanel mainPanel = new JPanel();

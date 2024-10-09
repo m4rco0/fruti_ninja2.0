@@ -17,8 +17,12 @@ public  class   Terreno {
 	 * @param dimensao - dimensão do mapa que vai ser gerado
 	 */
 	public Terreno(int dimensao) {
-		this.dimensao = dimensao;
-		this.setMapa(new Elemento[dimensao][dimensao]);
+		if(dimensao > 3) {
+			this.dimensao = dimensao;
+			this.setMapa(new Elemento[dimensao][dimensao]);
+		} else {
+			System.out.println("Erro falta dimensao menor que 3");
+		}
 	}
 
 	/**
