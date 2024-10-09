@@ -310,8 +310,7 @@ public  class   Terreno {
 		int y = rand.nextInt(this.getDimensao());
 		while(!this.posicaoDisponivel(x, y)) {
 			x = rand.nextInt(this.getDimensao());
-			y = rand.nextInt(this.getDimensao());
-		}
+			y = rand.nextInt(this.getDimensao());}
 		this.inserirElem(x, y, fruta);
 	}
 	

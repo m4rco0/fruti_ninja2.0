@@ -26,27 +26,44 @@ public class TerrenoPanel extends JPanel {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 String label = "";
+
+                // Check if the tile has a map element
                 if (this.terreno.hasMapa(row, col)) {
                     if (this.terreno.getMapa()[row][col] instanceof competidor.Competidor) {
                         competidor.Competidor c = (competidor.Competidor) this.terreno.getMapa()[row][col];
-                        System.out.println(c.getNome());
                         label = c.getNome();
-                    } else if(this.terreno.getMapa()[row][col] instanceof cataFruta.Elemento) {
+
+                        // Set tile color to white and text color to black
+                        g.setColor(Color.WHITE);  // Tile color
+                        g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
+                        g.setColor(Color.BLACK);  // Text color
+                    } else if (this.terreno.getMapa()[row][col] instanceof cataFruta.Elemento) {
                         label = this.terreno.getMapa()[row][col].getTipo();
-                        System.out.println(label);
+
+                        // Set tile color to white and text color to black
+                        g.setColor(Color.WHITE);  // Tile color
+                        g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
+                        g.setColor(Color.BLACK);  // Text color
                     }
-
-                    // Draw the label in the center of the tile
-//                    g.fil/**/lRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw each rectangle
-
+                } else {
+                    // This tile represents GRAMA
+                    label = "GRAMA";
+                    g.setColor(Color.GREEN);  // Tile color
+                    g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
+                    g.setColor(Color.BLACK);  // Text color
                 }
+
+                // Draw the label in the center of the tile
                 FontMetrics fm = g.getFontMetrics();
                 int textWidth = fm.stringWidth(label);
                 int textHeight = fm.getAscent();
                 int x = col * tileWidth + (tileWidth - textWidth) / 2;  // Center the text horizontally
                 int y = row * tileHeight + (tileHeight + textHeight) / 2;  // Center the text vertically
                 g.drawString(label, x, y);  // Draw the text on the tile
-//                g.setColor(Color.WHITE);  // Alternate between white...
+
+                // Draw the border around the tile
+                g.setColor(Color.BLACK);  // Set border color to black
+                g.drawRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight);  // Draw the border
             }
         }
     }
