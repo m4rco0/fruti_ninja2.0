@@ -65,9 +65,32 @@ public class JogoFrame extends JFrame {
      * Configura os componentes visuais como o painel do terreno e os botões de controle.
      */
     private void initUI() {
-    	LerArq arq = new LerArq();
-    	this.terreno = new Terreno(arq.getDimensao());
-//        this.inicilizarTerreno(5, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        // Exibir menu de seleção para Novo Jogo ou Carregar Jogo
+        String[] options = {"Novo Jogo", "Carregar Jogo"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Selecione uma opção",
+                "Menu",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        // Verificar a escolha do usuário
+        if (choice == 0) {
+            System.out.println("Novo Jogo selecionado");
+            // Aqui você pode adicionar a lógica para iniciar um novo jogo
+        } else if (choice == 1) {
+            System.out.println("Carregar Jogo selecionado");
+            // Aqui você pode adicionar a lógica para carregar um jogo salvo
+        }
+
+        // Continuação da inicialização do jogo
+        LerArq arq = new LerArq();
+        this.terreno = new Terreno(arq.getDimensao());
+
         int pedras = arq.getPedras();
         int arvore_maracuja = arq.getQuantidadeArvores("maracuja");
         int frutas_maracuja = arq.getQuantidadeFrutas("maracuja");
@@ -77,28 +100,22 @@ public class JogoFrame extends JFrame {
         int fruta_abacate = arq.getQuantidadeFrutas("abacate");
         int arvore_coco = arq.getQuantidadeArvores("coco");
         int fruta_coco = arq.getQuantidadeFrutas("coco");
+        int arvore_acerola = arq.getQuantidadeArvores("acerola");
+        int fruta_acerola = arq.getQuantidadeFrutas("acerola");
         int arvore_amora = arq.getQuantidadeArvores("amora");
         int fruta_amora = arq.getQuantidadeFrutas("amora");
         int arvore_goiaba = arq.getQuantidadeArvores("goiaba");
         int fruta_goiaba = arq.getQuantidadeFrutas("goiaba");
-        System.out.println("Terreno iniciado");
 
         this.inicilizarTerreno(
                 pedras,
-                arvore_maracuja,
-                frutas_maracuja,
-                arvore_laranja,
-                fruta_laranja,
-                arvore_abacate,
-                fruta_abacate,
-                arvore_coco,
-                fruta_coco,
-                0,
-                0,
-                arvore_amora,
-                fruta_amora,
-                arvore_goiaba,
-                fruta_goiaba
+                arvore_maracuja, frutas_maracuja,
+                arvore_laranja, fruta_laranja,
+                arvore_abacate, fruta_abacate,
+                arvore_coco, fruta_coco,
+                arvore_acerola, fruta_acerola,
+                arvore_amora, fruta_amora,
+                arvore_goiaba, fruta_goiaba
         );
 
         JPanel mainPanel = new JPanel();
