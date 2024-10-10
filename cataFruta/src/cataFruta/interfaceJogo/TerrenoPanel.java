@@ -22,6 +22,7 @@ public class TerrenoPanel extends JPanel {
         super.paintComponent(g);
         int tileWidth = getWidth() / cols;  // Calculate the width of each tile
         int tileHeight = getHeight() / rows;  // Calculate the height of each tile
+        boolean foundComp1 = false;
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -32,11 +33,16 @@ public class TerrenoPanel extends JPanel {
                     if (this.terreno.getMapa()[row][col] instanceof competidor.Competidor) {
                         competidor.Competidor c = (competidor.Competidor) this.terreno.getMapa()[row][col];
                         label = c.getNome();
-
-                        // Set tile color to white and text color to black
-                        g.setColor(Color.WHITE);  // Tile color
-                        g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
-                        g.setColor(Color.BLACK);  // Text color
+                        if (foundComp1) {
+                            g.setColor(Color.BLUE);  // Tile color
+                            g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
+                            g.setColor(Color.BLACK);  // Text color
+                        } else {
+                            g.setColor(Color.RED);  // Tile color
+                            g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
+                            g.setColor(Color.BLACK);  // Text color
+                            foundComp1 = true;
+                        }
                     } else if (this.terreno.getMapa()[row][col] instanceof cataFruta.Elemento) {
                         label = this.terreno.getMapa()[row][col].getTipo();
 

@@ -1,4 +1,5 @@
 package terreno;
+import cataFruta.Elemento;
 import estruturas.*;
 import frutas.*;
 import java.util.Random;
@@ -246,6 +247,10 @@ public  class   Terreno {
 			this.mapa[x][y] = elem;
 		else
 			System.out.println("Espaço ja esta ocupado");
+	}
+
+	public void inserirCompetidor(int x, int y, Elemento competidor) {
+		this.mapa[x][y] = competidor;
 	}
 	/**
 	 * Metodo para pegar um elemento do mapa

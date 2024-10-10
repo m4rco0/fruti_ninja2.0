@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 import cataFruta.MeuJogo;
+import competidor.Competidor;
 import terreno.Terreno;
 import arquivos.*;
 /**
@@ -20,6 +21,9 @@ public class JogoFrame extends JFrame {
      * Utilizado para representar o estado e os elementos do jogo, como frutas, árvores e pedras.
      */
     private terreno.Terreno terreno;
+    private competidor.Competidor competidor1;
+    private competidor.Competidor competidor2;
+
     /**
      * Construtor da classe JogoFrame.
      * Inicializa a interface gráfica do jogo, configurando o tamanho da janela, título, e preparando o terreno.
@@ -54,11 +58,8 @@ public class JogoFrame extends JFrame {
 
     private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja, int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora, int arvGoiaba, int goiaba) {
         terreno.colocarPedras(qtsPedras);
-        System.out.println("Pedras colocadas");
         terreno.adicionarArvores(qtsArvMaracuja, arvoreLaranja, arvoreAbacate, arvCoco, arvAcerola, arvAmora, arvGoiaba);
-        System.out.println("Arvores adicionadas");
         terreno.gerarFrutas(maracuja, laranja, abacate, coco, Amora, acerola, goiaba);
-        System.out.println("Frutas geradas");
     }
     /**
      * Metodo responsável por inicializar a interface gráfica do jogo.
@@ -78,45 +79,108 @@ public class JogoFrame extends JFrame {
                 options[0]
         );
 
+        Random num = new Random();
         // Verificar a escolha do usuário
         if (choice == 0) {
             System.out.println("Novo Jogo selecionado");
-            // Aqui você pode adicionar a lógica para iniciar um novo jogo
+            int dimensao = 0;
+            //validação do tamanho do terreno
+            while (dimensao < 3) {
+                String input = JOptionPane.showInputDialog("Digite a dimensão do terreno: ");
+                try {
+                    dimensao = Integer.parseInt(input);
+                    if (dimensao < 3) {
+                        JOptionPane.showMessageDialog(null, "A dimensão deve ser maior ou igual a 3. Tente novamente.");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Por favor, insira um número válido.");
+                }
+            }
+            this.terreno = new Terreno(dimensao);
+
+            int qtsPedras = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Pedras:"));
+            int qtsArvMaracuja = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Árvores de Maracujá:"));
+            int maracuja = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Maracujá:"));
+            int arvoreLaranja = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Árvores de Laranja:"));
+            int laranja = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Laranja:"));
+            int arvoreAbacate = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Árvores de Abacate:"));
+            int abacate = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Abacate:"));
+            int arvCoco = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Coqueiros:"));
+            int coco = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Cocos:"));
+            int arvAcerola = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Árvores de Acerola:"));
+            int acerola = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Acerola:"));
+            int arvAmora = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Amoreiras:"));
+            int amora = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Amora:"));
+            int arvGoiaba = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Goiabeiras:"));
+            int goiaba = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Goiaba:"));
+
+            this.inicilizarTerreno(
+                    qtsPedras,
+                    qtsArvMaracuja, maracuja,
+                    arvoreLaranja, laranja,
+                    arvoreAbacate, abacate,
+                    arvCoco, coco,
+                    arvAcerola, acerola,
+                    arvAmora, amora,
+                    arvGoiaba, goiaba
+            );
+
+            String nomeCompetidor1 = JOptionPane.showInputDialog("Digite o nome do Competidor 1:");
+            String nomeCompetidor2 = JOptionPane.showInputDialog("Digite o nome do Competidor 2:");
+
+            competidor1 = new Competidor(nomeCompetidor1, num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+            competidor2 = new Competidor(nomeCompetidor2, num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+            terreno.inserirCompetidor(competidor1.getX(), competidor1.getY(), competidor1);
+            terreno.inserirCompetidor(competidor2.getX(), competidor2.getY(), competidor2);
+
+            System.out.printf("Competidor 1: %d, %d\n", competidor1.getX(), competidor1.getY());
+            System.out.printf("Competidor 2: %d, %d\n", competidor2.getX(), competidor2.getY());
+
         } else if (choice == 1) {
             System.out.println("Carregar Jogo selecionado");
-            // Aqui você pode adicionar a lógica para carregar um jogo salvo
+            //Carregando o arquivo
+            LerArq arq = new LerArq();
+            this.terreno = new Terreno(arq.getDimensao());
+
+            int pedras = arq.getPedras();
+            int arvore_maracuja = arq.getQuantidadeArvores("maracuja");
+            int frutas_maracuja = arq.getQuantidadeFrutas("maracuja");
+            int arvore_laranja = arq.getQuantidadeArvores("laranja");
+            int fruta_laranja = arq.getQuantidadeFrutas("laranja");
+            int arvore_abacate = arq.getQuantidadeArvores("abacate");
+            int fruta_abacate = arq.getQuantidadeFrutas("abacate");
+            int arvore_coco = arq.getQuantidadeArvores("coco");
+            int fruta_coco = arq.getQuantidadeFrutas("coco");
+            int arvore_acerola = arq.getQuantidadeArvores("acerola");
+            int fruta_acerola = arq.getQuantidadeFrutas("acerola");
+            int arvore_amora = arq.getQuantidadeArvores("amora");
+            int fruta_amora = arq.getQuantidadeFrutas("amora");
+            int arvore_goiaba = arq.getQuantidadeArvores("goiaba");
+            int fruta_goiaba = arq.getQuantidadeFrutas("goiaba");
+
+            this.inicilizarTerreno(
+                    pedras,
+                    arvore_maracuja, frutas_maracuja,
+                    arvore_laranja, fruta_laranja,
+                    arvore_abacate, fruta_abacate,
+                    arvore_coco, fruta_coco,
+                    arvore_acerola, fruta_acerola,
+                    arvore_amora, fruta_amora,
+                    arvore_goiaba, fruta_goiaba
+            );
+
+            String nomeCompetidor1 = JOptionPane.showInputDialog("Digite o nome do Competidor 1:");
+            String nomeCompetidor2 = JOptionPane.showInputDialog("Digite o nome do Competidor 2:");
+
+            competidor1 = new Competidor(nomeCompetidor1, num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+            competidor2 = new Competidor(nomeCompetidor2, num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+            terreno.inserirCompetidor(competidor1.getX(), competidor1.getY(), competidor1);
+            terreno.inserirCompetidor(competidor2.getX(), competidor2.getY(), competidor2);
+
+            System.out.printf("Competidor 1: %d, %d\n", competidor1.getX(), competidor1.getY());
+            System.out.printf("Competidor 2: %d, %d\n", competidor2.getX(), competidor2.getY());
+
         }
-
-        // Continuação da inicialização do jogo
-        LerArq arq = new LerArq();
-        this.terreno = new Terreno(arq.getDimensao());
-
-        int pedras = arq.getPedras();
-        int arvore_maracuja = arq.getQuantidadeArvores("maracuja");
-        int frutas_maracuja = arq.getQuantidadeFrutas("maracuja");
-        int arvore_laranja = arq.getQuantidadeArvores("laranja");
-        int fruta_laranja = arq.getQuantidadeFrutas("laranja");
-        int arvore_abacate = arq.getQuantidadeArvores("abacate");
-        int fruta_abacate = arq.getQuantidadeFrutas("abacate");
-        int arvore_coco = arq.getQuantidadeArvores("coco");
-        int fruta_coco = arq.getQuantidadeFrutas("coco");
-        int arvore_acerola = arq.getQuantidadeArvores("acerola");
-        int fruta_acerola = arq.getQuantidadeFrutas("acerola");
-        int arvore_amora = arq.getQuantidadeArvores("amora");
-        int fruta_amora = arq.getQuantidadeFrutas("amora");
-        int arvore_goiaba = arq.getQuantidadeArvores("goiaba");
-        int fruta_goiaba = arq.getQuantidadeFrutas("goiaba");
-
-        this.inicilizarTerreno(
-                pedras,
-                arvore_maracuja, frutas_maracuja,
-                arvore_laranja, fruta_laranja,
-                arvore_abacate, fruta_abacate,
-                arvore_coco, fruta_coco,
-                arvore_acerola, fruta_acerola,
-                arvore_amora, fruta_amora,
-                arvore_goiaba, fruta_goiaba
-        );
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -128,13 +192,6 @@ public class JogoFrame extends JFrame {
 
         TerrenoPanel board = new TerrenoPanel(terreno);
         mainPanel.add(board, BorderLayout.CENTER);
-
-        // Inicia jogo
-        JButton startButton = new JButton("Iniciar Jogo");
-        startButton.addActionListener(e -> {
-            textArea.setText("Jogo iniciado!");
-        });
-        mainPanel.add(startButton, BorderLayout.SOUTH);
 
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
@@ -162,12 +219,11 @@ public class JogoFrame extends JFrame {
         gbc.gridy = 1;
         controlsPanel.add(new JButton("D"), gbc);
 
-        //Adiciona os botões no abaixo no painel
         JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
         parentPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
         parentPanel.add(controlsPanel, BorderLayout.SOUTH);
-        // Adiciona o painel ao painel principal
+
         mainPanel.add(parentPanel, BorderLayout.EAST);
         add(mainPanel, BorderLayout.CENTER);
     }
