@@ -3,8 +3,6 @@ import cataFruta.Elemento;
 import estruturas.*;
 import frutas.*;
 import java.util.Random;
-
-import cataFruta.*;
 import competidor.Competidor;
 import frutas.Frutas;
 /**
@@ -287,23 +285,6 @@ public  class   Terreno {
 		}
 		return null;
 	}
-
-	
-	/**
-	 * 
-	 * @param fruta
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean derrubarFruta(Frutas fruta, int x, int y) {
-	    if (this.posicaoDisponivel(x, y)) {
-	        this.inserirElem(x, y, fruta);
-	        return true;
-	    }
-	    return false;
-	}
-
 	
 	/**
 	 * Coloca frutas em posições aleatorias

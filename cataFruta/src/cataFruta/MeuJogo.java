@@ -4,7 +4,7 @@ import terreno.*;
 import java.util.Random;
 import java.util.Scanner;
 /**
- * Classe main para fazer os rounds do jogo e utilizar as classes de todos os elementos que vão estar no jogo.
+ * Classe usada para testar o jogo sem tem a interface grafica, para ver se estava rodando tudo certo
  * @author marcola.
  * @param args
  */

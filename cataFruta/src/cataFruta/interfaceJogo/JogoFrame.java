@@ -1,10 +1,16 @@
 package cataFruta.interfaceJogo;
-import arquivos.LerArq;
+import arquivos.*;
 import cataFruta.interfaceJogo.TerrenoPanel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import cataFruta.MeuJogo;
@@ -23,6 +29,7 @@ public class JogoFrame extends JFrame {
     private terreno.Terreno terreno;
     private competidor.Competidor competidor1;
     private competidor.Competidor competidor2;
+    private LerArq arq = new LerArq();
 
     /**
      * Construtor da classe JogoFrame.
@@ -97,7 +104,6 @@ public class JogoFrame extends JFrame {
                 }
             }
             this.terreno = new Terreno(dimensao);
-
             int qtsPedras = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Pedras:"));
             int qtsArvMaracuja = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Árvores de Maracujá:"));
             int maracuja = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Maracujá:"));
@@ -113,7 +119,20 @@ public class JogoFrame extends JFrame {
             int amora = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Amora:"));
             int arvGoiaba = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Goiabeiras:"));
             int goiaba = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Frutas de Goiaba:"));
-
+            int tamMochila = Integer.parseInt(JOptionPane.showInputDialog("Qual o tamanho da mochila: "));
+            // Criar o mapa de frutas
+            Map<String, int[]> frutas = new HashMap<>();
+            frutas.put("maracuja", new int[]{qtsArvMaracuja, maracuja});
+            frutas.put("laranja", new int[]{arvoreLaranja, laranja});
+            frutas.put("abacate", new int[]{arvoreAbacate, abacate});
+            frutas.put("coco", new int[]{arvCoco, coco});
+            frutas.put("acerola", new int[]{arvAcerola, acerola});
+            frutas.put("amora", new int[]{arvAmora, amora});
+            frutas.put("goiaba", new int[]{arvGoiaba, goiaba});
+            arq.setDimensao(dimensao);
+            arq.setMochila(tamMochila);
+            arq.setPedras(qtsPedras);
+            arq.setFrutas(frutas);
             this.inicilizarTerreno(
                     qtsPedras,
                     qtsArvMaracuja, maracuja,
@@ -139,9 +158,8 @@ public class JogoFrame extends JFrame {
         } else if (choice == 1) {
             System.out.println("Carregar Jogo selecionado");
             //Carregando o arquivo
-            LerArq arq = new LerArq();
+            arq.lerConfig();
             this.terreno = new Terreno(arq.getDimensao());
-
             int pedras = arq.getPedras();
             int arvore_maracuja = arq.getQuantidadeArvores("maracuja");
             int frutas_maracuja = arq.getQuantidadeFrutas("maracuja");
@@ -157,7 +175,7 @@ public class JogoFrame extends JFrame {
             int fruta_amora = arq.getQuantidadeFrutas("amora");
             int arvore_goiaba = arq.getQuantidadeArvores("goiaba");
             int fruta_goiaba = arq.getQuantidadeFrutas("goiaba");
-
+            
             this.inicilizarTerreno(
                     pedras,
                     arvore_maracuja, frutas_maracuja,
@@ -199,7 +217,17 @@ public class JogoFrame extends JFrame {
         JPanel controlsPanel = new JPanel();
         controlsPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
+        
+        
+        JButton salvarJogoButton = new JButton("Salvar Jogo");
+        
+        salvarJogoButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				salvarConfig();
+			}
+		});
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.fill = GridBagConstraints.NONE;
 
@@ -223,9 +251,14 @@ public class JogoFrame extends JFrame {
         parentPanel.setLayout(new BorderLayout());
         parentPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
         parentPanel.add(controlsPanel, BorderLayout.SOUTH);
-
+        parentPanel.add(salvarJogoButton);
         mainPanel.add(parentPanel, BorderLayout.EAST);
         add(mainPanel, BorderLayout.CENTER);
+    }
+    
+    private void salvarConfig() {
+    	arq.salvarConfig();
+    	arq.exibirConfiguracao();
     }
     /**
      * Metodo main que inicia a interface gráfica do jogo.
@@ -235,7 +268,7 @@ public class JogoFrame extends JFrame {
      */
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {	
             JogoFrame frame = new JogoFrame();
             frame.setVisible(true);
         });

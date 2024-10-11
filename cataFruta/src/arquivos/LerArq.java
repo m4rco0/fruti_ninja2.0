@@ -3,6 +3,7 @@ package arquivos;
 import javax.swing.JFileChooser;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -27,15 +28,6 @@ public class LerArq {
      */
     public LerArq() {
         frutas = new HashMap<>();
-        JFileChooser escolha = new JFileChooser();
-        int responseFile = escolha.showOpenDialog(null);
-        if (responseFile == JFileChooser.APPROVE_OPTION) {
-            File arqSelecionado = escolha.getSelectedFile();
-            System.out.println("Caminho do arquivo aberto = " + arqSelecionado.getAbsolutePath());
-            lerConfig(arqSelecionado);
-        } else {
-            System.out.println("Nenhum arquivo selecionado");
-        }
     }
 
     /**
@@ -43,47 +35,62 @@ public class LerArq {
      * 
      * @param arq O arquivo de configuração.
      */
-    private void lerConfig(File arq) {
-        try (Scanner sc = new Scanner(arq)) {
-            while (sc.hasNextLine()) {
-                String linha = sc.nextLine().trim();
-                if (linha.isEmpty()) continue;
-                String[] partes = linha.split(" ");
-                if (partes.length < 2) continue;
+    public void lerConfig() {
+        JFileChooser escolha = new JFileChooser();
+        int responseFile = escolha.showOpenDialog(null);
+        if (responseFile == JFileChooser.APPROVE_OPTION) {
+            File arq = escolha.getSelectedFile();
+            System.out.println("Caminho do arquivo aberto = " + arq.getAbsolutePath());
+            try (Scanner sc = new Scanner(arq)) {
+                while (sc.hasNextLine()) {
+                    String linha = sc.nextLine().trim();
+                    if (linha.isEmpty()) continue;
+                    String[] partes = linha.split(" ");
+                    
+                    if (partes.length < 2) continue;
 
-                switch (partes[0].toLowerCase()) {
-                    case "dimensao":
-                        this.dimensao = Integer.parseInt(partes[1]);
-                        break;
-                    case "pedras":
-                        this.pedras = Integer.parseInt(partes[1]);
-                        break;
-                    case "bichadas":
-                        this.bichadas = Integer.parseInt(partes[1]);
-                        break;
-                    case "mochila":
-                        this.mochila = Integer.parseInt(partes[1]);
-                        break;
-                    default:
-                        if (partes.length == 3) {
-                            String fruta = partes[0];
-                            int arv = Integer.parseInt(partes[1]);
-                            int fruto = Integer.parseInt(partes[2]);
-                            this.frutas.put(fruta, new int[]{arv, fruto});
+                    try {
+                        switch (partes[0].toLowerCase()) {
+                            case "dimensao":
+                                this.dimensao = Integer.parseInt(partes[1]);
+                                break;
+                            case "pedras":
+                                this.pedras = Integer.parseInt(partes[1]);
+                                break;
+                            case "bichadas":
+                                this.bichadas = Integer.parseInt(partes[1]);
+                                break;
+                            case "mochila":
+                                this.mochila = Integer.parseInt(partes[1]);
+                                break;
+                            default:
+                                if (partes.length == 3) {
+                                	System.out.println(partes[0]);
+                                    String fruta = partes[0].toLowerCase();
+                                    System.out.println(partes[1]);
+                                    int arv = Integer.parseInt(partes[1]);
+                                    System.out.println(partes[2]);
+                                    int fruto = Integer.parseInt(partes[2]);
+                                    this.frutas.put(fruta, new int[]{arv, fruto});
+                                }
+                                break;
                         }
-                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Erro ao ler número em linha: " + linha);
+                    }
                 }
-            }
-            exibirConfiguracao();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+                exibirConfiguracao();
+            } catch (FileNotFoundException e) {
+                System.out.println("Arquivo não encontrado: " + e.getMessage());
+            } 
+        } else {
+            System.out.println("Nenhum arquivo selecionado");
         }
     }
-
     /**
      * Exibe a configuração lida do arquivo.
      */
-    private void exibirConfiguracao() {
+    public void exibirConfiguracao() {
         System.out.println("Configurações lidas do arquivo:");
         System.out.println("Dimensão: " + this.dimensao);
         System.out.println("Pedras: " + this.pedras);
@@ -94,14 +101,32 @@ public class LerArq {
         System.out.println("Frutas bichadas: " + bichadas + "%");
         System.out.println("Capacidade da mochila: " + mochila);
     }
-
+    
+    /**
+     * Metodo apra salvar a configuração do mapa em um arquivo
+     * @param arq - arquivo em que vai ser salvo as configurações
+     */
+    public void salvarConfig() {
+    	try (FileWriter writer = new FileWriter("terrenoConfig.txt")){
+    		writer.write("dimensao " + this.dimensao + "\n");
+    		writer.write("pedras " + this.pedras + "\n");
+    		for(Map.Entry<String, int[]> entry : frutas.entrySet()) {
+    			writer.write(entry.getKey() + " " + entry.getValue()[0] + " " + entry.getValue()[1] + "\n");
+    		}
+    		writer.write("bichada " + this.bichadas + "\n");
+    		writer.write("mochila " + this.mochila + "\n");
+    		System.out.println("Configurações salvas");
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
     /**
      * Obtém a dimensão da floresta.
      * 
      * @return A dimensão da floresta.
      */
     public int getDimensao() {
-        return dimensao;
+        return this.dimensao;
     }
 
     /**
@@ -119,7 +144,7 @@ public class LerArq {
      * @return A quantidade de pedras.
      */
     public int getPedras() {
-        return pedras;
+        return this.pedras;
     }
 
     /**
@@ -137,7 +162,7 @@ public class LerArq {
      * @return A porcentagem de frutas bichadas.
      */
     public int getBichadas() {
-        return bichadas;
+        return this.bichadas;
     }
 
     /**
@@ -155,7 +180,7 @@ public class LerArq {
      * @return A capacidade da mochila.
      */
     public int getMochila() {
-        return mochila;
+        return this.mochila;
     }
 
     /**
@@ -173,7 +198,7 @@ public class LerArq {
      * @return O mapa de frutas.
      */
     public Map<String, int[]> getFrutas() {
-        return frutas;
+        return this.frutas;
     }
 
     /**
@@ -214,13 +239,8 @@ public class LerArq {
      * @return A quantidade de frutas, ou 0 se a fruta não existir.
      */
     public int getQuantidadeFrutas(String fruta) {
-        int[] valores = frutas.get(fruta);
+        int[] valores = this.frutas.get(fruta);
         return valores != null ? valores[1] : 0;
     }
-
-    /**
-     * Método principal para execução do programa.
-     * 
-     * @param args Argumentos da linha de comando.
-     */
+    
 }
