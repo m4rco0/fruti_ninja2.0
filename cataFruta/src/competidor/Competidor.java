@@ -42,7 +42,7 @@ public class Competidor extends ElemDinamico {
 		this.qts_mov = qts_mov;
 		this.roundParado = 0;
 		this.mochila = new Mochila(capacidadeMochila);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja/cataFruta/sprites/playerr.png").getImage();
+		imagem = new ImageIcon("cataFruta/sprites/playerr.png").getImage();
 	}
 	
 	public Image getImg() {
