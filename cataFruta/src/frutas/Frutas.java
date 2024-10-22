@@ -1,5 +1,7 @@
 package frutas;
 
+import java.awt.Image;
+
 import cataFruta.ElemDinamico;
 
 /**
@@ -8,7 +10,6 @@ import cataFruta.ElemDinamico;
 public abstract class  Frutas extends ElemDinamico {
 	private boolean bichada;
 	private int pontos;
-		
 	/**
 	 * Constructor das Frutas 
 	 * @param x A posicao inicial x da fruta
@@ -21,7 +22,6 @@ public abstract class  Frutas extends ElemDinamico {
 		this.bichada = bichada;
 		this.pontos = pontos;
 	}
-	
 	/**
 	 * Obtém a quantidade de pontos que esta fruta vale.
 	 * 
@@ -42,12 +42,13 @@ public abstract class  Frutas extends ElemDinamico {
 	public boolean isBichada() {
 		return this.bichada;
 	}
-	
 	/**
 	 * Método abstrato que deve ser implementado pelas subclasses para retornar o tipo da fruta.
 	 * 
 	 * @return Uma strisng indicando o tipo da fruta.
 	 */
+	
+	public abstract  Image getImg();
 	@Override
 	public abstract String getTipo();
 }

@@ -3,8 +3,10 @@ import cataFruta.*;
 import estruturas.*;
 import frutas.Frutas;
 import terreno.Terreno;
-import java.lang.Math;
-import java.util.Random;
+
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 /**
  * Classe que representa um Competidor no jogo. um elemento dinâmico que pode se mover e interagir
  * com outros elementos do jogo. Cada competidor possui um nome, forca, capacidade maximo de uma mochila, altura e largura.
@@ -12,6 +14,8 @@ import java.util.Random;
  * @author Marco Antonio da Silva Santos
  */
 public class Competidor extends ElemDinamico {
+	private Image imagem;
+	int dx, dy;
 	private String nome;
 	private int forca;
 	private int capacidadeMochila;
@@ -38,6 +42,11 @@ public class Competidor extends ElemDinamico {
 		this.qts_mov = qts_mov;
 		this.roundParado = 0;
 		this.mochila = new Mochila(capacidadeMochila);
+		imagem = new ImageIcon("/home/marco/git/fruti_ninja/cataFruta/sprites/playerr.png").getImage();
+	}
+	
+	public Image getImg() {
+		return this.imagem;
 	}
 	/**
 	 * Obtém o nome do competidor.
@@ -59,7 +68,7 @@ public class Competidor extends ElemDinamico {
 	 * @param terreno
 	 */
 	public void moverDireita(Terreno terreno) {
-	    int novaY = this.y + 1;
+	    dy = this.y + 1;
 	    
 	    if(this.roundParado > 0) {
 	    	System.out.println(this.nome + " está parado embaixo de uma árvore por mais " + this.roundParado + " rounds.");
@@ -67,15 +76,15 @@ public class Competidor extends ElemDinamico {
 	    }
 	    
 	    // Verifica se a posição novaY está dentro dos limites do terreno
-	    if (novaY < terreno.getDimensao()) {
-	        if (terreno.getElemento(this.x, novaY) == null) {
+	    if (dy < terreno.getDimensao()) {
+	        if (terreno.getElemento(this.x, dy) == null) {
 	        	terreno.removerElem(this.x,this.y);
-	            terreno.inserirElem(this.x, novaY, this);
-	            this.setPos(this.x, novaY);
-	        } else if (terreno.getElemento(this.x, novaY) instanceof Competidor) {
-	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, novaY); 
-	            this.empurrao(empurrado, this.x, novaY, terreno);
-	        } else if (terreno.getElemento(this.x, novaY) instanceof Pedra) {
+	            terreno.inserirElem(this.x, dy, this);
+	            this.setPos(this.x, dy);
+	        } else if (terreno.getElemento(this.x, dy) instanceof Competidor) {
+	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, dy); 
+	            this.empurrao(empurrado, this.x, dy, terreno);
+	        } else if (terreno.getElemento(this.x, dy) instanceof Pedra) {
 	            int puloY = this.y + 2;
 
 	            // Verifica se a posição puloY está dentro dos limites do terreno
@@ -87,11 +96,11 @@ public class Competidor extends ElemDinamico {
 	                terreno.inserirElem(this.x, puloY, this);
 	                this.setPos(this.x, puloY);
 	            }
-	        } else if (terreno.getElemento(this.x, novaY) instanceof Arvore) {
-	        	Arvore arv = (Arvore) terreno.getElemento(this.x, novaY);
+	        } else if (terreno.getElemento(this.x, dy) instanceof Arvore) {
+	        	Arvore arv = (Arvore) terreno.getElemento(this.x, dy);
 	        	this.pegarFrutaArv(arv);
 	        } else if (terreno.getElemento(this.x, this.y+1) instanceof Frutas) {
-	        	Frutas fruta = terreno.pegarFruta(this.x, novaY);
+	        	Frutas fruta = terreno.pegarFruta(this.x, dy);
 	        	if(fruta.getTipo() == "Laranja")
 	        		this.pontos++;
 	        	this.mochila.addFruta(fruta);

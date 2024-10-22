@@ -2,11 +2,15 @@ package cataFruta.interfaceJogo;
 
 import javax.swing.*;
 import java.awt.*;
-
+import competidor.*;
+import frutas.*;
+import estruturas.Pedra;
+import estruturas.*;;
 public class TerrenoPanel extends JPanel {
     private int rows;
     private int cols;
     private terreno.Terreno terreno;
+    private Image backgroundImage;
 
     // Constructor to set up the size of the board (NxM)
     public TerrenoPanel(terreno.Terreno terreno) {
@@ -14,59 +18,48 @@ public class TerrenoPanel extends JPanel {
         this.rows = dim;
         this.cols = dim;
         this.terreno = terreno;
+        this.setBackground(Color.green);
         setPreferredSize(new Dimension(800, 800)); // Set preferred size for the panel
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        
         int tileWidth = getWidth() / cols;  // Calculate the width of each tile
         int tileHeight = getHeight() / rows;  // Calculate the height of each tile
-        boolean foundComp1 = false;
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                String label = "";
+                Image image = null;
 
                 // Check if the tile has a map element
                 if (this.terreno.hasMapa(row, col)) {
-                    if (this.terreno.getMapa()[row][col] instanceof competidor.Competidor) {
-                        competidor.Competidor c = (competidor.Competidor) this.terreno.getMapa()[row][col];
-                        label = c.getNome();
-                        if (foundComp1) {
-                            g.setColor(Color.BLUE);  // Tile color
-                            g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
-                            g.setColor(Color.BLACK);  // Text color
-                        } else {
-                            g.setColor(Color.RED);  // Tile color
-                            g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
-                            g.setColor(Color.BLACK);  // Text color
-                            foundComp1 = true;
-                        }
-                    } else if (this.terreno.getMapa()[row][col] instanceof cataFruta.Elemento) {
-                        label = this.terreno.getMapa()[row][col].getTipo();
+                    Object element = this.terreno.getMapa()[row][col];
+                    if (element instanceof Competidor) {
+                        Competidor c = (Competidor) element;
+                        image = c.getImg();
+                    } else if (element instanceof Pedra) {
+                        Pedra p = (Pedra) element;
+                        image = p.getImg();
+                    } else if (element instanceof Frutas) {
+                        Frutas f =  (Frutas) element;
+                        image = f.getImg();
+                    } else if (element instanceof Arvore) {
+                        Arvore a = (Arvore) element;
+                        image = a.getImg();
+                    }
 
-                        // Set tile color to white and text color to black
-                        g.setColor(Color.WHITE);  // Tile color
-                        g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
-                        g.setColor(Color.BLACK);  // Text color
+                    if (image != null) {
+                        g.drawImage(image, col * tileWidth, row * tileHeight, tileWidth, tileHeight, this);
                     }
                 } else {
                     // This tile represents GRAMA
-                    label = "GRAMA";
-                    g.setColor(Color.GREEN);  // Tile color
+                    g.setColor(getBackground());;  // Tile color
                     g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
-                    g.setColor(Color.BLACK);  // Text color
                 }
-
-                // Draw the label in the center of the tile
-                FontMetrics fm = g.getFontMetrics();
-                int textWidth = fm.stringWidth(label);
-                int textHeight = fm.getAscent();
-                int x = col * tileWidth + (tileWidth - textWidth) / 2;  // Center the text horizontally
-                int y = row * tileHeight + (tileHeight + textHeight) / 2;  // Center the text vertically
-                g.drawString(label, x, y);  // Draw the text on the tile
-
                 // Draw the border around the tile
                 g.setColor(Color.BLACK);  // Set border color to black
                 g.drawRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight);  // Draw the border

@@ -1,5 +1,6 @@
 package frutas;
 
+import java.awt.Image;
 
 public class Coco  extends Frutas{
 	
@@ -12,5 +13,10 @@ public class Coco  extends Frutas{
 	@Override
 	public String getTipo() {
 		return "Coco";
+	}
+	@Override
+	public Image getImg() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package estruturas;
 
+import java.awt.Image;
+
 import frutas.Goiaba;
 /**
  * Classe que cria uma arvore do tipo Goiaba
@@ -13,6 +15,11 @@ public class ArvoreGoiaba extends Arvore{
 	 */
 	public String getTipo() {
 		return "ArvoreGoiaba";
+	}
+	@Override
+	public Image getImg() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

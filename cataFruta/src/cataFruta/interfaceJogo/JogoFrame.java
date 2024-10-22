@@ -1,28 +1,21 @@
 package cataFruta.interfaceJogo;
 import arquivos.*;
-import cataFruta.interfaceJogo.TerrenoPanel;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
-import cataFruta.MeuJogo;
 import competidor.Competidor;
 import terreno.Terreno;
-import arquivos.*;
 /**
  * Classe JogoFrame que cria a interface gráfica do jogo.
  * Responsável por exibir o terreno e permitir que os jogadores façam seus movimentos através de botões.
  */
 public class JogoFrame extends JFrame {
-    /**
+    private static final long serialVersionUID = 1L;
+	/**
      * O terreno do jogo.
      * Utilizado para representar o estado e os elementos do jogo, como frutas, árvores e pedras.
      */
@@ -30,13 +23,15 @@ public class JogoFrame extends JFrame {
     private competidor.Competidor competidor1;
     private competidor.Competidor competidor2;
     private LerArq arq = new LerArq();
+    Thread gameThread;
+    
 
     /**
      * Construtor da classe JogoFrame.
      * Inicializa a interface gráfica do jogo, configurando o tamanho da janela, título, e preparando o terreno.
      */
     public JogoFrame() {
-        setTitle("Cata Fruta");
+        setTitle("Cata Fruta");	
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -85,7 +80,6 @@ public class JogoFrame extends JFrame {
                 options,
                 options[0]
         );
-
         Random num = new Random();
         // Verificar a escolha do usuário
         if (choice == 0) {
@@ -189,9 +183,10 @@ public class JogoFrame extends JFrame {
 
             String nomeCompetidor1 = JOptionPane.showInputDialog("Digite o nome do Competidor 1:");
             String nomeCompetidor2 = JOptionPane.showInputDialog("Digite o nome do Competidor 2:");
-
+            
             competidor1 = new Competidor(nomeCompetidor1, num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
             competidor2 = new Competidor(nomeCompetidor2, num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+            
             terreno.inserirCompetidor(competidor1.getX(), competidor1.getY(), competidor1);
             terreno.inserirCompetidor(competidor2.getX(), competidor2.getY(), competidor2);
 
@@ -266,7 +261,7 @@ public class JogoFrame extends JFrame {
      *
      * @param args Argumentos da linha de comando (não utilizados).
      */
-
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {	
             JogoFrame frame = new JogoFrame();

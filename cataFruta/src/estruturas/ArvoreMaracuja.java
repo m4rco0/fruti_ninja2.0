@@ -1,5 +1,7 @@
 package estruturas;
 
+import java.awt.Image;
+
 import frutas.Maracuja;
 /**
  * CLasse que cria uma arvore do tipo Maracuja.
@@ -13,5 +15,10 @@ public class ArvoreMaracuja extends Arvore{
 	 */
 	public String getTipo() {
 		return "ArvoreMaracuja";
+	}
+	@Override
+	public Image getImg() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

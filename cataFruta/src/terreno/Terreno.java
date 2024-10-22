@@ -4,7 +4,6 @@ import estruturas.*;
 import frutas.*;
 import java.util.Random;
 import competidor.Competidor;
-import frutas.Frutas;
 /**
  * Classe que constroi um terreno para inserir elementos e remover do mapa
  */
@@ -327,7 +326,7 @@ public  class   Terreno {
 			this.colocarFruta(fruta);
 		}
 		for(int i = 0; i < qtsAmora; i++) {
-			Maracuja fruta = new Maracuja(0,0, false);
+			Amora fruta = new Amora(0,0, false);
 			this.colocarFruta(fruta);
 		}
 		for(int i = 0; i < qtsLaranja; i++) {

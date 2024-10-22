@@ -1,5 +1,7 @@
 package estruturas;
 
+import java.awt.Image;
+
 import frutas.Abacate;
 	/**
 	 * Classe para criar um tipo de arvore de abacate.
@@ -14,5 +16,11 @@ import frutas.Abacate;
 		 */
 		public String getTipo() {
 			return "ArvoreAbacate";
+		}
+
+		@Override
+		public Image getImg() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
