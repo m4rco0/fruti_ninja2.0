@@ -8,7 +8,7 @@ public class Laranja extends Frutas{
 	private Image imagem;
 	public Laranja(int x, int y, boolean bichada) {
 		super(x,y, 0, bichada);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/laranja.png").getImage();
+		imagem = new ImageIcon("cataFruta/sprites/laranja.png").getImage();
 	}
 	/**
 	 * Retorna o tipo da frutas
