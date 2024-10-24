@@ -2,6 +2,8 @@ package cataFruta.interfaceJogo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import competidor.*;
 import frutas.*;
 import estruturas.Pedra;
@@ -10,23 +12,22 @@ public class TerrenoPanel extends JPanel {
     private int rows;
     private int cols;
     private terreno.Terreno terreno;
-    private Image backgroundImage;
 
     // Constructor to set up the size of the board (NxM)
-    public TerrenoPanel(terreno.Terreno terreno) {
+    public TerrenoPanel(terreno.Terreno terreno) { 
+        this.terreno = terreno;
         int dim = terreno.getDimensao();
         this.rows = dim;
         this.cols = dim;
-        this.terreno = terreno;
-        this.setBackground(Color.green);
+        this.setBackground(Color.GREEN);
         setPreferredSize(new Dimension(800, 800)); // Set preferred size for the panel
     }
 
 
-    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+        //Image background = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/grama.png").getImage();
+        //g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         
         int tileWidth = getWidth() / cols;  // Calculate the width of each tile
         int tileHeight = getHeight() / rows;  // Calculate the height of each tile
@@ -51,9 +52,11 @@ public class TerrenoPanel extends JPanel {
                         Arvore a = (Arvore) element;
                         image = a.getImg();
                     }
-
+                    
                     if (image != null) {
-                        g.drawImage(image, col * tileWidth, row * tileHeight, tileWidth, tileHeight, this);
+                    	g.drawImage(image, col * tileWidth, row * tileHeight, tileWidth, tileHeight, this);
+                    } else {
+                    	//g.drawImage(background, col*tileWidth, row * tileHeight,tileWidth, tileHeight, this);
                     }
                 } else {
                     // This tile represents GRAMA

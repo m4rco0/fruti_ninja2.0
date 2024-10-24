@@ -14,7 +14,6 @@ import terreno.Terreno;
  * Responsável por exibir o terreno e permitir que os jogadores façam seus movimentos através de botões.
  */
 public class JogoFrame extends JFrame {
-    private static final long serialVersionUID = 1L;
 	/**
      * O terreno do jogo.
      * Utilizado para representar o estado e os elementos do jogo, como frutas, árvores e pedras.
@@ -228,20 +227,54 @@ public class JogoFrame extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        controlsPanel.add(new JButton("W"), gbc);
+        JButton buttonMovCima =  new JButton("W");
+        
+        buttonMovCima.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		competidor1.moverCima(terreno);
+        		board.repaint();
+        	}
+        });
+        controlsPanel.add(buttonMovCima, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        controlsPanel.add(new JButton("A"), gbc);
+        JButton leftButton = new JButton("A");
+        leftButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				competidor1.moverEsquerda(terreno);
+				board.repaint();
+			}
+		});
+        controlsPanel.add(leftButton, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        controlsPanel.add(new JButton("S"), gbc);
-
+        JButton downButton = new JButton("S");
+        controlsPanel.add(downButton, gbc);
+        downButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				competidor1.moverBaixo(terreno);
+				board.repaint();
+			}
+		});
         gbc.gridx = 2;
         gbc.gridy = 1;
-        controlsPanel.add(new JButton("D"), gbc);
-
+        JButton rightButton = new JButton("D");
+        controlsPanel.add(rightButton, gbc);
+        rightButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				competidor1.moverDireita(terreno);
+				board.repaint();
+			}
+		});
         JPanel parentPanel = new JPanel();
         parentPanel.setLayout(new BorderLayout());
         parentPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
@@ -255,6 +288,9 @@ public class JogoFrame extends JFrame {
     	arq.salvarConfig();
     	arq.exibirConfiguracao();
     }
+    
+    
+    
     /**
      * Metodo main que inicia a interface gráfica do jogo.
      * Cria e exibe a janela principal do jogo usando o SwingUtilities.

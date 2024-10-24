@@ -2,9 +2,12 @@ package frutas;
 
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
 public class Abacate extends Frutas{
+	private Image imagem;
 	public Abacate(int x, int y, boolean bichada) {
 		super(x,y, 0, bichada);
+		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/abacate.png").getImage();
 	}
 
 	/**
@@ -14,9 +17,8 @@ public class Abacate extends Frutas{
 	public String getTipo() {
 		return "Abacate";
 	}
-
 	@Override
 	public Image getImg() {
-		return null;
+		return imagem;
 	}
 }

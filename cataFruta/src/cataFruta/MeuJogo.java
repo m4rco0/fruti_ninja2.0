@@ -72,8 +72,8 @@ MeuJogo {
 	 */
 	private void inicializarCompetidores(int capacidadeMochila) {
 		Random num = new Random();
-		//competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
-		//competidor2 = new Competidor("Competidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
+		competidor1 = new Competidor("Competidor1",num.nextInt(terreno.getDimensao()) , num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
+		competidor2 = new Competidor("Competidor2", num.nextInt(terreno.getDimensao()), num.nextInt(terreno.getDimensao()), capacidadeMochila, num.nextInt(terreno.getDimensao()));
 		terreno.inserirElem(competidor1.getX(), competidor1.getY(), competidor1);
 		terreno.inserirElem(competidor2.getX(), competidor2.getY(), competidor2);
 	}

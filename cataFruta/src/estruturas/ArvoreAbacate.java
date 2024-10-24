@@ -2,13 +2,17 @@ package estruturas;
 
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+
 import frutas.Abacate;
 	/**
 	 * Classe para criar um tipo de arvore de abacate.
 	 */
 	public class ArvoreAbacate extends Arvore{
+		private Image imagem;
 		public ArvoreAbacate(int x, int y, String tipoArvore, Abacate abacate) {
 			super(x, y, tipoArvore, abacate);
+			imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/arvoreAbCATE.png").getImage();
 		}
 		
 		/**
@@ -20,7 +24,7 @@ import frutas.Abacate;
 
 		@Override
 		public Image getImg() {
-			// TODO Auto-generated method stub
-			return null;
+			
+			return imagem;
 		}
 	}

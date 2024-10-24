@@ -30,10 +30,12 @@ public  class   Terreno {
      * @return true se a posição está disponível, false caso contrário
      */
 	public boolean posicaoDisponivel(int x, int y) {
-		if(this.mapa[x][y] == null)
-			return true;
-		return false;
+	    if(x >= 0 && x < this.dimensao && y >= 0 && y < this.dimensao) {
+	        return this.mapa[x][y] == null;
+	    }
+	    return false;
 	}
+
 	 
 	/**
      * Adiciona uma árvore em uma posição específica do mapa

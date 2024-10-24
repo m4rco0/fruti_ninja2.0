@@ -7,6 +7,7 @@ import terreno.Terreno;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.RepaintManager;
 /**
  * Classe que representa um Competidor no jogo. um elemento dinâmico que pode se mover e interagir
  * com outros elementos do jogo. Cada competidor possui um nome, forca, capacidade maximo de uma mochila, altura e largura.
@@ -42,7 +43,7 @@ public class Competidor extends ElemDinamico {
 		this.qts_mov = qts_mov;
 		this.roundParado = 0;
 		this.mochila = new Mochila(capacidadeMochila);
-		imagem = new ImageIcon("cataFruta/sprites/playerr.png").getImage();
+		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
 	}
 	
 	public Image getImg() {
@@ -70,46 +71,19 @@ public class Competidor extends ElemDinamico {
 	public void moverDireita(Terreno terreno) {
 	    dy = this.y + 1;
 	    
-	    if(this.roundParado > 0) {
-	    	System.out.println(this.nome + " está parado embaixo de uma árvore por mais " + this.roundParado + " rounds.");
-	        return;
+	    if(terreno.posicaoDisponivel(x, dy)) {
+	    	terreno.removerElem(x, y);
+	    	terreno.inserirCompetidor(x, dy, this);
+	    	this.setPos(x, dy);
+	    } else if (terreno.getElemento(x, dy) instanceof Pedra) {
+	    	if(qts_mov > 2 && terreno.posicaoDisponivel(x, dy +1)) {
+	    		terreno.removerElem(x, y);
+	    		terreno.inserirCompetidor(x, dy+1, this);
+	    		this.setPos(x, dy+1);
+	    		this.qts_mov -= 2;
+	    	}
 	    }
-	    
-	    // Verifica se a posição novaY está dentro dos limites do terreno
-	    if (dy < terreno.getDimensao()) {
-	        if (terreno.getElemento(this.x, dy) == null) {
-	        	terreno.removerElem(this.x,this.y);
-	            terreno.inserirElem(this.x, dy, this);
-	            this.setPos(this.x, dy);
-	        } else if (terreno.getElemento(this.x, dy) instanceof Competidor) {
-	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, dy); 
-	            this.empurrao(empurrado, this.x, dy, terreno);
-	        } else if (terreno.getElemento(this.x, dy) instanceof Pedra) {
-	            int puloY = this.y + 2;
-
-	            // Verifica se a posição puloY está dentro dos limites do terreno
-	            if (puloY < terreno.getDimensao() && this.qts_mov >= 3 && terreno.getElemento(this.x, puloY) == null ) {
-	                this.qts_mov -= 3;
-	                terreno.removerElem(this.x, this.y);
-	                terreno.removerElem(this.x, puloY);
-	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-	                terreno.inserirElem(this.x, puloY, this);
-	                this.setPos(this.x, puloY);
-	            }
-	        } else if (terreno.getElemento(this.x, dy) instanceof Arvore) {
-	        	Arvore arv = (Arvore) terreno.getElemento(this.x, dy);
-	        	this.pegarFrutaArv(arv);
-	        } else if (terreno.getElemento(this.x, this.y+1) instanceof Frutas) {
-	        	Frutas fruta = terreno.pegarFruta(this.x, dy);
-	        	if(fruta.getTipo() == "Laranja")
-	        		this.pontos++;
-	        	this.mochila.addFruta(fruta);
-	        	terreno.removerElem(this.x, this.y+1);
-	        	terreno.removerElem(this.x, this.y);
-	        	terreno.inserirElem(this.x, this.y+1, this);
-	        	this.setPos(this.x, this.y+1);
-	        }
-	    }
+	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Right.png").getImage();
 	    this.qts_mov -=1;
 	}
 
@@ -126,47 +100,19 @@ public class Competidor extends ElemDinamico {
 	 */
 	public void moverEsquerda(Terreno terreno) {
 	    int novaY = this.y - 1;
-
-	    // Verifica se a posição novaY está dentro dos limites do terreno
-	    if (novaY >= 0) {
-	        if (terreno.getElemento(this.x, novaY) !=null) {
-	            terreno.inserirElem(this.x, novaY, this);
-	            terreno.removerElem(this.x, this.y);
-	            this.setPos(this.x, novaY);
-	        } else if (terreno.getElemento(this.x, novaY) instanceof Competidor) {
-	            Competidor empurrado = (Competidor) terreno.getElemento(this.x, novaY); 
-	            this.empurrao(empurrado, this.x, novaY, terreno);
-	        } else if (terreno.getElemento(this.x, novaY) instanceof Pedra) {
-	            int puloY = this.y - 2;
-
-	            // Verifica se a posição puloY está dentro dos limites do terreno
-	            if (puloY >= 0 && this.qts_mov >= 3 && terreno.getElemento(this.x, puloY) instanceof Grama) {
-	                this.qts_mov -= 3;
-	                terreno.removerElem(this.x, this.y);
-	                terreno.removerElem(this.x, puloY);
-	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-	                terreno.inserirElem(this.x, puloY, this);
-	                this.setPos(this.x, puloY);
-	            }
-	        }else if (terreno.getElemento(this.x, novaY) instanceof Frutas) {
-            	Frutas fruta = terreno.pegarFruta(this.x, novaY);
-            	if(fruta.getTipo() == "Laranja")
-            		this.pontos++;
-	        	this.mochila.addFruta(fruta);
-	        	terreno.removerElem(this.x, this.y);
-	        	terreno.removerElem(this.x, novaY);
-	        	terreno.inserirElem(this.x, novaY, this);
-	        	this.setPos(this.x, novaY);
-	        	
-	        } else if (terreno.getElemento(this.x, novaY) instanceof Arvore) {
-	        	Arvore arv = (Arvore) terreno.getElemento(this.x, novaY);
-	        	this.pegarFrutaArv(arv);
-	        }
+	    
+	    // verificar se n tem nada e colocar o jogadr
+	    if(terreno.posicaoDisponivel(x, novaY)) {
+	    	terreno.removerElem(x, y);
+	    	terreno.inserirCompetidor(x, novaY, this);
+	    	this.setPos(x, novaY);
+	    }
+	    if(terreno.getElemento(x, novaY) instanceof Competidor) {
+	    	this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_LeftShoot01.png").getImage();
 	    }
 	    this.qts_mov--;
+	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Left.png").getImage();
 	}
-
-	
 	/**
 	 * Metodo que recebe o terreno e move o jogador para cima
 	 * verificando as classes do terreno ao lado para mover-se
@@ -179,45 +125,15 @@ public class Competidor extends ElemDinamico {
 	 */
 	public void moverCima(Terreno terreno) {
 	    int novaX = this.x - 1;
-
-	    // Verifica se a posição novaX está dentro dos limites do terreno
-	    if (novaX >= 0) {
-	        if (terreno.getElemento(novaX, this.y) instanceof Grama) {
-	            terreno.removerElem(novaX, this.y);
-	            terreno.inserirElem(novaX, this.y, this);
-	            terreno.removerElem(this.x, this.y);
-	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-	            this.setPos(novaX, this.y);
-	        } else if (terreno.getElemento(novaX, this.y) instanceof Competidor) {
-	            Competidor empurrado = (Competidor) terreno.getElemento(novaX, this.y); 
-	            this.empurrao(empurrado, novaX, this.y, terreno);
-	        } else if (terreno.getElemento(novaX, this.y) instanceof Pedra) {
-	            int puloX = this.x - 2;
-
-	            // Verifica se a posição puloX está dentro dos limites do terreno
-	            if (puloX >= 0 && this.qts_mov >= 3 && terreno.getElemento(puloX, this.y) instanceof Grama) {
-	                this.qts_mov -= 3;
-	                terreno.removerElem(this.x, this.y);
-	                terreno.removerElem(puloX, this.y);
-	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-	                terreno.inserirElem(puloX, this.y, this);
-	                this.setPos(puloX, this.y);
-	            }
-	        }else if (terreno.getElemento(novaX, this.y) instanceof Frutas) {
-	        	Frutas fruta = terreno.pegarFruta(novaX, this.y);
-	        	if(fruta.getTipo() == "Laranja")
-	        		this.pontos++;
-	        	this.mochila.addFruta(fruta);
-	        	terreno.removerElem(novaX, this.y);
-	        	terreno.removerElem(this.x, this.y);
-	        	terreno.inserirElem(novaX, this.y, this);
-	        	this.setPos(novaX, this.y);
-	        } else if (terreno.getElemento(novaX, this.y) instanceof Arvore) {
-	        	Arvore arv = (Arvore) terreno.getElemento(novaX, this.y);
-	        	this.pegarFrutaArv(arv);
-	        }
-	    }
+	    
+	    if(terreno.posicaoDisponivel(novaX, this.getY())) {
+	    	terreno.inserirCompetidor(novaX, this.getY(), this);
+	    	terreno.removerElem(this.x, this.y);
+	    	this.setPos(novaX, this.y);
+	    } 
 	    this.qts_mov--;
+	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Back.png").getImage();
+	   
 	}
 
 	
@@ -233,45 +149,13 @@ public class Competidor extends ElemDinamico {
 	 */
 	public void moverBaixo(Terreno terreno) {
 	    int novaX = this.x + 1;
-
-	    // Verifica se a posição novaX está dentro dos limites do terreno
-	    if (novaX < terreno.getDimensao()) {
-	        if (terreno.getElemento(novaX, this.y) instanceof Grama) {
-	            terreno.removerElem(novaX, this.y);
-	            terreno.inserirElem(novaX, this.y, this);
-	            terreno.removerElem(this.x, this.y);
-	            terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-	            this.setPos(novaX, this.y);
-	        } else if (terreno.getElemento(novaX, this.y) instanceof Competidor) {
-	            Competidor empurrado = (Competidor) terreno.getElemento(novaX, this.y); 
-	            this.empurrao(empurrado, novaX, this.y, terreno);
-	        } else if (terreno.getElemento(novaX, this.y) instanceof Pedra) {
-	            int puloX = this.x + 2;
-
-	            // Verifica se a posição puloX está dentro dos limites do terreno
-	            if (puloX < terreno.getDimensao() && this.qts_mov >= 3 && terreno.getElemento(puloX, this.y) instanceof Grama) {
-	                this.qts_mov -= 3;
-	                terreno.removerElem(this.x, this.y);
-	                terreno.removerElem(puloX, this.y);
-	                terreno.inserirElem(this.x, this.y, new Grama(this.x, this.y));
-	                terreno.inserirElem(puloX, this.y, this);
-	                this.setPos(puloX, this.y);
-	            }
-	        }else if (terreno.getElemento(novaX, this.y) instanceof Frutas) {
-	        	Frutas fruta = terreno.pegarFruta(novaX, this.y);
-	        	this.mochila.addFruta(fruta);
-	        	if(fruta.getTipo() == "Laranja")
-	        		this.pontos++;
-	        	terreno.removerElem(novaX, this.y);
-	        	terreno.removerElem(this.x, this.y);
-	        	terreno.inserirElem(novaX, this.y, this);
-	        	this.setPos(novaX, this.y);
-	        } else if (terreno.getElemento(novaX, this.y) instanceof Arvore) {
-	        	Arvore arv = (Arvore) terreno.getElemento(novaX, this.y);
-	        	this.pegarFrutaArv(arv);
-	        }
+	    if(terreno.posicaoDisponivel(novaX, this.y)) {
+	    	terreno.removerElem(x, y);
+	    	terreno.inserirCompetidor(novaX, y, this);
+	    	this.setPos(novaX, y);
 	    }
 	    this.qts_mov--;
+	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
 	}
 
 	
