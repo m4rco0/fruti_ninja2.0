@@ -107,18 +107,35 @@ public class LerArq {
      * @param arq - arquivo em que vai ser salvo as configurações
      */
     public void salvarConfig() {
-    	try (FileWriter writer = new FileWriter("terrenoConfig.txt")){
-    		writer.write("dimensao " + this.dimensao + "\n");
-    		writer.write("pedras " + this.pedras + "\n");
-    		for(Map.Entry<String, int[]> entry : frutas.entrySet()) {
-    			writer.write(entry.getKey() + " " + entry.getValue()[0] + " " + entry.getValue()[1] + "\n");
-    		}
-    		writer.write("bichada " + this.bichadas + "\n");
-    		writer.write("mochila " + this.mochila + "\n");
-    		System.out.println("Configurações salvas");
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
+        JFileChooser escolha = new JFileChooser();
+        escolha.setDialogTitle("Salvar Configuração"); // Título da janela
+        escolha.setFileSelectionMode(JFileChooser.FILES_ONLY); // Configura para selecionar arquivos
+
+        // Exibe o diálogo de salvar
+        int responseFile = escolha.showSaveDialog(null);
+        if (responseFile == JFileChooser.APPROVE_OPTION) {
+            File arquivoSalvar = escolha.getSelectedFile(); // Obtém o arquivo selecionado
+
+            // Verifica se o arquivo possui a extensão .txt, se não, adiciona
+            if (!arquivoSalvar.getName().endsWith(".txt")) {
+                arquivoSalvar = new File(arquivoSalvar.getAbsolutePath() + ".txt");
+            }
+
+            try (FileWriter writer = new FileWriter(arquivoSalvar)) {
+                writer.write("dimensao " + this.dimensao + "\n");
+                writer.write("pedras " + this.pedras + "\n");
+                for (Map.Entry<String, int[]> entry : frutas.entrySet()) {
+                    writer.write(entry.getKey() + " " + entry.getValue()[0] + " " + entry.getValue()[1] + "\n");
+                }
+                writer.write("bichada " + this.bichadas + "\n");
+                writer.write("mochila " + this.mochila + "\n");
+                System.out.println("Configurações salvas em: " + arquivoSalvar.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Nenhum arquivo selecionado");
+        }
     }
     /**
      * Obtém a dimensão da floresta.

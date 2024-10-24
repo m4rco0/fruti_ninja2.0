@@ -43,7 +43,7 @@ public class Competidor extends ElemDinamico {
 		this.qts_mov = qts_mov;
 		this.roundParado = 0;
 		this.mochila = new Mochila(capacidadeMochila);
-		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
+		this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
 	}
 	
 	public Image getImg() {
@@ -83,7 +83,7 @@ public class Competidor extends ElemDinamico {
 	    		this.qts_mov -= 2;
 	    	}
 	    }
-	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Right.png").getImage();
+	    this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Right.png").getImage();
 	    this.qts_mov -=1;
 	}
 
@@ -108,10 +108,10 @@ public class Competidor extends ElemDinamico {
 	    	this.setPos(x, novaY);
 	    }
 	    if(terreno.getElemento(x, novaY) instanceof Competidor) {
-	    	this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_LeftShoot01.png").getImage();
+	    	this.imagem = new ImageIcon("cataFruta/sprites/player/Player_LeftShoot01.png").getImage();
 	    }
 	    this.qts_mov--;
-	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Left.png").getImage();
+	    this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Left.png").getImage();
 	}
 	/**
 	 * Metodo que recebe o terreno e move o jogador para cima
@@ -132,7 +132,7 @@ public class Competidor extends ElemDinamico {
 	    	this.setPos(novaX, this.y);
 	    } 
 	    this.qts_mov--;
-	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Back.png").getImage();
+	    this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Back.png").getImage();
 	   
 	}
 
@@ -155,7 +155,7 @@ public class Competidor extends ElemDinamico {
 	    	this.setPos(novaX, y);
 	    }
 	    this.qts_mov--;
-	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
+	    this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
 	}
 
 	
