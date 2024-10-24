@@ -1,0 +1,4 @@
+dimensao 0
+pedras 0
+bichada 0
+mochila 0

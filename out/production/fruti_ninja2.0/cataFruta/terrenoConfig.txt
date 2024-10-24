@@ -1,0 +1,11 @@
+dimensao 10
+pedras 10
+abacate 2 3
+acerola 1 2
+maracuja 3 2
+coco 2 1
+amora 1 1
+laranja 2 1
+goiaba 1 1
+bichada 25
+mochila 10

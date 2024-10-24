@@ -1,0 +1,3 @@
+Dimensao:10
+Competidor1:marco,3,7
+Competidor2:andre,0,6
