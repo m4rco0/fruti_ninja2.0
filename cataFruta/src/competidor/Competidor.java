@@ -24,7 +24,7 @@ public class Competidor extends ElemDinamico {
 	private int roundParado;
 	private int qts_mov;
 	private Mochila mochila;
-	
+
 	/**
 	 * Construtor que inicia o competidor com atributos.
 	 * @param nome  - O nome do competidor.
@@ -45,19 +45,89 @@ public class Competidor extends ElemDinamico {
 		this.mochila = new Mochila(capacidadeMochila);
 		this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
 	}
-	
+
 	public Image getImg() {
 		return this.imagem;
 	}
 	/**
 	 * Obtém o nome do competidor.
-	 * 
+	 *
 	 * @return nome
 	 */
 	public String getNome() {
 		return this.nome;
 	}
-	
+
+	/**
+	 * Metodo que recebe o terreno e move o jogador para cima
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para cima
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 *
+	 * @param terreno
+	 */
+	public void moverCima(Terreno terreno) {
+		int novaX = this.x - 1;
+
+		if(terreno.posicaoDisponivel(novaX, this.getY())) {
+			terreno.inserirCompetidor(novaX, this.getY(), this);
+			terreno.removerElem(this.x, this.y);
+			this.setPos(novaX, this.y);
+		}
+		this.qts_mov--;
+		this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Back.png").getImage();
+
+	}
+
+	/**
+	 * Metodo que recebe o terreno e move o jogador para baixo
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para baixo
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 *
+	 * @param terreno
+	 */
+	public void moverBaixo(Terreno terreno) {
+		int novaX = this.x + 1;
+		if(terreno.posicaoDisponivel(novaX, this.y)) {
+			terreno.removerElem(x, y);
+			terreno.inserirCompetidor(novaX, y, this);
+			this.setPos(novaX, y);
+		}
+		this.qts_mov--;
+		this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
+	}
+
+	/**
+	 * Metodo que recebe o terreno e move o jogador para esquerda
+	 * verificando as classes do terreno ao lado para mover-se
+	 * se for uma grama move-se para esquerda
+	 * se for uma pedra perde 3 pontos
+	 * se for uma arvore fica embaixo
+	 * se for um jogador empurra
+	 *
+	 * @param terreno
+	 */
+	public void moverEsquerda(Terreno terreno) {
+		int novaY = this.y - 1;
+
+		// verificar se n tem nada e colocar o jogadr
+		if(terreno.posicaoDisponivel(x, novaY)) {
+			terreno.removerElem(x, y);
+			terreno.inserirCompetidor(x, novaY, this);
+			this.setPos(x, novaY);
+		}
+		if(terreno.getElemento(x, novaY) instanceof Competidor) {
+			this.imagem = new ImageIcon("cataFruta/sprites/player/Player_LeftShoot01.png").getImage();
+		}
+		this.qts_mov--;
+		this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Left.png").getImage();
+	}
+
 	/**
 	 * Metodo que recebe o terreno e move o jogador para direita
 	 * verificando as classes do terreno ao lado para mover-se
@@ -65,12 +135,12 @@ public class Competidor extends ElemDinamico {
 	 * se for uma pedra perde 3 pontos
 	 * se for uma arvore fica embaixo
 	 * se for um jogador empurra
-	 * 
+	 *
 	 * @param terreno
 	 */
 	public void moverDireita(Terreno terreno) {
 	    dy = this.y + 1;
-	    
+
 	    if(terreno.posicaoDisponivel(x, dy)) {
 	    	terreno.removerElem(x, y);
 	    	terreno.inserirCompetidor(x, dy, this);
@@ -87,78 +157,8 @@ public class Competidor extends ElemDinamico {
 	    this.qts_mov -=1;
 	}
 
-	
-	/**
-	 * Metodo que recebe o terreno e move o jogador para esquerda
-	 * verificando as classes do terreno ao lado para mover-se
-	 * se for uma grama move-se para esquerda
-	 * se for uma pedra perde 3 pontos
-	 * se for uma arvore fica embaixo
-	 * se for um jogador empurra
-	 * 
-	 * @param terreno
-	 */
-	public void moverEsquerda(Terreno terreno) {
-	    int novaY = this.y - 1;
-	    
-	    // verificar se n tem nada e colocar o jogadr
-	    if(terreno.posicaoDisponivel(x, novaY)) {
-	    	terreno.removerElem(x, y);
-	    	terreno.inserirCompetidor(x, novaY, this);
-	    	this.setPos(x, novaY);
-	    }
-	    if(terreno.getElemento(x, novaY) instanceof Competidor) {
-	    	this.imagem = new ImageIcon("cataFruta/sprites/player/Player_LeftShoot01.png").getImage();
-	    }
-	    this.qts_mov--;
-	    this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Left.png").getImage();
-	}
-	/**
-	 * Metodo que recebe o terreno e move o jogador para cima
-	 * verificando as classes do terreno ao lado para mover-se
-	 * se for uma grama move-se para cima
-	 * se for uma pedra perde 3 pontos
-	 * se for uma arvore fica embaixo
-	 * se for um jogador empurra
-	 * 
-	 * @param terreno
-	 */
-	public void moverCima(Terreno terreno) {
-	    int novaX = this.x - 1;
-	    
-	    if(terreno.posicaoDisponivel(novaX, this.getY())) {
-	    	terreno.inserirCompetidor(novaX, this.getY(), this);
-	    	terreno.removerElem(this.x, this.y);
-	    	this.setPos(novaX, this.y);
-	    } 
-	    this.qts_mov--;
-	    this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Back.png").getImage();
-	   
-	}
 
-	
-	/**
-	 * Metodo que recebe o terreno e move o jogador para baixo
-	 * verificando as classes do terreno ao lado para mover-se
-	 * se for uma grama move-se para baixo
-	 * se for uma pedra perde 3 pontos
-	 * se for uma arvore fica embaixo
-	 * se for um jogador empurra
-	 * 
-	 * @param terreno
-	 */
-	public void moverBaixo(Terreno terreno) {
-	    int novaX = this.x + 1;
-	    if(terreno.posicaoDisponivel(novaX, this.y)) {
-	    	terreno.removerElem(x, y);
-	    	terreno.inserirCompetidor(novaX, y, this);
-	    	this.setPos(novaX, y);
-	    }
-	    this.qts_mov--;
-	    this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
-	}
 
-	
 	public void exibirFrutas() {
 		this.mochila.mostrar();
 	}
@@ -169,10 +169,10 @@ public class Competidor extends ElemDinamico {
 	public int getForca() {
 		return this.forca;
 	}
-	
+
 	/**
 	 * Obtém a quantidade de items que podem serem armazenados na mochila.
-	 * 
+	 *
 	 * @return A capacidade da mochila.
 	 */
 	public int getCapacidadeMochila() {

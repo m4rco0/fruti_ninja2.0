@@ -230,7 +230,7 @@ public class JogoFrame extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        JButton buttonMovCima =  new JButton("W");
+        JButton buttonMovCima =  new JButton("▲");
         
         buttonMovCima.addActionListener(new ActionListener() {
         	@Override
@@ -243,7 +243,7 @@ public class JogoFrame extends JFrame {
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JButton leftButton = new JButton("A");
+        JButton leftButton = new JButton("◀");
         leftButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -256,7 +256,7 @@ public class JogoFrame extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        JButton downButton = new JButton("S");
+        JButton downButton = new JButton("▼");
         controlsPanel.add(downButton, gbc);
         downButton.addActionListener(new ActionListener() {
 			
@@ -269,7 +269,7 @@ public class JogoFrame extends JFrame {
 		});
         gbc.gridx = 2;
         gbc.gridy = 1;
-        JButton rightButton = new JButton("D");
+        JButton rightButton = new JButton("▶");
         controlsPanel.add(rightButton, gbc);
         rightButton.addActionListener(new ActionListener() {
 			

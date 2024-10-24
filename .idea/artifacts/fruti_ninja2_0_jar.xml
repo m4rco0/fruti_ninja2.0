@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="fruti_ninja2.0:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/fruti_ninja2_0_jar</output-path>
+    <root id="archive" name="fruti_ninja2.0.jar">
+      <element id="module-output" name="fruti_ninja2.0" />
+    </root>
+  </artifact>
+</component>
