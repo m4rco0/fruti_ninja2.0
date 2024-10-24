@@ -21,6 +21,7 @@ public class JogoFrame extends JFrame {
     private terreno.Terreno terreno;
     private competidor.Competidor competidor1;
     private competidor.Competidor competidor2;
+    private int round;
     private LerArq arq = new LerArq();
     Thread gameThread;
     
@@ -30,6 +31,7 @@ public class JogoFrame extends JFrame {
      * Inicializa a interface gráfica do jogo, configurando o tamanho da janela, título, e preparando o terreno.
      */
     public JogoFrame() {
+    	round = 0;
         setTitle("Cata Fruta");	
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -197,16 +199,11 @@ public class JogoFrame extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         getContentPane().setBackground(Color.GREEN);
-
-        JTextArea textArea = new JTextArea();
-        textArea.setEditable(false);
-        mainPanel.add(new JScrollPane(textArea), BorderLayout.CENTER);
-
+        
+        
         TerrenoPanel board = new TerrenoPanel(terreno);
         mainPanel.add(board, BorderLayout.CENTER);
 
-        JPanel controlPanel = new JPanel();
-        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 
         JPanel controlsPanel = new JPanel();
         controlsPanel.setLayout(new GridBagLayout());
@@ -214,14 +211,20 @@ public class JogoFrame extends JFrame {
         
         
         JButton salvarJogoButton = new JButton("Salvar Jogo");
-        
+        salvarJogoButton.setPreferredSize(new Dimension(120,30));
         salvarJogoButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				salvarConfig();
+				JOptionPane.showMessageDialog(null, "Jogo salvo");
 			}
 		});
+        
+        
+
+        JLabel roundLabel = new JLabel("Round " + round);
+        JLabel jogadorLabel = new JLabel("Jogador: " + (round % 2 == 0 ? competidor2.getNome() : competidor1.getNome()));
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.fill = GridBagConstraints.NONE;
 
@@ -261,6 +264,7 @@ public class JogoFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				competidor1.moverBaixo(terreno);
 				board.repaint();
+				
 			}
 		});
         gbc.gridx = 2;
@@ -275,13 +279,39 @@ public class JogoFrame extends JFrame {
 				board.repaint();
 			}
 		});
+       
+     // Criação do painel pai
         JPanel parentPanel = new JPanel();
-        parentPanel.setLayout(new BorderLayout());
-        parentPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
-        parentPanel.add(controlsPanel, BorderLayout.SOUTH);
-        parentPanel.add(salvarJogoButton);
+        parentPanel.setLayout(new BoxLayout(parentPanel, BoxLayout.Y_AXIS)); // Usando BoxLayout para empilhar verticalmente
+
+        // Adicionando o botão "Iniciar Jogo" ao painel pai
+        JButton iniciarJogoButton = new JButton("Iniciar Jogo");
+        iniciarJogoButton.setPreferredSize(new Dimension(120,30));
+        iniciarJogoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Lógica para iniciar o jogo
+                //iniciarJogo();
+            }
+        });
+        
+        parentPanel.add(roundLabel, gbc);
+        parentPanel.add(jogadorLabel, gbc);
+        
+        
+        parentPanel.add(iniciarJogoButton); // Adiciona o botão "Iniciar Jogo"
+
+        // Adicionando um espaço entre os botões, se necessário
+        parentPanel.add(Box.createVerticalStrut(10)); // Cria um espaço de 10 pixels
+        // Adicionando o botão "Salvar Jogo" ao painel pai
+        parentPanel.add(salvarJogoButton); // Adiciona o botão "Salvar Jogo"
+        // Adicionando o painel de controle na parte inferior
+        parentPanel.add(controlsPanel); // Adiciona o painel de controle
+
+        // Adicionando o painel pai ao painel principal
         mainPanel.add(parentPanel, BorderLayout.EAST);
         add(mainPanel, BorderLayout.CENTER);
+
     }
     
     private void salvarConfig() {
@@ -289,7 +319,25 @@ public class JogoFrame extends JFrame {
     	arq.exibirConfiguracao();
     }
     
+    public void iniciarJogo() {
+    	boolean jogoRodando = true;
+    	Random random = new Random();
+    	round = 1;
+    	
+    	while(jogoRodando) {
+    		if (competidor1.getMov() <= 0)
+    			competidor1.setMov(random.nextInt(6) + random.nextInt(6));
+    		if(competidor2.getMov() <= 0) 
+    			competidor2.setMov(random.nextInt(6) + random.nextInt(random.nextInt(6)));
+    		System.out.println("Round " +round);
+    		repaint();
+    		executarRound(competidor1);
+    		
+    	}
+    }
     
+    private void executarRound(Competidor competidor) {
+    }
     
     /**
      * Metodo main que inicia a interface gráfica do jogo.
@@ -303,5 +351,6 @@ public class JogoFrame extends JFrame {
             JogoFrame frame = new JogoFrame();
             frame.setVisible(true);
         });
+        
     }
 }
