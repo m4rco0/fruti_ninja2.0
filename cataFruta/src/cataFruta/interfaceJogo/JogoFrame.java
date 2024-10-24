@@ -332,7 +332,6 @@ public class JogoFrame extends JFrame {
     		System.out.println("Round " +round);
     		repaint();
     		executarRound(competidor1);
-    		
     	}
     }
     
