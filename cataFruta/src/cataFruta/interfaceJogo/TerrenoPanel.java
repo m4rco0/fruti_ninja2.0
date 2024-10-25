@@ -2,14 +2,13 @@ package cataFruta.interfaceJogo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import competidor.*;
 import frutas.*;
 import estruturas.Pedra;
 import estruturas.*;;
 public class TerrenoPanel extends JPanel {
-    private int rows;
+    private static final long serialVersionUID = 1L;
+	private int rows;
     private int cols;
     private terreno.Terreno terreno;
 

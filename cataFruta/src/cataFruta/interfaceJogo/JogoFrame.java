@@ -1,5 +1,6 @@
 package cataFruta.interfaceJogo;
 import arquivos.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import terreno.Terreno;
  * Responsável por exibir o terreno e permitir que os jogadores façam seus movimentos através de botões.
  */
 public class JogoFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
 	/**
      * O terreno do jogo.
      * Utilizado para representar o estado e os elementos do jogo, como frutas, árvores e pedras.
@@ -344,12 +346,4 @@ public class JogoFrame extends JFrame {
      *
      * @param args Argumentos da linha de comando (não utilizados).
      */
-    
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {	
-            JogoFrame frame = new JogoFrame();
-            frame.setVisible(true);
-        });
-        
-    }
 }

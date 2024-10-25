@@ -7,7 +7,6 @@ import terreno.Terreno;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
-import javax.swing.RepaintManager;
 /**
  * Classe que representa um Competidor no jogo. um elemento dinâmico que pode se mover e interagir
  * com outros elementos do jogo. Cada competidor possui um nome, forca, capacidade maximo de uma mochila, altura e largura.

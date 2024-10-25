@@ -6,8 +6,8 @@
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="cataFruta">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="21"/>
-    <property name="source" value="21"/>
+    <property name="target" value="22"/>
+    <property name="source" value="22"/>
     <path id="cataFruta.classpath">
         <pathelement location="bin"/>
     </path>
