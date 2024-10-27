@@ -1,8 +1,6 @@
 package estruturas;
 
 import cataFruta.ElemEstaticos;
-import frutas.Frutas;
-import competidor.Competidor;
 import java.util.ArrayList;
 import java.util.List;
 

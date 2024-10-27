@@ -1,20 +1,28 @@
 package estruturas;
 
 import java.awt.Image;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import frutas.Coco;
+
 /**
  * Classe que cria uma arvore do tipo Coco.
  */
-public class ArvoreCoco extends Arvore{
+public class ArvoreCoco extends Arvore {
 	private Image imagem;
+
 	public ArvoreCoco(int x, int y, String tipoArvore, Coco coco) {
 		super(x, y, tipoArvore, coco);
-		imagem = new ImageIcon("sprites/coqueiro.png").getImage();
+		try {
+			this.imagem = ImageIO.read(getClass().getResource("/sprites/coqueiro.png"));
+		} catch (IOException e) {
+			
+		}
 	}
-	
+
 	/**
 	 * Metodo que retorna o tipo da Arvore
 	 */

@@ -1,13 +1,21 @@
 package frutas;
 
 import java.awt.Image;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-public class Abacate extends Frutas{
+
+public class Abacate extends Frutas {
 	private Image imagem;
+
 	public Abacate(int x, int y, boolean bichada) {
-		super(x,y, 0, bichada);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/abacate.png").getImage();
+		super(x, y, 0, bichada);
+		try {
+			this.imagem = ImageIO.read(getClass().getResource("/sprites/abacate.png"));
+		} catch (IOException e) {
+			
+		}
 	}
 
 	/**
@@ -17,6 +25,7 @@ public class Abacate extends Frutas{
 	public String getTipo() {
 		return "Abacate";
 	}
+
 	@Override
 	public Image getImg() {
 		return imagem;

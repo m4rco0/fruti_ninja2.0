@@ -5,5 +5,5 @@
  *
  */
 module cataFruta {
-    requires java.desktop;
+	requires java.desktop;
 }

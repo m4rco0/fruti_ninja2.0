@@ -18,7 +18,7 @@ import terreno.Terreno;
  * o terreno e permitir que os jogadores façam seus movimentos através de
  * botões.
  */
-public class JogoFrame extends JFrame implements ActionListener{
+public class JogoFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * O terreno do jogo. Utilizado para representar o estado e os elementos do
@@ -317,18 +317,18 @@ public class JogoFrame extends JFrame implements ActionListener{
 		competidorAtual = competidor1;
 		round = 1;
 		updateRoundInfo();
-		
+
 		repaint();
 	}
-	
+
 	private void moveJogador(String direcao) {
-		if(competidorAtual.getPontos() >= 2) {
+		if (competidorAtual.getPontos() >= 2) {
 			JOptionPane.showMessageDialog(null, "Jogodor " + competidorAtual.getNome() + " ganhou!");
 			controles.setVisible(false);
-			return ;
+			return;
 		}
-			
-		if( direcao == "d") {
+
+		if (direcao == "d") {
 			competidorAtual.moverDireita(terreno);
 			repaint();
 			checkTurn();
@@ -336,43 +336,43 @@ public class JogoFrame extends JFrame implements ActionListener{
 			competidorAtual.moverCima(terreno);
 			repaint();
 			checkTurn();
-		} else if ( direcao == "a") {
+		} else if (direcao == "a") {
 			competidorAtual.moverEsquerda(terreno);
 			repaint();
 			checkTurn();
-		} else if ( direcao == "s") {
+		} else if (direcao == "s") {
 			competidorAtual.moverBaixo(terreno);
 			repaint();
 			checkTurn();
 		}
 	}
+
 	private void checkTurn() {
-			if (competidorAtual.getMov() < 0) {
-				
-				if(competidorAtual == competidor2) {
-					competidor2.girarDados();
-					competidorAtual = competidor1;
-					
-				} else {
-					competidor1.girarDados();
-					competidorAtual = competidor2;
-					round++;
-				}
-				
-				updateRoundInfo();
+		if (competidorAtual.getMov() < 0) {
+
+			if (competidorAtual == competidor2) {
+				competidor2.girarDados();
+				competidorAtual = competidor1;
+
+			} else {
+				competidor1.girarDados();
+				competidorAtual = competidor2;
+				round++;
 			}
+
+			updateRoundInfo();
+		}
 	}
-	
-	
+
 	private void updateRoundInfo() {
-        roundLabel.setText("Round: " + round);
-        jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
-    }
+		roundLabel.setText("Round: " + round);
+		jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

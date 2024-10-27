@@ -1,15 +1,23 @@
 package frutas;
 
 import java.awt.Image;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Laranja extends Frutas{
+public class Laranja extends Frutas {
 	private Image imagem;
+
 	public Laranja(int x, int y, boolean bichada) {
-		super(x,y, 0, bichada);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/laranja.png").getImage();
+		super(x, y, 0, bichada);
+		try {
+			this.imagem = ImageIO.read(getClass().getResource("/sprites/laranja.png"));
+		} catch (IOException e) {
+			
+		}
 	}
+
 	/**
 	 * Retorna o tipo da frutas
 	 */
@@ -17,6 +25,7 @@ public class Laranja extends Frutas{
 	public String getTipo() {
 		return "Laranja";
 	}
+
 	@Override
 	public Image getImg() {
 		return imagem;
