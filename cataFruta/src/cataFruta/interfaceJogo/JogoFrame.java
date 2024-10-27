@@ -350,7 +350,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 			if (competidorAtual.getMov() < 0) {
 				
 				if(competidorAtual == competidor2) {
-					competidor1.girarDados();
+					competidor2.girarDados();
 					competidorAtual = competidor1;
 					
 				} else {
@@ -368,10 +368,11 @@ public class JogoFrame extends JFrame implements ActionListener{
         roundLabel.setText("Round: " + round);
         jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
     }
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		repaint();
+		
 	}
 
 }
