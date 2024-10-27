@@ -32,13 +32,14 @@ public class JogoFrame extends JFrame implements ActionListener{
 	private LerArq arq = new LerArq();
 	private JLabel roundLabel;
 	private JLabel jogadorLabel;
+	private JPanel controles;
 
 	/**
 	 * Construtor da classe JogoFrame. Inicializa a interface gráfica do jogo,
 	 * configurando o tamanho da janela, título, e preparando o terreno.
 	 */
 	public JogoFrame() {
-		round = 0;
+		this.round = 0;
 		setTitle("Cata Fruta");
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -199,6 +200,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 		mainPanel.add(board, BorderLayout.CENTER);
 
 		JPanel controlsPanel = new JPanel();
+		this.controles = controlsPanel;
 		controlsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -228,8 +230,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 		buttonMovCima.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				competidorAtual.moverCima(terreno);
-				board.repaint();
+				moveJogador("w");
 			}
 		});
 		controlsPanel.add(buttonMovCima, gbc);
@@ -241,8 +242,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				competidorAtual.moverEsquerda(terreno);
-				board.repaint();
+				moveJogador("a");
 			}
 		});
 		controlsPanel.add(leftButton, gbc);
@@ -255,8 +255,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				competidorAtual.moverBaixo(terreno);
-				board.repaint();
+				moveJogador("s");
 			}
 		});
 		gbc.gridx = 2;
@@ -267,8 +266,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				competidorAtual.moverDireita(terreno);
-				board.repaint();
+				moveJogador("d");
 			}
 		});
 
@@ -283,11 +281,7 @@ public class JogoFrame extends JFrame implements ActionListener{
 		iniciarJogoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Lógica para iniciar o jogo
-				// Defina o competidor atual como o primeiro competidor
-				competidorAtual = competidor1; // Inicie com o competidor 1
-				jogadorLabel.setText("Jogador: " + competidorAtual.getNome());
-				// Aqui você pode iniciar a lógica de rounds, por exemplo:
+				// Lógica para iniciar o jogoa
 				controlsPanel.setVisible(true);
 				iniciarJogo();
 			}
@@ -295,7 +289,6 @@ public class JogoFrame extends JFrame implements ActionListener{
 		controlsPanel.setVisible(false);
 		parentPanel.add(roundLabel, gbc);
 		parentPanel.add(jogadorLabel, gbc);
-
 		parentPanel.add(iniciarJogoButton); // Adiciona o botão "Iniciar Jogo"
 
 		// Adicionando um espaço entre os botões, se necessário
@@ -309,7 +302,6 @@ public class JogoFrame extends JFrame implements ActionListener{
 		mainPanel.add(parentPanel, BorderLayout.EAST);
 		add(mainPanel, BorderLayout.CENTER);
 		// getContentPane().add(mainPanel);
-		iniciarJogo();
 	}
 
 	public void setRoundLabel(int qRound) {
@@ -322,17 +314,60 @@ public class JogoFrame extends JFrame implements ActionListener{
 	}
 
 	private void iniciarJogo() {
-		Random dado = new Random();
-		int comeca = dado.nextInt(2);
-		this.round = 1;
-		this.roundLabel.setText("Round " + round);
-		if(comeca == 0) {
-			competidorAtual = competidor1;
-		} else 
-			competidorAtual = competidor2;
+		competidorAtual = competidor1;
+		round = 1;
+		updateRoundInfo();
+		
+		repaint();
 	}
 	
-
+	private void moveJogador(String direcao) {
+		if(competidorAtual.getPontos() >= 2) {
+			JOptionPane.showMessageDialog(null, "Jogodor " + competidorAtual.getNome() + " ganhou!");
+			controles.setVisible(false);
+			return ;
+		}
+			
+		if( direcao == "d") {
+			competidorAtual.moverDireita(terreno);
+			repaint();
+			checkTurn();
+		} else if (direcao == "w") {
+			competidorAtual.moverCima(terreno);
+			repaint();
+			checkTurn();
+		} else if ( direcao == "a") {
+			competidorAtual.moverEsquerda(terreno);
+			repaint();
+			checkTurn();
+		} else if ( direcao == "s") {
+			competidorAtual.moverBaixo(terreno);
+			repaint();
+			checkTurn();
+		}
+	}
+	private void checkTurn() {
+			if (competidorAtual.getMov() < 0) {
+				
+				if(competidorAtual == competidor2) {
+					competidor1.girarDados();
+					competidorAtual = competidor1;
+					
+				} else {
+					competidor1.girarDados();
+					competidorAtual = competidor2;
+					round++;
+				}
+				
+				updateRoundInfo();
+			}
+	}
+	
+	
+	private void updateRoundInfo() {
+        roundLabel.setText("Round: " + round);
+        jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
+    }
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

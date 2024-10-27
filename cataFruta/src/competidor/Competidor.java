@@ -70,7 +70,8 @@ public class Competidor extends ElemDinamico {
 	 */
 	public void moverCima(Terreno terreno) {
 		int novaX = this.x - 1;
-
+		
+		
 		if(terreno.posicaoDisponivel(novaX, this.getY())) {
 			terreno.inserirCompetidor(novaX, this.getY(), this);
 			terreno.removerElem(this.x, this.y);
@@ -88,6 +89,7 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			this.setPos(novaX, y);
 		}
+		System.out.println(this.qts_mov);
 		this.qts_mov--;
 		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Back.png").getImage();
 
@@ -122,6 +124,7 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			this.setPos(novaX, y);
 		}
+		System.out.println(this.qts_mov);
 		this.qts_mov--;
 		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
 	}
@@ -156,6 +159,7 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			this.setPos(x, novaY);
 		}
+		System.out.println(this.qts_mov);
 		this.qts_mov--;
 		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Left.png").getImage();
 	}
@@ -189,6 +193,7 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			this.setPos(x, dy);
 		}
+	    System.out.println(this.qts_mov);
 	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Right.png").getImage();
 	    this.qts_mov -=1;
 	} 
