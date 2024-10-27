@@ -2,9 +2,11 @@ package competidor;
 import cataFruta.*;
 import estruturas.*;
 import frutas.Frutas;
+import frutas.Laranja;
 import terreno.Terreno;
 
 import java.awt.Image;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 /**
@@ -15,7 +17,6 @@ import javax.swing.ImageIcon;
  */
 public class Competidor extends ElemDinamico {
 	private Image imagem;
-	int dx, dy;
 	private String nome;
 	private int forca;
 	private int capacidadeMochila;
@@ -42,7 +43,7 @@ public class Competidor extends ElemDinamico {
 		this.qts_mov = qts_mov;
 		this.roundParado = 0;
 		this.mochila = new Mochila(capacidadeMochila);
-		this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
+		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
 	}
 
 	public Image getImg() {
@@ -74,9 +75,21 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(novaX, this.getY(), this);
 			terreno.removerElem(this.x, this.y);
 			this.setPos(novaX, this.y);
+		} else if (x >= 2 &&terreno.getElemento(novaX, y) instanceof Pedra && terreno.getElemento(novaX -1, y)  == null) {
+			terreno.inserirCompetidor(novaX-1, y, this);
+			terreno.removerElem(x, y);
+			this.setPos(novaX-1, y);
+			this.qts_mov-= 2;
+		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
+			Frutas fruta = terreno.pegarFruta(novaX, y);
+			this.pegarFrutaChao(fruta);
+			terreno.removerElem(novaX, y);
+			terreno.inserirCompetidor(novaX, y, this);
+			terreno.removerElem(x, y);
+			this.setPos(novaX, y);
 		}
 		this.qts_mov--;
-		this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Back.png").getImage();
+		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Back.png").getImage();
 
 	}
 
@@ -96,9 +109,21 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			terreno.inserirCompetidor(novaX, y, this);
 			this.setPos(novaX, y);
+		}else if (x < terreno.getDimensao() -2 &&terreno.getElemento(novaX, y) instanceof Pedra && terreno.getElemento(novaX +1, y)  == null) {
+			terreno.inserirCompetidor(novaX+1, y, this);
+			terreno.removerElem(x, y);
+			this.setPos(novaX+1, y);
+			this.qts_mov-=2;
+			
+		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
+			Frutas fruta = terreno.pegarFruta(novaX, y);
+			this.pegarFrutaChao(fruta);
+			terreno.inserirCompetidor(novaX, y, this);
+			terreno.removerElem(x, y);
+			this.setPos(novaX, y);
 		}
 		this.qts_mov--;
-		this.imagem = new ImageIcon("cataFruta/sprites/player/playerr.png").getImage();
+		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/playerr.png").getImage();
 	}
 
 	/**
@@ -119,12 +144,20 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			terreno.inserirCompetidor(x, novaY, this);
 			this.setPos(x, novaY);
-		}
-		if(terreno.getElemento(x, novaY) instanceof Competidor) {
-			this.imagem = new ImageIcon("cataFruta/sprites/player/Player_LeftShoot01.png").getImage();
+		}else if (y >= 2 &&terreno.getElemento(x, novaY) instanceof Pedra && terreno.getElemento(x, novaY-1)  == null) {
+			terreno.inserirCompetidor(x, novaY-1, this);
+			terreno.removerElem(x, y);
+			this.setPos(x, novaY-1);
+			this.qts_mov-=2;
+		} else if (terreno.getElemento(x, novaY) instanceof Frutas) {
+			Frutas fruta = terreno.pegarFruta(x, novaY);
+			this.pegarFrutaChao(fruta);
+			terreno.inserirCompetidor(x, novaY, this);
+			terreno.removerElem(x, y);
+			this.setPos(x, novaY);
 		}
 		this.qts_mov--;
-		this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Left.png").getImage();
+		this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Left.png").getImage();
 	}
 
 	/**
@@ -138,23 +171,27 @@ public class Competidor extends ElemDinamico {
 	 * @param terreno
 	 */
 	public void moverDireita(Terreno terreno) {
-	    dy = this.y + 1;
+	    int dy = this.y + 1;
 
 	    if(terreno.posicaoDisponivel(x, dy)) {
 	    	terreno.removerElem(x, y);
 	    	terreno.inserirCompetidor(x, dy, this);
 	    	this.setPos(x, dy);
-	    } else if (terreno.getElemento(x, dy) instanceof Pedra) {
-	    	if(qts_mov > 2 && terreno.posicaoDisponivel(x, dy +1)) {
-	    		terreno.removerElem(x, y);
-	    		terreno.inserirCompetidor(x, dy+1, this);
-	    		this.setPos(x, dy+1);
-	    		this.qts_mov -= 2;
-	    	}
-	    }
-	    this.imagem = new ImageIcon("cataFruta/sprites/player/Player_Right.png").getImage();
+	    } else if (y <= terreno.getDimensao() -2 && terreno.getElemento(x, dy) instanceof Pedra && terreno.getElemento(x, dy+1)  == null) {
+			terreno.inserirCompetidor(x, dy+1, this);
+			terreno.removerElem(x, y);
+			this.setPos(x, dy+1);
+			this.qts_mov-=2;
+		} else if (terreno.getElemento(x, dy) instanceof Frutas) {
+			Frutas fruta = terreno.pegarFruta(x, dy);
+			this.pegarFrutaChao(fruta);
+			terreno.inserirCompetidor(x, dy, this);
+			terreno.removerElem(x, y);
+			this.setPos(x, dy);
+		}
+	    this.imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/player/Player_Right.png").getImage();
 	    this.qts_mov -=1;
-	}
+	} 
 
 
 
@@ -168,7 +205,11 @@ public class Competidor extends ElemDinamico {
 	public int getForca() {
 		return this.forca;
 	}
-
+	
+	public void girarDados() {
+		Random dado = new Random();
+		this.qts_mov += (dado.nextInt(6) + dado.nextInt(6));
+	}
 	/**
 	 * Obtém a quantidade de items que podem serem armazenados na mochila.
 	 *
@@ -245,6 +286,8 @@ public class Competidor extends ElemDinamico {
 	 * @param fruta
 	 */
 	public void pegarFrutaChao(Frutas fruta) {
+		if(fruta instanceof Laranja)
+			this.addPontos(1);
 		this.mochila.addFruta(fruta);
 	}
 	

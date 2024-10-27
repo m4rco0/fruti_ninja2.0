@@ -199,26 +199,6 @@ public  class   Terreno {
 
 	public boolean hasMapa(int i, int j) { return this.mapa[i][j] != null; }
 
-	public void exibirMapa() {
-		for(int i = 0; i < this.getDimensao(); i++) {
-			for(int j = 0; j < this.getDimensao(); j++) {
-				if(this.mapa[i][j] != null) {
-					if (this.mapa[i][j] instanceof Competidor)
-					{
-						Competidor c = (Competidor) this.getMapa()[i][j];
-						System.out.printf("%s", c.getNome());
-					} else if(this.mapa[i][j] instanceof Elemento) {
-						System.out.printf("%s", this.mapa[i][j].getTipo());
-					}
-				}else {
-					System.out.printf("NULL");
-				}
-				if(j < this.getDimensao())
-					System.out.printf(" |");
-			}
-			System.out.println();
-		}
-	}
 	/**
 	 * Metodo para setar um mapa completo
 	 * @param mapa mapa que vai ser inserido
@@ -298,6 +278,8 @@ public  class   Terreno {
 		while(!this.posicaoDisponivel(x, y)) {
 			x = rand.nextInt(this.getDimensao());
 			y = rand.nextInt(this.getDimensao());}
+		
+		fruta.setPos(x, y);
 		this.inserirElem(x, y, fruta);
 	}
 	

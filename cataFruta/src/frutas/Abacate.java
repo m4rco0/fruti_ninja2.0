@@ -7,7 +7,7 @@ public class Abacate extends Frutas{
 	private Image imagem;
 	public Abacate(int x, int y, boolean bichada) {
 		super(x,y, 0, bichada);
-		imagem = new ImageIcon("cataFruta/sprites/abacate.png").getImage();
+		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/abacate.png").getImage();
 	}
 
 	/**

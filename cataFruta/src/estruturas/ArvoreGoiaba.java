@@ -12,7 +12,7 @@ public class ArvoreGoiaba extends Arvore{
 	private Image imagem;
 	public ArvoreGoiaba(int x, int y, String tipoArvore, Goiaba goiaba) {
 		super(x,y, tipoArvore, goiaba);
-		imagem = new ImageIcon("cataFruta/sprites/goiabeira.png").getImage();
+		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/goiabeira.png").getImage();
 	}
 	/**
 	 * Metodo que retorna o tipo da Arvore

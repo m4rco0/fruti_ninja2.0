@@ -41,6 +41,7 @@ public class TerrenoPanel extends JPanel {
                     if (element instanceof Competidor) {
                         Competidor c = (Competidor) element;
                         image = c.getImg();
+                        g.drawString(c.getNome(), col * tileWidth, row * tileHeight);
                     } else if (element instanceof Pedra) {
                         Pedra p = (Pedra) element;
                         image = p.getImg();

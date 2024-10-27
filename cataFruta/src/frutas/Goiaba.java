@@ -8,7 +8,7 @@ public class Goiaba extends Frutas{
 	private Image imagem;
 	public Goiaba(int x, int y, boolean bichada) {
 		super(x,y,0, bichada);
-		imagem = new ImageIcon("cataFruta/sprites/goiaba.png").getImage();
+		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/goiaba.png").getImage();
 	}
 	/**
 	 * Retorna o tipo da frutas
