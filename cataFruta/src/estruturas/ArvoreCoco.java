@@ -12,7 +12,7 @@ public class ArvoreCoco extends Arvore{
 	private Image imagem;
 	public ArvoreCoco(int x, int y, String tipoArvore, Coco coco) {
 		super(x, y, tipoArvore, coco);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/coqueiro.png").getImage();
+		imagem = new ImageIcon("sprites/coqueiro.png").getImage();
 	}
 	
 	/**

@@ -12,7 +12,7 @@ public class ArvoreAmora extends Arvore{
 	private Image imagem;
 	public ArvoreAmora(int x, int y, String tipoArvore, Amora amora) {
 		super(x, y, tipoArvore, amora);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/pe_amora.png").getImage();
+		imagem = new ImageIcon("sprites/pe_amora.png").getImage();
 	}
 	
 	/**

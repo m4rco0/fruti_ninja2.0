@@ -13,7 +13,7 @@ public class ArvoreAcerola extends Arvore{
 	private Image imagem;
 	public ArvoreAcerola(int x, int y, String tipoArvore, Acerola acerola) {
 		super(x, y, tipoArvore, acerola);
-		imagem = new ImageIcon("/home/marco/git/fruti_ninja2.0/cataFruta/sprites/pe_acerola.png").getImage();
+		imagem = new ImageIcon("sprites/pe_acerola.png").getImage();
 	}
 	
 	/**
