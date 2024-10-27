@@ -16,7 +16,7 @@ public class Pedra extends ElemEstaticos {
 
 	public Pedra(int x, int y) {
 		super(x, y);
-		try {
+		try { 
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/pedra.png"));
 		} catch (IOException e) {
 			
