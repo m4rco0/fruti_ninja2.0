@@ -56,6 +56,7 @@ public class Mochila {
 			return false;
 		}
 	}
+	
 
 	/**
 	 * Mostra as frutas que estao na lista da mochila.
@@ -111,6 +112,14 @@ public class Mochila {
 		}
 		
 		return pontos;
+	}
+	public int qtsFrutas(Frutas fruta) {
+		int qts = 0;
+		for(int i = 0; i < frutas.size(); i++) {
+			if(frutas.get(i).equals(fruta))
+				qts++;
+		}
+		return qts;
 	}
 	/*
 	 * Metodo que fala se a mochila ta cheia ou n

@@ -105,6 +105,9 @@ public class Competidor extends ElemDinamico {
 			Arvore arv = (Arvore) terreno.getElemento(novaX, y);
 			this.pegarFrutaArv(arv);
 			this.setRoundsParado(2);
+		} else if (terreno.getElemento(novaX, y) instanceof Competidor) {
+			Competidor comp = (Competidor) terreno.getElemento(novaX, y);
+			this.empurrao(comp, novaX, y, terreno);
 		}
 		this.qts_mov--;
 		try {
@@ -146,7 +149,8 @@ public class Competidor extends ElemDinamico {
 			this.pegarFrutaArv(arv);
 			this.setRoundsParado(2);
 		}
-		this.qts_mov--;
+		if(this.getMov() > 0)
+			this.qts_mov--;
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/playerr.png"));
 		} catch (IOException e) {
@@ -236,7 +240,7 @@ public class Competidor extends ElemDinamico {
 		} catch (IOException e) {
 			
 		}
-		this.qts_mov -= 1;
+		this.qts_mov--;
 	}
 
 	public void exibirFrutas() {
@@ -354,6 +358,10 @@ public class Competidor extends ElemDinamico {
 	public int getForcaDef() {
 		return this.mochila.getSize();
 	}
+	
+	public void serEmpurrad(int forcaSofrida) {
+		
+	}
 
 	/**
 	 * Metodo que empurra um competidor em certa posição
@@ -381,6 +389,11 @@ public class Competidor extends ElemDinamico {
 	 */
 	public int getRoundsParado() {
 		return this.roundParado;
+	}
+	
+	
+	public void setTamMochila(int tamanho) {
+		this.capacidadeMochila = tamanho;
 	}
 
 	/**

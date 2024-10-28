@@ -156,6 +156,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 			System.out.println("Carregar Jogo selecionado");
 			// Carregando o arquivo
 			arq.lerConfig();
+			
 			this.terreno = new Terreno(arq.getDimensao());
 			int pedras = arq.getPedras();
 			int arvore_maracuja = arq.getQuantidadeArvores("maracuja");
@@ -172,6 +173,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 			int fruta_amora = arq.getQuantidadeFrutas("amora");
 			int arvore_goiaba = arq.getQuantidadeArvores("goiaba");
 			int fruta_goiaba = arq.getQuantidadeFrutas("goiaba");
+			
 
 			this.inicilizarTerreno(pedras, arvore_maracuja, frutas_maracuja, arvore_laranja, fruta_laranja,
 					arvore_abacate, fruta_abacate, arvore_coco, fruta_coco, arvore_acerola, fruta_acerola, arvore_amora,
@@ -181,9 +183,9 @@ public class JogoFrame extends JFrame implements ActionListener {
 			String nomeCompetidor2 = JOptionPane.showInputDialog("Digite o nome do Competidor 2:");
 
 			competidor1 = new Competidor(nomeCompetidor1, num.nextInt(terreno.getDimensao()),
-					num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+					num.nextInt(terreno.getDimensao()), arq.getMochila(), num.nextInt(terreno.getDimensao()));
 			competidor2 = new Competidor(nomeCompetidor2, num.nextInt(terreno.getDimensao()),
-					num.nextInt(terreno.getDimensao()), 10, num.nextInt(terreno.getDimensao()));
+					num.nextInt(terreno.getDimensao()), arq.getMochila(), num.nextInt(terreno.getDimensao()));
 
 			terreno.inserirCompetidor(competidor1.getX(), competidor1.getY(), competidor1);
 			terreno.inserirCompetidor(competidor2.getX(), competidor2.getY(), competidor2);
@@ -362,7 +364,6 @@ public class JogoFrame extends JFrame implements ActionListener {
 				competidorAtual = competidor1;
 			return ;
 		}
-		System.out.println(competidorAtual.getNome() + " tem rounds parado " + competidorAtual.getRoundsParado());
 		if (competidorAtual.getMov() < 0) {
 			
 			if (competidorAtual == competidor2) {

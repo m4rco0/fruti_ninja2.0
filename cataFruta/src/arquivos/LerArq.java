@@ -213,6 +213,8 @@ public class LerArq {
 	public void setMochila(int mochila) {
 		this.mochila = mochila;
 	}
+	
+
 
 	/**
 	 * Obtém o mapa de frutas.
