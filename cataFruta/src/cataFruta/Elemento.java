@@ -9,7 +9,11 @@ package cataFruta;
 public abstract class Elemento {
 	protected int x;
 	protected int y;
-
+	/**
+	 * Construtor do Elemento
+	 * @param x posição 
+	 * @param y posição
+	 */
 	public Elemento(int x, int y) {
 		this.x = x;
 		this.y = y;

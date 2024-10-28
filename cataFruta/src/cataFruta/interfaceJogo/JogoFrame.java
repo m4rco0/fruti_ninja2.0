@@ -17,13 +17,10 @@ import terreno.Terreno;
  * Classe JogoFrame que cria a interface gráfica do jogo. Responsável por exibir
  * o terreno e permitir que os jogadores façam seus movimentos através de
  * botões.
+ * 
  */
 public class JogoFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	/**
-	 * O terreno do jogo. Utilizado para representar o estado e os elementos do
-	 * jogo, como frutas, árvores e pedras.
-	 */
 	private terreno.Terreno terreno;
 	private Competidor competidor1;
 	private Competidor competidor2;
@@ -36,8 +33,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 	private JLabel movsLabel;
 
 	/**
-	 * Construtor da classe JogoFrame. Inicializa a interface gráfica do jogo,
-	 * configurando o tamanho da janela, título, e preparando o terreno.
+	 * Construtor para criar um painel com titulo de "Cata Fruta" tamanho 800x600
 	 */
 	public JogoFrame() {
 		this.round = 0;
@@ -310,15 +306,25 @@ public class JogoFrame extends JFrame implements ActionListener {
 		// getContentPane().add(mainPanel);
 	}
 
+	/**
+	 * Metodo responsavel por mudar o round do painel
+	 * @param qRound qual round
+	 */
 	public void setRoundLabel(int qRound) {
 		this.roundLabel.setText("Round " + qRound);
 	}
 
+	/**
+	 * Metodo que chama a classe {@link LerArq} para salvar config do mapa
+	 */
 	private void salvarConfig() {
 		arq.salvarConfig();
 		arq.exibirConfiguracao();
 	}
 
+	/**
+	 * Metodo para inicar o jogo, após clickar no botão iniciarJogo
+	 */
 	private void iniciarJogo() {
 		competidorAtual = competidor1;
 		round = 1;
@@ -326,7 +332,10 @@ public class JogoFrame extends JFrame implements ActionListener {
 
 		repaint();
 	}
-
+	/**
+	 * Move o jogador para o botão que clickou informando o lado, que pede para {@link Competidor} se mover.
+	 * @param direcao onde o jogador vai se mover
+	 */
 	private void moveJogador(String direcao) {
 		movsLabel.setText("movs: " + competidorAtual.getMov());
 		if (competidorAtual.getPontos() >= 2) {
@@ -355,6 +364,9 @@ public class JogoFrame extends JFrame implements ActionListener {
 		
 	}
 
+	/**
+	 * Metodo para ver o jogador que vai participar do turno e passara vez para ele
+	 */
 	private void checkTurn() {
 		
 		if(competidorAtual.getRoundsParado() > 0) {
@@ -380,6 +392,9 @@ public class JogoFrame extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Atuliza os label de informações do jogador
+	 */
 	private void updateRoundInfo() {
 		roundLabel.setText("Round: " + round);
 		jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
@@ -389,8 +404,10 @@ public class JogoFrame extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
+
 
 }

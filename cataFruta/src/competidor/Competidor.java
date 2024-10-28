@@ -3,7 +3,6 @@ package competidor;
 import cataFruta.*;
 import estruturas.*;
 import frutas.Frutas;
-import frutas.Laranja;
 import terreno.Terreno;
 
 import java.awt.Image;
