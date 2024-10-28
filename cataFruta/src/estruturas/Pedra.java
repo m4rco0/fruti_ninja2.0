@@ -12,7 +12,7 @@ public class Pedra  extends ElemEstaticos{
 	private Image imagem;
 	public Pedra(int x, int y) {
 		super(x,y);
-		imagem = new ImageIcon("sprites/pedra.png").getImage();
+		imagem = new ImageIcon("catafruta/sprites/pedra.png").getImage();
 	}
 	public Image getImg() {
 		return imagem;

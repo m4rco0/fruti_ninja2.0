@@ -1,8 +1,10 @@
 package estruturas;
 
 import cataFruta.ElemEstaticos;
-import frutas.Frutas;
-import competidor.Competidor;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,3 +60,18 @@ public class Grama extends ElemEstaticos {
 		return "Grama";
 	}
 }
+
+
+
+/*
+JButton recomeçarJogo = new JButton("Recomeçar Jogo");
+		recomeçarJogo.setPreferredSize(new Dimension(120, 30));
+		recomeçarJogo.addActionListener(new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// Lógica para iniciar o jogoa
+		controlsPanel.setVisible(true);
+		iniciarJogo();
+		recomeçarJogo.setVisible(false);
+	}
+});*/

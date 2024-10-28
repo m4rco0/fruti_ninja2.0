@@ -12,7 +12,7 @@ import frutas.Abacate;
 		private Image imagem;
 		public ArvoreAbacate(int x, int y, String tipoArvore, Abacate abacate) {
 			super(x, y, tipoArvore, abacate);
-			imagem = new ImageIcon("sprites/arvoreAbCATE.png").getImage();
+			imagem = new ImageIcon("catafruta/sprites/arvoreAbCATE.png").getImage();
 		}
 		
 		/**

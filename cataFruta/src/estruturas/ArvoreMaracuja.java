@@ -12,7 +12,7 @@ public class ArvoreMaracuja extends Arvore{
 	private Image imagem;
 	public ArvoreMaracuja(int x, int y, String tipoArvore, Maracuja maracuja) {
 		super(x, y, tipoArvore, maracuja);
-		imagem = new  ImageIcon("sprites/peMaracuja.png").getImage();
+		imagem = new  ImageIcon("catafruta/sprites/peMaracuja.png").getImage();
 	}
 	/**
 	 * Metodo que retorna o tipo da Arvore
