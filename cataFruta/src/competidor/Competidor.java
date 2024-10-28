@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * Classe que representa um Competidor no jogo. um elemento dinâmico que pode se
@@ -91,15 +91,10 @@ public class Competidor extends ElemDinamico {
 			if (terreno.getElemento(novaX - 1, y) == null) {
 				terreno.inserirCompetidor(novaX - 1, y, this);
 				terreno.removerElem(x, y);
-			} else if (terreno.getElemento(novaX - 1, y) instanceof Frutas) {
-				Frutas fruta = terreno.pegarFruta(novaX - 1, y);
-				this.pegarFrutaChao(fruta);
-				terreno.removerElem(novaX - 1, y);
-				terreno.inserirCompetidor(novaX - 1, y, this);
-				terreno.removerElem(x, y);
+				this.setPos(novaX - 1, y);
+				this.qts_mov -= 2;
 			}
-			this.setPos(novaX - 1, y);
-			this.qts_mov -= 2;
+			
 		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(novaX, y);
 			this.pegarFrutaChao(fruta);
@@ -134,14 +129,10 @@ public class Competidor extends ElemDinamico {
 			if (terreno.getElemento(novaX + 1, y) == null) {
 				terreno.inserirCompetidor(novaX + 1, y, this);
 				terreno.removerElem(x, y);
-			} else if (terreno.getElemento(novaX + 1, y) instanceof Frutas) {
-				Frutas fruta = terreno.pegarFruta(novaX + 1, y);
-				this.pegarFrutaChao(fruta);
-				terreno.removerElem(x, y);
-				terreno.inserirCompetidor(novaX + 1, y, this);
-			}
-			this.setPos(novaX + 1, y);
-			this.qts_mov -= 2;
+				this.setPos(novaX + 1, y);
+				this.qts_mov -= 2;
+			} 
+			
 
 		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(novaX, y);
@@ -179,14 +170,10 @@ public class Competidor extends ElemDinamico {
 			if (terreno.getElemento(x, novaY - 1) == null) {
 				terreno.inserirCompetidor(x, novaY - 1, this);
 				terreno.removerElem(x, y);
-			} else if (terreno.getElemento(x, novaY - 1) instanceof Frutas) {
-				Frutas fruta = terreno.pegarFruta(x, novaY - 1);
-				this.pegarFrutaChao(fruta);
-				terreno.inserirCompetidor(x, novaY - 1, this);
-				terreno.removerElem(x, y);
+				this.setPos(x, novaY - 1);
+				this.qts_mov -= 2;
 			}
-			this.setPos(x, novaY - 1);
-			this.qts_mov -= 2;
+			
 		} else if (terreno.getElemento(x, novaY) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(x, novaY);
 			this.pegarFrutaChao(fruta);
@@ -221,14 +208,10 @@ public class Competidor extends ElemDinamico {
 			if (terreno.getElemento(x, dy + 1) == null) {
 				terreno.inserirCompetidor(x, dy + 1, this);
 				terreno.removerElem(x, y);
-			} else if (terreno.getElemento(x, dy + 1) instanceof Frutas) {
-				Frutas fruta = terreno.pegarFruta(x, dy);
-				this.pegarFrutaChao(fruta);
-				terreno.inserirCompetidor(x, dy + 1, this);
-				terreno.removerElem(x, y);
+				this.setPos(x, dy + 1);
+				this.qts_mov -= 2;
 			}
-			this.setPos(x, dy + 1);
-			this.qts_mov -= 2;
+			
 		} else if (terreno.getElemento(x, dy) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(x, dy);
 			this.pegarFrutaChao(fruta);
