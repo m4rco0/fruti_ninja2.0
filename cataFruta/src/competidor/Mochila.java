@@ -103,6 +103,7 @@ public class Mochila {
 			System.out.println();
 		}
 	}
+
 	
 	public int getPontos() {
 		int pontos = 0;
