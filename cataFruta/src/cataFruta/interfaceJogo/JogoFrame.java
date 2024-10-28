@@ -1,11 +1,9 @@
 package cataFruta.interfaceJogo;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -19,7 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
 
 import arquivos.LerArq;
 import competidor.Competidor;
@@ -32,7 +33,12 @@ import terreno.Terreno;
  *
  */
 public class JogoFrame extends JFrame implements ActionListener {
+	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * O terreno do jogo. Utilizado para representar o estado e os elementos do
+	 * jogo, como frutas, árvores e pedras.
+	 */
 	private terreno.Terreno terreno;
 	private Competidor competidor1;
 	private Competidor competidor2;
@@ -42,6 +48,8 @@ public class JogoFrame extends JFrame implements ActionListener {
 	private JLabel roundLabel;
 	private JLabel jogadorLabel;
 	private JPanel controles;
+	private JTable table;
+	private DefaultTableModel tableModel;
 	private JLabel movsLabel;
 
 	/**
@@ -204,16 +212,95 @@ public class JogoFrame extends JFrame implements ActionListener {
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
-		getContentPane().setBackground(Color.GREEN);
 
 		TerrenoPanel board = new TerrenoPanel(terreno);
 		mainPanel.add(board, BorderLayout.CENTER);
 
 		JPanel controlsPanel = new JPanel();
 		this.controles = controlsPanel;
-		controlsPanel.setLayout(new GridBagLayout());
+		controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
+		
+		// tabela para exibir as frutas coletadas por cada competidor
+		table = new JTable(tableModel);
+		tableModel = new DefaultTableModel(new Object[]{"Frutas", competidor1.getNome(), competidor2.getNome()}, 0);
+		table = new JTable(tableModel);
+		table.setPreferredScrollableViewportSize(new Dimension(200, 128));
+		table.setFillsViewportHeight(true);
+				
+		
+		
+		//controle de movimentação
+		JPanel movementPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		
+		JButton buttonMovCima = new JButton("▲");
+		buttonMovCima.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				moveJogador("w");
+			}
+		});
+		
+		controlsPanel.add(buttonMovCima);
+		JButton leftButton = new JButton("◀");
+		leftButton.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				moveJogador("a");
+			}
+		});
+		
+		
+		
+		
+		controlsPanel.add(leftButton);
+		JButton downButton = new JButton("▼");
+		controlsPanel.add(downButton);
+		downButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				moveJogador("s");
+			}
+		});
+		
+		JButton rightButton = new JButton("▶");
+		controlsPanel.add(rightButton);
+		rightButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				moveJogador("d");
+			}
+		});
+		
+		controlsPanel.add(movementPanel);
+		mainPanel.add(controlsPanel, BorderLayout.EAST);
+		getContentPane().add(mainPanel);
+		setVisible(true);
+		atualizarTabelaFrutas();
+		// Adicionar painel de controle ao lado direito
+		
+		GridBagConstraints gbc1 = new GridBagConstraints();
+		JLabel roundLabel = new JLabel("Round " + round);
+		this.roundLabel = roundLabel;
+		JLabel jogadorLabel = new JLabel(
+				"Jogador: " + (round % 2 == 0 ? competidor2.getNome() : competidor1.getNome()));
+		this.jogadorLabel = jogadorLabel;
+		JLabel movsLabel = new JLabel("movs: 0");
+		this.movsLabel = movsLabel;
+		
+		
+		
+		
+
+		// Criação do painel pai
+		JPanel parentPanel = new JPanel();
+		parentPanel.setLayout(new BoxLayout(parentPanel, BoxLayout.Y_AXIS)); // Usando BoxLayout para empilhar
+																				// verticalmente
+		
 		JButton salvarJogoButton = new JButton("Salvar Jogo");
 		salvarJogoButton.setPreferredSize(new Dimension(120, 30));
 		salvarJogoButton.addActionListener(new ActionListener() {
@@ -224,96 +311,47 @@ public class JogoFrame extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Jogo salvo");
 			}
 		});
-
-		JLabel roundLabel = new JLabel("Round " + round);
-		this.roundLabel = roundLabel;
-		JLabel jogadorLabel = new JLabel(
-				"Jogador: " + (round % 2 == 0 ? competidor2.getNome() : competidor1.getNome()));
-		this.jogadorLabel = jogadorLabel;
-		JLabel movsLabel = new JLabel("movs: 0");
-		this.movsLabel = movsLabel;
-		gbc.insets = new Insets(0, 0, 0, 0);
-		gbc.fill = GridBagConstraints.NONE;
-
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		JButton buttonMovCima = new JButton("▲");
-
-		buttonMovCima.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				moveJogador("w");
-			}
-		});
-		controlsPanel.add(buttonMovCima, gbc);
-
-		gbc.gridx = 0;
-		gbc.gridy = 1;
-		JButton leftButton = new JButton("◀");
-		leftButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				moveJogador("a");
-			}
-		});
-		controlsPanel.add(leftButton, gbc);
-
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		JButton downButton = new JButton("▼");
-		controlsPanel.add(downButton, gbc);
-		downButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				moveJogador("s");
-			}
-		});
-		gbc.gridx = 2;
-		gbc.gridy = 1;
-		JButton rightButton = new JButton("▶");
-		controlsPanel.add(rightButton, gbc);
-		rightButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				moveJogador("d");
-			}
-		});
-
-		// Criação do painel pai
-		JPanel parentPanel = new JPanel();
-		parentPanel.setLayout(new BoxLayout(parentPanel, BoxLayout.Y_AXIS)); // Usando BoxLayout para empilhar
-																				// verticalmente
-
+		parentPanel.add(salvarJogoButton);
+		
+		JLabel tamanhoMochilaLabel = new JLabel("Tamanho da Mochila: " +  arq.getMochila());
+		
 		// Adicionando o botão "Iniciar Jogo" ao painel pai
 		JButton iniciarJogoButton = new JButton("Iniciar Jogo");
 		iniciarJogoButton.setPreferredSize(new Dimension(120, 30));
 		iniciarJogoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Lógica para iniciar o jogoa
+				// Lógica para iniciar o jogo
 				controlsPanel.setVisible(true);
 				iniciarJogo();
+				iniciarJogoButton.setVisible(false);
+				parentPanel.add(tamanhoMochilaLabel);
+				JScrollPane scrollPane = new JScrollPane(table);
+				controlsPanel.add(scrollPane);
+				controlsPanel.add(buttonMovCima);
+				controlsPanel.add(leftButton);
+				controlsPanel.add(downButton);
+				controlsPanel.add(rightButton);
 			}
 		});
+		
 		controlsPanel.setVisible(false);
-		parentPanel.add(roundLabel, gbc);
-		parentPanel.add(jogadorLabel, gbc);
-		parentPanel.add(movsLabel, gbc);
+		parentPanel.add(roundLabel, gbc1);
+		parentPanel.add(jogadorLabel, gbc1);
+		
+		parentPanel.add(movsLabel, gbc1);
 		parentPanel.add(iniciarJogoButton); // Adiciona o botão "Iniciar Jogo"
 
 		// Adicionando um espaço entre os botões, se necessário
-		parentPanel.add(Box.createVerticalStrut(10)); // Cria um espaço de 10 pixels
+		parentPanel.add(Box.createVerticalStrut(5)); // Cria um espaço de 10 pixels
 		// Adicionando o botão "Salvar Jogo" ao painel pai
-		parentPanel.add(salvarJogoButton); // Adiciona o botão "Salvar Jogo"
+		//parentPanel.add(salvarJogoButton); // Adiciona o botão "Salvar Jogo"
 		// Adicionando o painel de controle na parte inferior
 		parentPanel.add(controlsPanel); // Adiciona o painel de controle
-
-		// Adicionando o painel pai ao painel principal
+		
 		mainPanel.add(parentPanel, BorderLayout.EAST);
 		add(mainPanel, BorderLayout.CENTER);
+		// Adicionando o painel pai ao painel principa
 		// getContentPane().add(mainPanel);
 	}
 
@@ -352,7 +390,8 @@ public class JogoFrame extends JFrame implements ActionListener {
 	 * @param direcao onde o jogador vai se mover
 	 */
 	private void moveJogador(String direcao) {
-		movsLabel.setText("movs: " + competidorAtual.getMov());
+		
+		
 		if (competidorAtual.getPontos() >= 2) {
 			JOptionPane.showMessageDialog(null, "Jogodor " + competidorAtual.getNome() + " ganhou!");
 			controles.setVisible(false);
@@ -376,7 +415,8 @@ public class JogoFrame extends JFrame implements ActionListener {
 			repaint();
 			checkTurn();
 		}
-
+		movsLabel.setText("movs: " + competidorAtual.getMov());
+		atualizarTabelaFrutas();
 	}
 
 	/**
@@ -407,7 +447,20 @@ public class JogoFrame extends JFrame implements ActionListener {
 			updateRoundInfo();
 		}
 	}
+	private void atualizarTabelaFrutas() {
+		
+		// Exemplo de frutas coletadas - você pode substituir com valores reais dos competidores
+		String[] frutas = {"Maracujá", "Laranja", "Abacate", "Coco", "Acerola", "Amora", "Goiaba","qts frutas"};
+		int[] frutasCompetidor1 = {competidor1.qtsFrutas("maracuja"), competidor1.qtsFrutas("laranja"), competidor1.qtsFrutas("abacate"), competidor1.qtsFrutas("coco"), competidor1.qtsFrutas("acerola"), competidor1.qtsFrutas("amora"), competidor1.qtsFrutas("goiaba"), competidor1.getqtsMochila()};  // Exemplo
+		int[] frutasCompetidor2 = {competidor2.qtsFrutas("maracuja"), competidor2.qtsFrutas("laranja"), competidor2.qtsFrutas("abacate"), competidor2.qtsFrutas("coco"), competidor2.qtsFrutas("acerola"), competidor2.qtsFrutas("amora"), competidor2.qtsFrutas("goiaba"), competidor2.getqtsMochila()};  // Exemplo
 
+		tableModel.setRowCount(0);  // Limpa linhas anteriores
+
+		for (int i = 0; i < frutas.length; i++) {
+			tableModel.addRow(new Object[]{frutas[i], frutasCompetidor1[i], frutasCompetidor2[i]});
+		}
+	}
+	
 	/**
 	 * Atuliza os label de informações do jogador
 	 */

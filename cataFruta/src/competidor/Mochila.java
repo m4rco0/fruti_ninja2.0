@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import frutas.Frutas;
-import frutas.Laranja;
+import frutas.Maracuja;
 
 /**
  * Class da mochila utilizada pelo competidor onde tem uma lista de frutas e um
@@ -107,7 +107,7 @@ public class Mochila {
 	public int getPontos() {
 		int pontos = 0;
 		for (int i = 0; i < this.frutas.size(); i++) {
-			if (frutas.get(i) instanceof Laranja) {
+			if (frutas.get(i) instanceof Maracuja) {
 				pontos++;
 			}
 		}
@@ -115,10 +115,10 @@ public class Mochila {
 		return pontos;
 	}
 
-	public int qtsFrutas(Frutas fruta) {
+	public int qtsFrutas(Frutas fff) {
 		int qts = 0;
-		for (Frutas element : frutas) {
-			if (element.equals(fruta)) {
+		for (int i =0; i < frutas.size(); i++) {
+			if (frutas.get(i).getTipo()  == fff.getTipo()) {
 				qts++;
 			}
 		}

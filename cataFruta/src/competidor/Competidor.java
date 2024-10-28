@@ -10,7 +10,14 @@ import javax.swing.JOptionPane;
 import cataFruta.ElemDinamico;
 import estruturas.Arvore;
 import estruturas.Pedra;
+import frutas.Abacate;
+import frutas.Acerola;
+import frutas.Amora;
+import frutas.Coco;
 import frutas.Frutas;
+import frutas.Goiaba;
+import frutas.Laranja;
+import frutas.Maracuja;
 import terreno.Terreno;
 
 
@@ -335,7 +342,25 @@ public class Competidor extends ElemDinamico {
 	public void addPontos(int pontos) {
 		this.pontos += pontos;
 	}
-
+	
+	public int qtsFrutas(String tipo) {
+		if(tipo == "maracuja") {
+			return mochila.qtsFrutas(new Maracuja(0, 0, false));
+		} else if (tipo == "laranja") {
+			return mochila.qtsFrutas(new Laranja(0, 0, false));
+		} else if (tipo == "coco") {
+			return mochila.qtsFrutas(new Coco(0, 0, false));
+		} else if (tipo == "abacate") {
+			return mochila.qtsFrutas(new Abacate(0, 0, false));
+		} else if (tipo == "goiaba") {
+			return mochila.qtsFrutas(new Goiaba(0, 0, false));
+		} else if (tipo == "amora") {
+			return mochila.qtsFrutas(new Amora(0,0 , false));
+		} else if (tipo == "acerola") {
+			return mochila.qtsFrutas(new Acerola(0,0,false));
+		} else 
+			return 0;
+	}
 	/**
 	 * Metodo que mostra quantos movimentos o competidor possui.
 	 *
@@ -407,7 +432,8 @@ public class Competidor extends ElemDinamico {
 		int forca_ataque = 2 * (this.mochila.getSize() - 1);
 		int forca_defesa = competidor.getForca();
 		
-		//int empurrao = Math.round(Math.log()))
+		int empurrao = (int) Math.round(Math.log((forca_ataque+1) - Math.round(forca_defesa +1)) / Math.log(2));
+		JOptionPane.showMessageDialog(null, "O jogador " + competidor.getNome() + " vai derrubar " + empurrao);
 	}
 
 	/**
@@ -456,7 +482,10 @@ public class Competidor extends ElemDinamico {
 			this.roundParado--;
 		}
 	}
-
+	
+	public int getqtsMochila() {
+		return this.mochila.getSize();
+	}
 	/**
 	 * Seta o movimento de um jogador
 	 *
