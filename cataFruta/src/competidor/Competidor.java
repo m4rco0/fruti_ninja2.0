@@ -13,6 +13,7 @@ import estruturas.Pedra;
 import frutas.Frutas;
 import terreno.Terreno;
 
+
 /**
  * Classe que representa um Competidor no jogo. um elemento dinâmico que pode se
  * mover e interagir com outros elementos do jogo. Cada competidor possui um
