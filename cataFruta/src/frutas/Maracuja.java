@@ -13,7 +13,7 @@ public class Maracuja extends Frutas {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/maracuja.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 

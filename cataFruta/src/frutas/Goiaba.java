@@ -13,7 +13,7 @@ public class Goiaba extends Frutas {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/goiaba.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 

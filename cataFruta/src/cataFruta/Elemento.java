@@ -2,16 +2,18 @@ package cataFruta;
 
 /**
  * Class que representa um elemento do jogo
- * 
+ *
  * @author Marco Antonio da Silva Santos
- * 
+ *
  */
 public abstract class Elemento {
 	protected int x;
 	protected int y;
+
 	/**
 	 * Construtor do Elemento
-	 * @param x posição 
+	 *
+	 * @param x posição
 	 * @param y posição
 	 */
 	public Elemento(int x, int y) {
@@ -21,7 +23,7 @@ public abstract class Elemento {
 
 	/**
 	 * Metodo que pega a posição x do elemento.
-	 * 
+	 *
 	 * @return int x - Posição x
 	 */
 	public int getX() {
@@ -30,7 +32,7 @@ public abstract class Elemento {
 
 	/**
 	 * Metodo que pega a posição y do elemento
-	 * 
+	 *
 	 * @return int y - posicao y
 	 */
 	public int getY() {
@@ -39,7 +41,7 @@ public abstract class Elemento {
 
 	/**
 	 * metodo para proximas classes
-	 * 
+	 *
 	 * @return
 	 */
 	public abstract String getTipo();

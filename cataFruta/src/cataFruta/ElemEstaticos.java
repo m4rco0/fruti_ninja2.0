@@ -7,6 +7,7 @@ package cataFruta;
 public abstract class ElemEstaticos extends Elemento {
 	/**
 	 * Construtor de leementos dinamicos
+	 *
 	 * @param x posição do elemento
 	 * @param y posição do elemento
 	 */

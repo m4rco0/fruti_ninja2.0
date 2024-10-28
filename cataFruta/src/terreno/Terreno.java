@@ -1,9 +1,25 @@
 package terreno;
 
-import cataFruta.Elemento;
-import estruturas.*;
-import frutas.*;
 import java.util.Random;
+
+import cataFruta.Elemento;
+import estruturas.Arvore;
+import estruturas.ArvoreAbacate;
+import estruturas.ArvoreAcerola;
+import estruturas.ArvoreAmora;
+import estruturas.ArvoreCoco;
+import estruturas.ArvoreGoiaba;
+import estruturas.ArvoreLaranja;
+import estruturas.ArvoreMaracuja;
+import estruturas.Pedra;
+import frutas.Abacate;
+import frutas.Acerola;
+import frutas.Amora;
+import frutas.Coco;
+import frutas.Frutas;
+import frutas.Goiaba;
+import frutas.Laranja;
+import frutas.Maracuja;
 
 /**
  * Classe que constroi um terreno para inserir elementos e remover do mapa
@@ -14,7 +30,7 @@ public class Terreno {
 
 	/**
 	 * Construitor do Terreno
-	 * 
+	 *
 	 * @param dimensao - dimensão do mapa que vai ser gerado
 	 */
 	public Terreno(int dimensao) {
@@ -28,7 +44,7 @@ public class Terreno {
 
 	/**
 	 * Verifica se uma posição está disponível no mapa
-	 * 
+	 *
 	 * @param x posição x no mapa
 	 * @param y posição y no mapa
 	 * @return true se a posição está disponível, false caso contrário
@@ -42,7 +58,7 @@ public class Terreno {
 
 	/**
 	 * Adiciona uma árvore em uma posição específica do mapa
-	 * 
+	 *
 	 * @param arvore A árvore a ser adicionada
 	 * @param x      posição x no mapa
 	 * @param y      posição y no mapa
@@ -81,7 +97,7 @@ public class Terreno {
 
 	/**
 	 * Adiciona uma árvore em uma posição específica do mapa
-	 * 
+	 *
 	 * @param arvore A árvore a ser adicionada
 	 * @param x      posição x no mapa
 	 * @param y      posição y no mapax
@@ -98,10 +114,10 @@ public class Terreno {
 
 	/**
 	 * Metodo para encontrar uma posição vaga para a arvore
-	 * 
+	 *
 	 * @param arvore
 	 * @return true - se achou e false se não conseguiu achar
-	 * 
+	 *
 	 */
 	public boolean setarArvores(Arvore arvore) {
 		Random rand = new Random();
@@ -109,8 +125,9 @@ public class Terreno {
 		while (tentativas < this.getDimensao()) {
 			int x = rand.nextInt(this.getDimensao());
 			int y = rand.nextInt(this.getDimensao());
-			if (this.adicionaArvore(arvore, x, y))
+			if (this.adicionaArvore(arvore, x, y)) {
 				return true;
+			}
 
 		}
 		return false;
@@ -118,7 +135,7 @@ public class Terreno {
 
 	/**
 	 * Metodo que criar a quantidades de arvores e coloca na posição do mapa
-	 * 
+	 *
 	 * @param tipo       String - tipo da arvore laranja, maracuja ...
 	 * @param qtsArvores int - quantidades de arvores de um certo tipo para inserir
 	 */
@@ -166,7 +183,7 @@ public class Terreno {
 	/**
 	 * Metodo para criar cada tipo de arvore passando o tipo de arvore quantidades
 	 * para o metodo criarArvores
-	 * 
+	 *
 	 * @param arvMaracuja
 	 * @param arvLaranja
 	 * @param arvAbacate
@@ -189,7 +206,7 @@ public class Terreno {
 
 	/**
 	 * Pega a dimensao do mapa
-	 * 
+	 *
 	 * @return dimensao - int
 	 */
 	public int getDimensao() {
@@ -198,7 +215,7 @@ public class Terreno {
 
 	/**
 	 * Seta a dimensao de o mapa, caso queira mudar
-	 * 
+	 *
 	 * @param dimensao - int
 	 */
 	public void setDimensao(int dimensao) {
@@ -207,7 +224,7 @@ public class Terreno {
 
 	/**
 	 * Retorna o mapa com os elementos inseridos nele
-	 * 
+	 *
 	 * @return mapa - Matriz de elementos
 	 */
 	public Elemento[][] getMapa() {
@@ -220,7 +237,7 @@ public class Terreno {
 
 	/**
 	 * Metodo para setar um mapa completo
-	 * 
+	 *
 	 * @param mapa mapa que vai ser inserido
 	 */
 	public void setMapa(Elemento[][] mapa) {
@@ -229,7 +246,7 @@ public class Terreno {
 
 	/**
 	 * Retorna o tipo elemento inserido naquela posição da matriz
-	 * 
+	 *
 	 * @param x - posição x
 	 * @param y - posição y
 	 * @return tipo - String do tipo que esta no local
@@ -240,16 +257,17 @@ public class Terreno {
 
 	/**
 	 * Inseri um elemento no mapa
-	 * 
+	 *
 	 * @param x    - posição x do elemento
 	 * @param y    - posição y do elemento
 	 * @param elem O elemento que vai ser inserido
 	 */
 	public void inserirElem(int x, int y, Elemento elem) {
-		if (this.mapa[x][y] == null)
+		if (this.mapa[x][y] == null) {
 			this.mapa[x][y] = elem;
-		else
+		} else {
 			System.out.println("Espaço ja esta ocupado");
+		}
 	}
 
 	public void inserirCompetidor(int x, int y, Elemento competidor) {
@@ -258,21 +276,22 @@ public class Terreno {
 
 	/**
 	 * Metodo para pegar um elemento do mapa
-	 * 
+	 *
 	 * @param x pos
 	 * @param y pos
 	 * @return Elemento
 	 */
 	public Elemento getElemento(int x, int y) {
-		if ((x >= 0 && x < this.getDimensao()) && (y >= 0 && y < this.getDimensao()))
+		if ((x >= 0 && x < this.getDimensao()) && (y >= 0 && y < this.getDimensao())) {
 			return this.getMapa()[x][y];
+		}
 		return null;
 
 	}
 
 	/**
 	 * Remove um elemento do mapa
-	 * 
+	 *
 	 * @param x - posição x do elemento
 	 * @param y - posição y do elemento
 	 */
@@ -282,7 +301,7 @@ public class Terreno {
 
 	/**
 	 * Remove a fruta do chão do terreno para o competidor pegar
-	 * 
+	 *
 	 * @param x - posição x da fruta
 	 * @param y - posição y da fruta
 	 * @return fruta - a fruta que o usuario vai colocar na mochila.
@@ -298,7 +317,7 @@ public class Terreno {
 
 	/**
 	 * Coloca frutas em posições aleatorias
-	 * 
+	 *
 	 * @param fruta a fruta que vai no chãos
 	 */
 	public void colocarFruta(Frutas fruta) {
@@ -317,7 +336,7 @@ public class Terreno {
 	/**
 	 * Metodo geradore de frutas no chão, gera todos os tipos de frutas e coloca
 	 * cada uma em uma posição aleatoria no mapa.
-	 * 
+	 *
 	 * @param qtsMaracuja
 	 * @param qtsLaranja
 	 * @param qtsAbacate

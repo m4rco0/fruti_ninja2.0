@@ -1,15 +1,27 @@
 package cataFruta.interfaceJogo;
 
-import arquivos.*;
-
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
+import arquivos.LerArq;
 import competidor.Competidor;
 import terreno.Terreno;
 
@@ -17,7 +29,7 @@ import terreno.Terreno;
  * Classe JogoFrame que cria a interface gráfica do jogo. Responsável por exibir
  * o terreno e permitir que os jogadores façam seus movimentos através de
  * botões.
- * 
+ *
  */
 public class JogoFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -39,7 +51,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 		this.round = 0;
 		setTitle("Cata Fruta");
 		setSize(800, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		initUI();
 
@@ -152,7 +164,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 			System.out.println("Carregar Jogo selecionado");
 			// Carregando o arquivo
 			arq.lerConfig();
-			
+
 			this.terreno = new Terreno(arq.getDimensao());
 			int pedras = arq.getPedras();
 			int arvore_maracuja = arq.getQuantidadeArvores("maracuja");
@@ -169,7 +181,6 @@ public class JogoFrame extends JFrame implements ActionListener {
 			int fruta_amora = arq.getQuantidadeFrutas("amora");
 			int arvore_goiaba = arq.getQuantidadeArvores("goiaba");
 			int fruta_goiaba = arq.getQuantidadeFrutas("goiaba");
-			
 
 			this.inicilizarTerreno(pedras, arvore_maracuja, frutas_maracuja, arvore_laranja, fruta_laranja,
 					arvore_abacate, fruta_abacate, arvore_coco, fruta_coco, arvore_acerola, fruta_acerola, arvore_amora,
@@ -219,7 +230,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 		JLabel jogadorLabel = new JLabel(
 				"Jogador: " + (round % 2 == 0 ? competidor2.getNome() : competidor1.getNome()));
 		this.jogadorLabel = jogadorLabel;
-		JLabel movsLabel = new JLabel ("movs: 0");
+		JLabel movsLabel = new JLabel("movs: 0");
 		this.movsLabel = movsLabel;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.fill = GridBagConstraints.NONE;
@@ -308,6 +319,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Metodo responsavel por mudar o round do painel
+	 *
 	 * @param qRound qual round
 	 */
 	public void setRoundLabel(int qRound) {
@@ -332,8 +344,11 @@ public class JogoFrame extends JFrame implements ActionListener {
 
 		repaint();
 	}
+
 	/**
-	 * Move o jogador para o botão que clickou informando o lado, que pede para {@link Competidor} se mover.
+	 * Move o jogador para o botão que clickou informando o lado, que pede para
+	 * {@link Competidor} se mover.
+	 *
 	 * @param direcao onde o jogador vai se mover
 	 */
 	private void moveJogador(String direcao) {
@@ -361,23 +376,24 @@ public class JogoFrame extends JFrame implements ActionListener {
 			repaint();
 			checkTurn();
 		}
-		
+
 	}
 
 	/**
 	 * Metodo para ver o jogador que vai participar do turno e passara vez para ele
 	 */
 	private void checkTurn() {
-		
-		if(competidorAtual.getRoundsParado() > 0) {
-			if(competidorAtual == competidor1)
+
+		if (competidorAtual.getRoundsParado() > 0) {
+			if (competidorAtual == competidor1) {
 				competidorAtual = competidor2;
-			else
+			} else {
 				competidorAtual = competidor1;
-			return ;
+			}
+			return;
 		}
 		if (competidorAtual.getMov() < 0) {
-			
+
 			if (competidorAtual == competidor2) {
 				competidor2.girarDados();
 				competidorAtual = competidor1;
@@ -398,7 +414,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 	private void updateRoundInfo() {
 		roundLabel.setText("Round: " + round);
 		jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
-		
+
 		competidor1.decrementarRoundsParado();
 		competidor2.decrementarRoundsParado();
 	}
@@ -406,8 +422,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

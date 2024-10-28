@@ -1,13 +1,14 @@
 package arquivos;
 
-import javax.swing.JFileChooser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+
+import javax.swing.JFileChooser;
 
 /**
  * Classe responsável por ler a configuração de um arquivo de texto. O arquivo
@@ -31,7 +32,7 @@ public class LerArq {
 
 	/**
 	 * Lê a configuração do arquivo fornecido.
-	 * 
+	 *
 	 * @param arq O arquivo de configuração.
 	 */
 	public void lerConfig() {
@@ -43,12 +44,14 @@ public class LerArq {
 			try (Scanner sc = new Scanner(arq)) {
 				while (sc.hasNextLine()) {
 					String linha = sc.nextLine().trim();
-					if (linha.isEmpty())
+					if (linha.isEmpty()) {
 						continue;
+					}
 					String[] partes = linha.split(" ");
 
-					if (partes.length < 2)
+					if (partes.length < 2) {
 						continue;
+					}
 
 					try {
 						switch (partes[0].toLowerCase()) {
@@ -107,7 +110,7 @@ public class LerArq {
 
 	/**
 	 * Metodo apra salvar a configuração do mapa em um arquivo
-	 * 
+	 *
 	 * @param arq - arquivo em que vai ser salvo as configurações
 	 */
 	public void salvarConfig() {
@@ -144,7 +147,7 @@ public class LerArq {
 
 	/**
 	 * Obtém a dimensão da floresta.
-	 * 
+	 *
 	 * @return A dimensão da floresta.
 	 */
 	public int getDimensao() {
@@ -153,7 +156,7 @@ public class LerArq {
 
 	/**
 	 * Define a dimensão da floresta.
-	 * 
+	 *
 	 * @param dimensao A nova dimensão da floresta.
 	 */
 	public void setDimensao(int dimensao) {
@@ -162,7 +165,7 @@ public class LerArq {
 
 	/**
 	 * Obtém a quantidade de pedras na floresta.
-	 * 
+	 *
 	 * @return A quantidade de pedras.
 	 */
 	public int getPedras() {
@@ -171,7 +174,7 @@ public class LerArq {
 
 	/**
 	 * Define a quantidade de pedras na floresta.
-	 * 
+	 *
 	 * @param pedras A nova quantidade de pedras.
 	 */
 	public void setPedras(int pedras) {
@@ -180,7 +183,7 @@ public class LerArq {
 
 	/**
 	 * Obtém a porcentagem de frutas bichadas.
-	 * 
+	 *
 	 * @return A porcentagem de frutas bichadas.
 	 */
 	public int getBichadas() {
@@ -189,7 +192,7 @@ public class LerArq {
 
 	/**
 	 * Define a porcentagem de frutas bichadas.
-	 * 
+	 *
 	 * @param bichadas A nova porcentagem de frutas bichadas.
 	 */
 	public void setBichadas(int bichadas) {
@@ -198,7 +201,7 @@ public class LerArq {
 
 	/**
 	 * Obtém a capacidade da mochila.
-	 * 
+	 *
 	 * @return A capacidade da mochila.
 	 */
 	public int getMochila() {
@@ -207,18 +210,16 @@ public class LerArq {
 
 	/**
 	 * Define a capacidade da mochila.
-	 * 
+	 *
 	 * @param mochila A nova capacidade da mochila.
 	 */
 	public void setMochila(int mochila) {
 		this.mochila = mochila;
 	}
-	
-
 
 	/**
 	 * Obtém o mapa de frutas.
-	 * 
+	 *
 	 * @return O mapa de frutas.
 	 */
 	public Map<String, int[]> getFrutas() {
@@ -227,7 +228,7 @@ public class LerArq {
 
 	/**
 	 * Define o mapa de frutas.
-	 * 
+	 *
 	 * @param frutas O novo mapa de frutas.
 	 */
 	public void setFrutas(Map<String, int[]> frutas) {
@@ -236,7 +237,7 @@ public class LerArq {
 
 	/**
 	 * Adiciona uma nova fruta ao mapa de frutas.
-	 * 
+	 *
 	 * @param nome             O nome da fruta.
 	 * @param arvores          A quantidade de árvores da fruta.
 	 * @param quantidadeFrutas A quantidade de frutas.
@@ -247,7 +248,7 @@ public class LerArq {
 
 	/**
 	 * Obtém a quantidade de árvores de uma fruta específica.
-	 * 
+	 *
 	 * @param fruta O nome da fruta.
 	 * @return A quantidade de árvores da fruta, ou 0 se a fruta não existir.
 	 */
@@ -258,7 +259,7 @@ public class LerArq {
 
 	/**
 	 * Obtém a quantidade de frutas de uma fruta específica.
-	 * 
+	 *
 	 * @param fruta O nome da fruta.
 	 * @return A quantidade de frutas, ou 0 se a fruta não existir.
 	 */

@@ -13,7 +13,7 @@ public class Coco extends Frutas {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/coco.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 

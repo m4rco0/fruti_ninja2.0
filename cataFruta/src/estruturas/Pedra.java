@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
 import cataFruta.ElemEstaticos;
 
 /**
@@ -14,10 +15,10 @@ public class Pedra extends ElemEstaticos {
 
 	public Pedra(int x, int y) {
 		super(x, y);
-		try { 
+		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/pedra.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 
@@ -27,9 +28,10 @@ public class Pedra extends ElemEstaticos {
 
 	/**
 	 * Retorna o tipo de pedra
-	 * 
+	 *
 	 * @return "Pedra"
 	 */
+	@Override
 	public String getTipo() {
 		return "Pedra";
 	}

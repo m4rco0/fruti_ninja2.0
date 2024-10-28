@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
 import frutas.Acerola;
 
 /**
@@ -17,17 +18,19 @@ public class ArvoreAcerola extends Arvore {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/pe_acerola.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 
 	/**
 	 * Metodo que retorna o tipo da Arvore
 	 */
+	@Override
 	public String getTipo() {
 		return "ArvoreAmora";
 	}
 
+	@Override
 	public Image getImg() {
 		return imagem;
 	}

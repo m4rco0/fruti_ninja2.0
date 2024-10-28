@@ -1,8 +1,9 @@
 package estruturas;
 
-import cataFruta.ElemEstaticos;
 import java.util.ArrayList;
 import java.util.List;
+
+import cataFruta.ElemEstaticos;
 
 /**
  * Classe que cria uma grama como elemento Estatico.

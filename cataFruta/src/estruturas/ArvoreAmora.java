@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
 import frutas.Amora;
 
 /**
@@ -17,13 +18,14 @@ public class ArvoreAmora extends Arvore {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/pe_amora.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 
 	/**
 	 * Metodo que retorna o tipo da fruta
 	 */
+	@Override
 	public String getTipo() {
 		return "ArvoreAmora";
 	}

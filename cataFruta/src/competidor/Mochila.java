@@ -2,6 +2,7 @@ package competidor;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import frutas.Frutas;
 import frutas.Laranja;
 
@@ -17,7 +18,7 @@ public class Mochila {
 	/**
 	 * Construtor da mochila que cria uma lista vazia de frutas que é as que vão ser
 	 * inseridos na mochila.
-	 * 
+	 *
 	 * @param capacidadeMaxima capacidade maxiama que a mochila aceita.
 	 */
 	public Mochila(int capacidadeMaxima) {
@@ -27,7 +28,7 @@ public class Mochila {
 
 	/**
 	 * Metodo para inserir uma fruta na mochila
-	 * 
+	 *
 	 * @param fruta a fruta que vai ser inserida.
 	 * @return true se a fruta foi adicionada.
 	 *
@@ -43,7 +44,7 @@ public class Mochila {
 
 	/**
 	 * Metodo para remover uma fruta da mochila
-	 * 
+	 *
 	 * @param fruta a fruta que vai ser removida.
 	 * @return true se conseguiu remover.
 	 * @return false se nao conseguiu remover.
@@ -56,11 +57,10 @@ public class Mochila {
 			return false;
 		}
 	}
-	
 
 	/**
 	 * Mostra as frutas que estao na lista da mochila.
-	 * 
+	 *
 	 * @return lista de frutas.
 	 */
 	public List<Frutas> getFrutas() {
@@ -69,7 +69,7 @@ public class Mochila {
 
 	/**
 	 * Retorna o tamanho da mochila
-	 * 
+	 *
 	 * @return int size - quantas frutas estão na mochila
 	 */
 	public int getSize() {
@@ -78,10 +78,10 @@ public class Mochila {
 
 	/**
 	 * Metodo para remover uma fruta de um index da mochila
-	 * 
+	 *
 	 * @param i index que vai ser removido
 	 * @return true se removeu, false se nao removeu
-	 * 
+	 *
 	 */
 	public Frutas removeIndexFrut(int i) {
 		if (this.getSize() > i) {
@@ -104,29 +104,32 @@ public class Mochila {
 		}
 	}
 
-	
 	public int getPontos() {
 		int pontos = 0;
-		for(int i = 0; i < this.frutas.size(); i++) {
-			if(frutas.get(i) instanceof Laranja)
+		for (int i = 0; i < this.frutas.size(); i++) {
+			if (frutas.get(i) instanceof Laranja) {
 				pontos++;
+			}
 		}
-		
+
 		return pontos;
 	}
+
 	public int qtsFrutas(Frutas fruta) {
 		int qts = 0;
-		for(int i = 0; i < frutas.size(); i++) {
-			if(frutas.get(i).equals(fruta))
+		for (Frutas element : frutas) {
+			if (element.equals(fruta)) {
 				qts++;
+			}
 		}
 		return qts;
 	}
+
 	/*
 	 * Metodo que fala se a mochila ta cheia ou n
-	 * 
+	 *
 	 * @return true se estiver cheia false se estiver vazia
-	 * 
+	 *
 	 */
 	public boolean isCheia() {
 		return this.frutas.size() >= this.capacidadeMaxima;

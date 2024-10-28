@@ -8,7 +8,7 @@ import frutas.Frutas;
 /**
  * Classe abstrata de uma Arvore onde pega o tipo da arvore e a fruta que vai
  * entregar.
- * 
+ *
  * @author marcola
  */
 public abstract class Arvore extends ElemEstaticos {
@@ -16,7 +16,7 @@ public abstract class Arvore extends ElemEstaticos {
 
 	/**
 	 * Construtor de uma arvore
-	 * 
+	 *
 	 * @param x          posição x no mapa;
 	 * @param y          posição y no mapa;
 	 * @param tipoArvore qual o tipo de arvore e qual fruto vai dar.
@@ -30,7 +30,7 @@ public abstract class Arvore extends ElemEstaticos {
 
 	/**
 	 * Seta a posição do jogador
-	 * 
+	 *
 	 * @param x - posição x no mapa
 	 * @param y - posição y no mapa
 	 */
@@ -42,7 +42,7 @@ public abstract class Arvore extends ElemEstaticos {
 
 	/**
 	 * Devolve um fruto da arvore
-	 * 
+	 *
 	 * @return fruto da arvores
 	 */
 	public Frutas pegaFruta() {

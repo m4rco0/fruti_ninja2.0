@@ -14,7 +14,7 @@ public abstract class Frutas extends ElemDinamico {
 
 	/**
 	 * Constructor das Frutas
-	 * 
+	 *
 	 * @param x       A posicao inicial x da fruta
 	 * @param y       A posicao inicial y da fruta
 	 * @param pontos  Os pontos que esta fruta vale
@@ -28,13 +28,14 @@ public abstract class Frutas extends ElemDinamico {
 
 	/**
 	 * Obtém a quantidade de pontos que esta fruta vale.
-	 * 
+	 *
 	 * @return A quantida de pontos
 	 */
 	public int getPontos() {
 		return this.pontos;
 	}
 
+	@Override
 	public void setPos(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -42,7 +43,7 @@ public abstract class Frutas extends ElemDinamico {
 
 	/**
 	 * Fala se a fruta é bichada ou não
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isBichada() {
@@ -52,7 +53,7 @@ public abstract class Frutas extends ElemDinamico {
 	/**
 	 * Método abstrato que deve ser implementado pelas subclasses para retornar o
 	 * tipo da fruta.
-	 * 
+	 *
 	 * @return Uma strisng indicando o tipo da fruta.
 	 */
 

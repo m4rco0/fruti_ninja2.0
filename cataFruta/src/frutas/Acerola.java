@@ -13,7 +13,7 @@ public class Acerola extends Frutas {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/acerola.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 

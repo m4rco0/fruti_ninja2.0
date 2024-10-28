@@ -13,7 +13,7 @@ public class Laranja extends Frutas {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/laranja.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 

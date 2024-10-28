@@ -1,11 +1,16 @@
 package cataFruta.interfaceJogo;
 
-import javax.swing.*;
-import java.awt.*;
-import competidor.*;
-import frutas.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.JPanel;
+
+import competidor.Competidor;
+import estruturas.Arvore;
 import estruturas.Pedra;
-import estruturas.*;;
+import frutas.Frutas;;
 
 public class TerrenoPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +28,7 @@ public class TerrenoPanel extends JPanel {
 		setPreferredSize(new Dimension(800, 800)); // Set preferred size for the panel
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// Image background = new
@@ -63,7 +69,7 @@ public class TerrenoPanel extends JPanel {
 				} else {
 					// This tile represents GRAMA
 					g.setColor(getBackground());
-					; // Tile color
+					 // Tile color
 					g.fillRect(col * tileWidth, row * tileHeight, tileWidth, tileHeight); // Draw the tile
 				}
 				// Draw the border around the tile

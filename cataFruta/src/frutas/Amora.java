@@ -13,7 +13,7 @@ public class Amora extends Frutas {
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/amora.png"));
 		} catch (IOException e) {
-			
+
 		}
 	}
 
