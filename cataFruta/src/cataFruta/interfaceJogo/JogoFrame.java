@@ -33,6 +33,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 	private JLabel roundLabel;
 	private JLabel jogadorLabel;
 	private JPanel controles;
+	private JLabel movsLabel;
 
 	/**
 	 * Construtor da classe JogoFrame. Inicializa a interface gráfica do jogo,
@@ -220,6 +221,8 @@ public class JogoFrame extends JFrame implements ActionListener {
 		JLabel jogadorLabel = new JLabel(
 				"Jogador: " + (round % 2 == 0 ? competidor2.getNome() : competidor1.getNome()));
 		this.jogadorLabel = jogadorLabel;
+		JLabel movsLabel = new JLabel ("movs: 0");
+		this.movsLabel = movsLabel;
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.fill = GridBagConstraints.NONE;
 
@@ -289,6 +292,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 		controlsPanel.setVisible(false);
 		parentPanel.add(roundLabel, gbc);
 		parentPanel.add(jogadorLabel, gbc);
+		parentPanel.add(movsLabel, gbc);
 		parentPanel.add(iniciarJogoButton); // Adiciona o botão "Iniciar Jogo"
 
 		// Adicionando um espaço entre os botões, se necessário
@@ -322,6 +326,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 	}
 
 	private void moveJogador(String direcao) {
+		movsLabel.setText("movs: " + competidorAtual.getMov());
 		if (competidorAtual.getPontos() >= 2) {
 			JOptionPane.showMessageDialog(null, "Jogodor " + competidorAtual.getNome() + " ganhou!");
 			controles.setVisible(false);
@@ -345,11 +350,21 @@ public class JogoFrame extends JFrame implements ActionListener {
 			repaint();
 			checkTurn();
 		}
+		
 	}
 
 	private void checkTurn() {
+		
+		if(competidorAtual.getRoundsParado() > 0) {
+			if(competidorAtual == competidor1)
+				competidorAtual = competidor2;
+			else
+				competidorAtual = competidor1;
+			return ;
+		}
+		System.out.println(competidorAtual.getNome() + " tem rounds parado " + competidorAtual.getRoundsParado());
 		if (competidorAtual.getMov() < 0) {
-
+			
 			if (competidorAtual == competidor2) {
 				competidor2.girarDados();
 				competidorAtual = competidor1;
@@ -367,11 +382,13 @@ public class JogoFrame extends JFrame implements ActionListener {
 	private void updateRoundInfo() {
 		roundLabel.setText("Round: " + round);
 		jogadorLabel.setText("Jogador Atual: " + competidorAtual.getNome());
+		
+		competidor1.decrementarRoundsParado();
+		competidor2.decrementarRoundsParado();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 

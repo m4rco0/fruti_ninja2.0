@@ -1,9 +1,9 @@
 package estruturas;
 
 import java.awt.Image;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
-
+import javax.imageio.ImageIO;
 import frutas.Amora;
 
 /**
@@ -14,7 +14,11 @@ public class ArvoreAmora extends Arvore {
 
 	public ArvoreAmora(int x, int y, String tipoArvore, Amora amora) {
 		super(x, y, tipoArvore, amora);
-		imagem = new ImageIcon("sprites/pe_amora.png").getImage();
+		try {
+			this.imagem = ImageIO.read(getClass().getResource("/sprites/pe_amora.png"));
+		} catch (IOException e) {
+			
+		}
 	}
 
 	/**

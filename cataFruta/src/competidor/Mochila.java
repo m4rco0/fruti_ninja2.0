@@ -3,6 +3,7 @@ package competidor;
 import java.util.ArrayList;
 import java.util.List;
 import frutas.Frutas;
+import frutas.Laranja;
 
 /**
  * Class da mochila utilizada pelo competidor onde tem uma lista de frutas e um
@@ -101,7 +102,16 @@ public class Mochila {
 			System.out.println();
 		}
 	}
-
+	
+	public int getPontos() {
+		int pontos = 0;
+		for(int i = 0; i < this.frutas.size(); i++) {
+			if(frutas.get(i) instanceof Laranja)
+				pontos++;
+		}
+		
+		return pontos;
+	}
 	/*
 	 * Metodo que fala se a mochila ta cheia ou n
 	 * 

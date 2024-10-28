@@ -98,10 +98,13 @@ public class Competidor extends ElemDinamico {
 		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(novaX, y);
 			this.pegarFrutaChao(fruta);
-			terreno.removerElem(novaX, y);
 			terreno.inserirCompetidor(novaX, y, this);
 			terreno.removerElem(x, y);
 			this.setPos(novaX, y);
+		}else if (terreno.getElemento(novaX,y) instanceof Arvore) {
+			Arvore arv = (Arvore) terreno.getElemento(novaX, y);
+			this.pegarFrutaArv(arv);
+			this.setRoundsParado(2);
 		}
 		this.qts_mov--;
 		try {
@@ -132,16 +135,17 @@ public class Competidor extends ElemDinamico {
 				this.setPos(novaX + 1, y);
 				this.qts_mov -= 2;
 			} 
-			
-
 		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(novaX, y);
 			this.pegarFrutaChao(fruta);
 			terreno.inserirCompetidor(novaX, y, this);
 			terreno.removerElem(x, y);
 			this.setPos(novaX, y);
+		} else if (terreno.getElemento(novaX, y) instanceof Arvore) {
+			Arvore arv = (Arvore) terreno.getElemento(novaX, y);
+			this.pegarFrutaArv(arv);
+			this.setRoundsParado(2);
 		}
-		System.out.println(this.qts_mov);
 		this.qts_mov--;
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/playerr.png"));
@@ -180,6 +184,10 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(x, novaY, this);
 			terreno.removerElem(x, y);
 			this.setPos(x, novaY);
+		} else if (terreno.getElemento(x, novaY) instanceof Arvore) {
+			Arvore arv = (Arvore) terreno.getElemento(x, novaY);
+			this.pegarFrutaArv(arv);
+			this.setRoundsParado(2);
 		}
 		this.qts_mov--;
 		try {
@@ -218,6 +226,10 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(x, dy, this);
 			terreno.removerElem(x, y);
 			this.setPos(x, dy);
+		} else if (terreno.getElemento(x, dy) instanceof Arvore) {
+			Arvore arv = (Arvore) terreno.getElemento(x, dy);
+			this.pegarFrutaArv(arv);
+			this.setRoundsParado(2);
 		}
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/Player_Right.png"));
@@ -260,7 +272,7 @@ public class Competidor extends ElemDinamico {
 	 * @return pontos
 	 */
 	public int getPontos() {
-		return this.pontos;
+		return mochila.getPontos();
 	}
 
 	/**
@@ -322,7 +334,7 @@ public class Competidor extends ElemDinamico {
 		this.mochila.addFruta(arvore.pegaFruta());
 		this.setForca(this.getForca() + 1);
 		this.roundParado = 2;
-		System.out.println("[+]" + arvore.getTipo() + "fruto pego");
+		JOptionPane.showMessageDialog(null, "jogador " + this.getNome() + " pegou " + arvore.getTipo());
 	}
 
 	/**
@@ -331,8 +343,6 @@ public class Competidor extends ElemDinamico {
 	 * @param fruta
 	 */
 	public void pegarFrutaChao(Frutas fruta) {
-		if (fruta instanceof Laranja)
-			this.addPontos(1);
 		this.mochila.addFruta(fruta);
 	}
 
@@ -397,7 +407,6 @@ public class Competidor extends ElemDinamico {
 	 * @param nextInt - quantos movimentos
 	 */
 	public void setMov(int nextInt) {
-		// TODO Auto-generated method stub
 		this.qts_mov = nextInt;
 	}
 
