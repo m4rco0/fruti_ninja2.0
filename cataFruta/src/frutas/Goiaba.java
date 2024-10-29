@@ -23,9 +23,13 @@ public class Goiaba extends Frutas {
 	@Override
 	public String getTipo() {
 		// TODO Auto-generated method stub
-		return "Acerola";
+		return "Goiaba";
 	}
-
+	
+	/**
+	 * Mostra Imagem {@link Image}
+	 * return {@link Image}
+	 */
 	@Override
 	public Image getImg() {
 		// TODO Auto-generated method stub

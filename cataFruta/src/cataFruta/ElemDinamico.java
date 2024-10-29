@@ -21,7 +21,6 @@ public abstract class ElemDinamico extends Elemento {
 	 *
 	 * @param x Number - proxima pos x do elemento
 	 * @param y Number - proxima pos y do elemento
-	 * @return void
 	 */
 	public void setPos(int x, int y) {
 		this.x = x;

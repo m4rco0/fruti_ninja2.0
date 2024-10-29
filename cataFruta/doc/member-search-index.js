@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"cataFruta","c":"ElemDinamico","l":"ElemDinamico(int, int)","u":"%3Cinit%3E(int,int)"},{"p":"cataFruta","c":"ElemDinamico","l":"setPos(int, int)","u":"setPos(int,int)"}];updateSearchResults();

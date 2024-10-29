@@ -25,6 +25,10 @@ public class Laranja extends Frutas {
 		return "Laranja";
 	}
 
+	/**
+	 * Mostra Imagem {@link Image}
+	 * return {@link Image}
+	 */
 	@Override
 	public Image getImg() {
 		return imagem;

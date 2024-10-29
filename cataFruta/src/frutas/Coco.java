@@ -18,7 +18,8 @@ public class Coco extends Frutas {
 	}
 
 	/**
-	 * Retorna o tipo da frutas
+	 * Mostra Imagem {@link Image}
+	 * return {@link Image}
 	 */
 	@Override
 	public String getTipo() {

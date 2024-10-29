@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,6 +52,7 @@ public class JogoFrame extends JFrame implements ActionListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private JLabel movsLabel;
+	private JTextArea actionLog;
 
 	/**
 	 * Construtor para criar um painel com titulo de "Cata Fruta" tamanho 800x600
@@ -58,35 +60,31 @@ public class JogoFrame extends JFrame implements ActionListener {
 	public JogoFrame() {
 		this.round = 0;
 		setTitle("Cata Fruta");
-		setSize(800, 600);
+		setSize(1000, 600);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		initUI();
 
 	}
-
+	
 	/**
-	 * Metodo responsável por inicializar o terreno com elementos do jogo. As
-	 * pedras, árvores e frutas são distribuídas pelo terreno de acordo com as
-	 * quantidades fornecidas.
-	 *
-	 * @param qtsPedras      A quantidade de pedras no terreno.
-	 * @param qtsArvMaracuja A quantidade de árvores de maracujá.
-	 * @param maracuja       A quantidade de frutos de maracujá.
-	 * @param arvoreLaranja  A quantidade de árvores de laranja.
-	 * @param laranja        A quantidade de frutos de laranja.
-	 * @param arvoreAbacate  A quantidade de árvores de abacate.
-	 * @param abacate        A quantidade de frutos de abacate.
-	 * @param arvCoco        A quantidade de coqueiros.
-	 * @param coco           A quantidade de cocos.
-	 * @param arvAcerola     A quantidade de árvores de acerola.
-	 * @param acerola        A quantidade de frutos de acerola.
-	 * @param arvAmora       A quantidade de amoreiras.
-	 * @param amora          A quantidade de frutos de amora.
-	 * @param arvGoiaba      A quantidade de goiabeiras.
-	 * @param goiaba         A quantidade de frutos de goiaba.
+	 * Metodo para inicializar o terreno
+	 * @param qtsPedras
+	 * @param qtsArvMaracuja
+	 * @param maracuja
+	 * @param arvoreLaranja
+	 * @param laranja
+	 * @param arvoreAbacate
+	 * @param abacate
+	 * @param arvCoco
+	 * @param coco
+	 * @param arvAcerola
+	 * @param acerola
+	 * @param arvAmora
+	 * @param Amora
+	 * @param arvGoiaba
+	 * @param goiaba
 	 */
-
 	private void inicilizarTerreno(int qtsPedras, int qtsArvMaracuja, int maracuja, int arvoreLaranja, int laranja,
 			int arvoreAbacate, int abacate, int arvCoco, int coco, int arvAcerola, int acerola, int arvAmora, int Amora,
 			int arvGoiaba, int goiaba) {
@@ -220,6 +218,13 @@ public class JogoFrame extends JFrame implements ActionListener {
 		this.controles = controlsPanel;
 		controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
 		
+		actionLog = new JTextArea(10, 20);
+        actionLog.setEditable(false);
+        JScrollPane logScrollPane = new JScrollPane(actionLog);
+        logScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        controlsPanel.add(logScrollPane, BorderLayout.SOUTH);
+        mainPanel.add(controlsPanel, BorderLayout.EAST);
+		
 		// tabela para exibir as frutas coletadas por cada competidor
 		table = new JTable(tableModel);
 		tableModel = new DefaultTableModel(new Object[]{"Frutas", competidor1.getNome(), competidor2.getNome()}, 0);
@@ -291,7 +296,6 @@ public class JogoFrame extends JFrame implements ActionListener {
 		this.jogadorLabel = jogadorLabel;
 		JLabel movsLabel = new JLabel("movs: 0");
 		this.movsLabel = movsLabel;
-		
 		
 		
 		
@@ -399,19 +403,23 @@ public class JogoFrame extends JFrame implements ActionListener {
 		}
 
 		if (direcao == "d") {
-			competidorAtual.moverDireita(terreno);
+			actionLog.append(competidorAtual.getNome() + " moveu-se para direita\n");
+			competidorAtual.moverDireita(terreno, actionLog);
 			repaint();
 			checkTurn();
 		} else if (direcao == "w") {
-			competidorAtual.moverCima(terreno);
+			actionLog.append(competidorAtual.getNome() + " moveu-se para cima\n");
+			competidorAtual.moverCima(terreno, actionLog);
 			repaint();
 			checkTurn();
 		} else if (direcao == "a") {
-			competidorAtual.moverEsquerda(terreno);
+			actionLog.append(competidorAtual.getNome() + " moveu-se para esquerda\n");
+			competidorAtual.moverEsquerda(terreno, actionLog);
 			repaint();
 			checkTurn();
 		} else if (direcao == "s") {
-			competidorAtual.moverBaixo(terreno);
+			actionLog.append(competidorAtual.getNome() + " moveu-se para baixo\n");
+			competidorAtual.moverBaixo(terreno, actionLog);
 			repaint();
 			checkTurn();
 		}
@@ -474,8 +482,9 @@ public class JogoFrame extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		repaint();
+		
 	}
+
 
 }

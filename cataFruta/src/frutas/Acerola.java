@@ -25,7 +25,11 @@ public class Acerola extends Frutas {
 		// TODO Auto-generated method stub
 		return "Acerola";
 	}
-
+	
+	/**
+	 * Mostra Imagem {@link Image}
+	 * return {@link Image}
+	 */
 	@Override
 	public Image getImg() {
 		// TODO Auto-generated method stub

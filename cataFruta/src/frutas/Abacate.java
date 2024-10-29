@@ -25,6 +25,10 @@ public class Abacate extends Frutas {
 		return "Abacate";
 	}
 
+	/**
+	 * Retorna sprite
+	 * @return  {@link Image}
+	 */
 	@Override
 	public Image getImg() {
 		return imagem;

@@ -22,9 +22,13 @@ public class Maracuja extends Frutas {
 	 */
 	@Override
 	public String getTipo() {
-		return "Maracujá";
+		return "Maracuja";
 	}
 
+	/**
+	 * Mostra Imagem {@link Image}
+	 * return {@link Image}
+	 */
 	@Override
 	public Image getImg() {
 		// TODO Auto-generated method stub

@@ -57,6 +57,11 @@ public class Mochila {
 			return false;
 		}
 	}
+	public Frutas removerPrimeiro() {
+		if(frutas.size() > 0)
+			return frutas.removeFirst();
+		return null;
+	}
 
 	/**
 	 * Mostra as frutas que estao na lista da mochila.
@@ -84,8 +89,8 @@ public class Mochila {
 	 *
 	 */
 	public Frutas removeIndexFrut(int i) {
-		if (this.getSize() > i) {
-			return this.frutas.get(i);
+		if(frutas.size() > i) {
+			return frutas.remove(i);
 		}
 		return null;
 	}
@@ -104,6 +109,10 @@ public class Mochila {
 		}
 	}
 
+	/**
+	 * Retorna os pontos dos usuarios na mochila, que são os maracuja
+	 * @return qts maracuja
+	 */
 	public int getPontos() {
 		int pontos = 0;
 		for (int i = 0; i < this.frutas.size(); i++) {
@@ -115,10 +124,15 @@ public class Mochila {
 		return pontos;
 	}
 
-	public int qtsFrutas(Frutas fff) {
+	/**
+	 * Quantas frutas tem na mochila
+	 * @param fruta
+	 * @return quantidade de frutas
+	 */
+	public int qtsFrutas(Frutas fruta) {
 		int qts = 0;
 		for (int i =0; i < frutas.size(); i++) {
-			if (frutas.get(i).getTipo()  == fff.getTipo()) {
+			if (frutas.get(i).getTipo()  == fruta.getTipo()) {
 				qts++;
 			}
 		}

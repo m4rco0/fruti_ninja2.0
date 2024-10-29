@@ -33,7 +33,6 @@ public class LerArq {
 	/**
 	 * Lê a configuração do arquivo fornecido.
 	 *
-	 * @param arq O arquivo de configuração.
 	 */
 	public void lerConfig() {
 		JFileChooser escolha = new JFileChooser();
@@ -111,7 +110,6 @@ public class LerArq {
 	/**
 	 * Metodo apra salvar a configuração do mapa em um arquivo
 	 *
-	 * @param arq - arquivo em que vai ser salvo as configurações
 	 */
 	public void salvarConfig() {
 		JFileChooser escolha = new JFileChooser();

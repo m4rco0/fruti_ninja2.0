@@ -21,7 +21,6 @@ public abstract class Arvore extends ElemEstaticos {
 	 * @param y          posição y no mapa;
 	 * @param tipoArvore qual o tipo de arvore e qual fruto vai dar.
 	 * @param fruta      tipo da fruta que vai entregar ao jogador.
-	 * @param imagem2
 	 */
 	public Arvore(int x, int y, String tipoArvore, Frutas fruta) {
 		super(x, y);

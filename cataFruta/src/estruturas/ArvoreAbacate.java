@@ -12,7 +12,13 @@ import frutas.Abacate;
  */
 public class ArvoreAbacate extends Arvore {
 	private Image imagem;
-
+	/**
+	 * Construtor da ArvoreAbacate
+	 * @param x
+	 * @param y
+	 * @param tipoArvore
+	 * @param abacate
+	 */
 	public ArvoreAbacate(int x, int y, String tipoArvore, Abacate abacate) {
 		super(x, y, tipoArvore, abacate);
 		try {

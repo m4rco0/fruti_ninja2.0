@@ -231,6 +231,13 @@ public class Terreno {
 		return this.mapa;
 	}
 
+	
+	/**
+	 *  Fala se tem mapa setado
+	 * @param i posição x
+	 * @param j  posição y
+	 * @return mapa {@index Terreno}
+	 */
 	public boolean hasMapa(int i, int j) {
 		return this.mapa[i][j] != null;
 	}
@@ -270,6 +277,12 @@ public class Terreno {
 		}
 	}
 
+	/**
+	 * Insere um competidor
+	 * @param x 
+	 * @param y
+	 * @param competidor
+	 */
 	public void inserirCompetidor(int x, int y, Elemento competidor) {
 		this.mapa[x][y] = competidor;
 	}

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 import cataFruta.ElemDinamico;
 import estruturas.Arvore;
@@ -88,14 +89,14 @@ public class Competidor extends ElemDinamico {
 	 *
 	 * @param terreno
 	 */
-	public void moverCima(Terreno terreno) {
+	public void moverCima(Terreno terreno, JTextArea actionLog) {
 		int novaX = this.x - 1;
 
 		if (terreno.posicaoDisponivel(novaX, this.getY())) {
 			terreno.inserirCompetidor(novaX, this.getY(), this);
 			terreno.removerElem(this.x, this.y);
 			this.setPos(novaX, this.y);
-		} else if (x >= 2 && terreno.getElemento(novaX, y) instanceof Pedra) {
+		} else if (x >= 2 && terreno.getElemento(novaX, y) instanceof Pedra && this.qts_mov > 1) {
 			if (terreno.getElemento(novaX - 1, y) == null) {
 				terreno.inserirCompetidor(novaX - 1, y, this);
 				terreno.removerElem(x, y);
@@ -107,6 +108,7 @@ public class Competidor extends ElemDinamico {
 				terreno.inserirCompetidor(novaX-1, y, this);
 				terreno.removerElem(x, y);
 				this.setPos(novaX-1, y);
+				actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 			}
 
 		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
@@ -115,13 +117,15 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(novaX, y, this);
 			terreno.removerElem(x, y);
 			this.setPos(novaX, y);
+			actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 		} else if (terreno.getElemento(novaX, y) instanceof Arvore) {
 			Arvore arv = (Arvore) terreno.getElemento(novaX, y);
 			this.pegarFrutaArv(arv);
 			this.setRoundsParado(2);
+			actionLog.append(this.getNome() + " pegou " + arv.pegaFruta().getTipo() + " da "+ arv.getTipo() + "\n");
 		} else if (terreno.getElemento(novaX, y) instanceof Competidor) {
 			Competidor comp = (Competidor) terreno.getElemento(novaX, y);
-			this.empurrao(comp, novaX, y, terreno);
+			this.empurrao(comp, novaX, y, terreno, actionLog);
 		}
 		this.qts_mov--;
 		try {
@@ -139,13 +143,13 @@ public class Competidor extends ElemDinamico {
 	 *
 	 * @param terreno
 	 */
-	public void moverBaixo(Terreno terreno) {
+	public void moverBaixo(Terreno terreno, JTextArea actionLog) {
 		int novaX = this.x + 1;
 		if (terreno.posicaoDisponivel(novaX, this.y)) {
 			terreno.removerElem(x, y);
 			terreno.inserirCompetidor(novaX, y, this);
 			this.setPos(novaX, y);
-		} else if (x < terreno.getDimensao() - 2 && terreno.getElemento(novaX, y) instanceof Pedra) {
+		} else if (x < terreno.getDimensao() - 2 && terreno.getElemento(novaX, y) instanceof Pedra && this.qts_mov > 1) {
 			if (terreno.getElemento(novaX + 1, y) == null) {
 				terreno.inserirCompetidor(novaX + 1, y, this);
 				terreno.removerElem(x, y);
@@ -157,6 +161,7 @@ public class Competidor extends ElemDinamico {
 				terreno.inserirCompetidor(novaX+1, y, this);
 				terreno.removerElem(x, y);
 				this.setPos(novaX+1, y);
+				actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 			}
 		} else if (terreno.getElemento(novaX, y) instanceof Frutas) {
 			Frutas fruta = terreno.pegarFruta(novaX, y);
@@ -164,13 +169,15 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(novaX, y, this);
 			terreno.removerElem(x, y);
 			this.setPos(novaX, y);
+			actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 		} else if (terreno.getElemento(novaX, y) instanceof Arvore) {
 			Arvore arv = (Arvore) terreno.getElemento(novaX, y);
 			this.pegarFrutaArv(arv);
 			this.setRoundsParado(2);
+			actionLog.append(this.getNome() + " pegou " + arv.pegaFruta().getTipo() + " da "+ arv.getTipo() + "\n");
 		} else if (terreno.getElemento(novaX, y) instanceof Competidor) {
 			Competidor competidor = (Competidor) terreno.getElemento(novaX, y);
-			this.empurrao(competidor, novaX, y, terreno);
+			this.empurrao(competidor, novaX, y, terreno, actionLog);
 		}
 		if (this.getMov() > 0) {
 			this.qts_mov--;
@@ -190,7 +197,7 @@ public class Competidor extends ElemDinamico {
 	 *
 	 * @param terreno
 	 */
-	public void moverEsquerda(Terreno terreno) {
+	public void moverEsquerda(Terreno terreno, JTextArea actionLog) {
 		int novaY = this.y - 1;
 
 		// verificar se n tem nada e colocar o jogadr
@@ -198,7 +205,7 @@ public class Competidor extends ElemDinamico {
 			terreno.removerElem(x, y);
 			terreno.inserirCompetidor(x, novaY, this);
 			this.setPos(x, novaY);
-		} else if (y >= 2 && terreno.getElemento(x, novaY) instanceof Pedra) {
+		} else if (y >= 2 && terreno.getElemento(x, novaY) instanceof Pedra && this.qts_mov > 1) {
 			if (terreno.getElemento(x, novaY - 1) == null) {
 				terreno.inserirCompetidor(x, novaY - 1, this);
 				terreno.removerElem(x, y);
@@ -210,6 +217,7 @@ public class Competidor extends ElemDinamico {
 				terreno.inserirCompetidor(x, novaY-1, this);
 				terreno.removerElem(x, y);
 				this.setPos(x, novaY-1);
+				actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 			}
 
 		} else if (terreno.getElemento(x, novaY) instanceof Frutas) {
@@ -218,13 +226,15 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(x, novaY, this);
 			terreno.removerElem(x, y);
 			this.setPos(x, novaY);
+			actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 		} else if (terreno.getElemento(x, novaY) instanceof Arvore) {
 			Arvore arv = (Arvore) terreno.getElemento(x, novaY);
 			this.pegarFrutaArv(arv);
 			this.setRoundsParado(2);
+			actionLog.append(this.getNome() + " pegou " + arv.pegaFruta() + " da "+ arv.getTipo() + "\n");
 		} else if (terreno.getElemento(x, novaY) instanceof Competidor) {
 			Competidor competidor = (Competidor) terreno.getElemento(x, novaY);
-			this.empurrao(competidor, x, novaY, terreno);
+			this.empurrao(competidor, x, novaY, terreno, actionLog);
 		}
 		this.qts_mov--;
 		try {
@@ -242,14 +252,14 @@ public class Competidor extends ElemDinamico {
 	 *
 	 * @param terreno
 	 */
-	public void moverDireita(Terreno terreno) {
+	public void moverDireita(Terreno terreno, JTextArea actionLog) {
 		int dy = this.y + 1;
 
 		if (terreno.posicaoDisponivel(x, dy)) {
 			terreno.removerElem(x, y);
 			terreno.inserirCompetidor(x, dy, this);
 			this.setPos(x, dy);
-		} else if (y <= terreno.getDimensao() - 2 && terreno.getElemento(x, dy) instanceof Pedra) {
+		} else if (y <= terreno.getDimensao() - 2 && terreno.getElemento(x, dy) instanceof Pedra && this.qts_mov >1) {
 			if (terreno.getElemento(x, dy + 1) == null) {
 				terreno.inserirCompetidor(x, dy + 1, this);
 				terreno.removerElem(x, y);
@@ -261,6 +271,7 @@ public class Competidor extends ElemDinamico {
 				terreno.inserirCompetidor(x, dy+1, this);
 				terreno.removerElem(x, y);
 				this.setPos(x, dy+1);
+				actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 			}
 
 		} else if (terreno.getElemento(x, dy) instanceof Frutas) {
@@ -269,14 +280,16 @@ public class Competidor extends ElemDinamico {
 			terreno.inserirCompetidor(x, dy, this);
 			terreno.removerElem(x, y);
 			this.setPos(x, dy);
+			actionLog.append(this.getNome() + " pegou " + fruta.getTipo() + "\n");
 		} else if (terreno.getElemento(x, dy) instanceof Arvore) {
 			Arvore arv = (Arvore) terreno.getElemento(x, dy);
 			this.pegarFrutaArv(arv);
 			this.setRoundsParado(2);
+			actionLog.append(this.getNome() + " pegou " + arv.pegaFruta().getTipo() + " da "+ arv.getTipo() + "\n");
 		} else if (terreno.getElemento(x, dy) instanceof Competidor) {
 			Competidor competidor = (Competidor) terreno.getElemento(x, dy);
-			this.empurrao(competidor, x, dy, terreno);
-			JOptionPane.showMessageDialog(null, "Empurrando " + competidor.getNome());
+			this.empurrao(competidor, x, dy, terreno, actionLog);
+			
 		}
 		try {
 			this.imagem = ImageIO.read(getClass().getResource("/sprites/Player_Right.png"));
@@ -397,13 +410,12 @@ public class Competidor extends ElemDinamico {
 	/**
 	 * Competidor pega a fruta do chao e remove do terreno.
 	 *
-	 * @param fruta a fruta pega pelo jogador
+	 * @param arvore
 	 */
 	public void pegarFrutaArv(Arvore arvore) {
 		this.mochila.addFruta(arvore.pegaFruta());
 		this.setForca(this.getForca() + 1);
 		this.roundParado = 2;
-		JOptionPane.showMessageDialog(null, "jogador " + this.getNome() + " pegou " + arvore.getTipo());
 	}
 
 	/**
@@ -424,32 +436,67 @@ public class Competidor extends ElemDinamico {
 		return this.mochila.getSize();
 	}
 
-	public void serEmpurrado(int forcaSofrida) {
-
+	
+	/**
+	 * Metodo que vai dropar as frutas do jogador que foi empurrado
+	 * @param forcaEmpurrao
+	 * @param terreno
+	 * @param actionLog
+	 */
+	public void serEmpurrado(int forcaEmpurrao, Terreno terreno, JTextArea actionLog) {
+		int frutasDerrubadas = Math.max(0, forcaEmpurrao);
+		actionLog.append(this.getNome() + " perdeu " + frutasDerrubadas + " frutas\n");
+		for(int i = 1; i < frutasDerrubadas; i++) {
+			if(terreno.posicaoDisponivel(x, y+1)) {
+				Frutas fruta = this.mochila.removerPrimeiro();
+				terreno.inserirElem(x, y+1, fruta);
+				frutasDerrubadas--;
+			} 
+			if (terreno.posicaoDisponivel(x, y-1)) {
+				Frutas fruta = this.mochila.removerPrimeiro();
+				terreno.inserirElem(x, y-1, fruta);
+				frutasDerrubadas--;
+			}
+			if (terreno.posicaoDisponivel(x+1, y)) {
+				Frutas fruta = this.mochila.removerPrimeiro();
+				terreno.inserirElem(x+1, y, fruta);
+				frutasDerrubadas--;
+			}
+			if (terreno.posicaoDisponivel(x-1, y)) {
+				Frutas fruta = this.mochila.removerPrimeiro();
+				terreno.inserirElem(x-1, y, fruta);
+				frutasDerrubadas--;
+			}
+			if (terreno.posicaoDisponivel(x+1, y-1)) {
+				Frutas fruta = this.mochila.removerPrimeiro();
+				terreno.inserirElem(x+1, y-1, fruta);
+				frutasDerrubadas--;
+			}
+			if (terreno.posicaoDisponivel(x-1, y)) {
+				Frutas fruta = this.mochila.removerPrimeiro();
+				terreno.inserirElem(x-1, y+1, fruta);
+				frutasDerrubadas--;
+			}
+		}
+		
 	}
 
-	public void empurrao(Competidor competidor, int x, int y, Terreno terreno) {
+	
+	/**
+	 * Metodo do compeitodr que vai empurrar
+	 * @param competidor {@link Competidor}
+	 * @param x posição
+	 * @param y posição
+	 * @param terreno {@link Terreno}
+	 * @param actionLog log que vai geral as msgs}
+	 */
+	public void empurrao(Competidor competidor, int x, int y, Terreno terreno, JTextArea actionLog) {
 		int forca_ataque = 2 * (this.mochila.getSize() - 1);
 		int forca_defesa = competidor.getForca();
 		
 		int empurrao = (int) Math.round(Math.log((forca_ataque+1) - Math.round(forca_defesa +1)) / Math.log(2));
-		JOptionPane.showMessageDialog(null, "O jogador " + competidor.getNome() + " vai derrubar " + empurrao);
-	}
-
-	/**
-	 * Metodo que empurra um competidor em certa posição
-	 *
-	 * @param competidor
-	 * @param x
-	 * @param y
-	 */
-
-	/**
-	 * Printa o conteudo da mmochila
-	 */
-	public void exibirMochila() {
-		System.out.println("Conteudo da mochila:");
-		mochila.mostrar();
+		JOptionPane.showMessageDialog(null, "O jogador " + competidor.getNome() + " vai derrubar " + Math.max(0,  empurrao));
+		competidor.serEmpurrado(empurrao, terreno, actionLog);
 	}
 
 	/**
@@ -461,6 +508,10 @@ public class Competidor extends ElemDinamico {
 		return this.roundParado;
 	}
 
+	/**
+	 * mudar o tamanho da mochila
+	 * @param tamanho
+	 */
 	public void setTamMochila(int tamanho) {
 		this.capacidadeMochila = tamanho;
 	}
@@ -483,6 +534,10 @@ public class Competidor extends ElemDinamico {
 		}
 	}
 	
+	/**
+	 * passar o tamanho da mochila
+	 * @return tamanho da mochila
+	 */
 	public int getqtsMochila() {
 		return this.mochila.getSize();
 	}
