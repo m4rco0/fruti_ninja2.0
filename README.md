@@ -21,4 +21,4 @@ Um jogo feito como trabalho da matéria de Programação Orientada a Objetos, qu
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt-get install openjdk-22-jdk
-sudo apt-get install openjdk-17-jre (opcional)
+sudo apt-get install openjdk-22-jre (opcional)
