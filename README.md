@@ -1,19 +1,25 @@
 # Fruti_ninja2.0
 
-Um jogo feito como trabalho da materia de Programação Orientada a Objetos,  que roda no java jdk 22
+Um jogo feito como trabalho da matéria de Programação Orientada a Objetos, que roda no Java JDK 22.
+
+## Releases
+
+### Versão 1.0.0 - Lançamento Inicial
+*Data de Lançamento: 29 de Outubro de 2024*
+
+- Implementação básica do jogo.
+- Gráficos e sons iniciais.
+- Funcionalidade de pontuação.
+
+[Baixar JAR](https://github.com/m4rco0/fruti_ninja2.0/releases/download/untagged-83967be7b4c52362567a/fruti-ninja.jar)
 
 ## java install
 ### Windows
 [java-22-openjdk](https://download.oracle.com/java/22/archive/jdk-22.0.2_windows-x64_bin.exe)
 
-## Linux
+### Linux
 
+```bash
 sudo apt update && sudo apt upgrade -y
-~~~
 sudo apt-get install openjdk-22-jdk
-sudo apt-get install openjdk-17-jre (optional)
-~~~
-
-## Download jar
-
-[beta-fruti-ninja](https://github.com/m4rco0/fruti_ninja2.0/releases/download/untagged-83967be7b4c52362567a/fruti-ninja.jar)
+sudo apt-get install openjdk-17-jre (opcional)
