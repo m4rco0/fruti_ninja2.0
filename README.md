@@ -10,7 +10,7 @@ Um jogo feito como trabalho da matéria de Programação Orientada a Objetos, qu
 - Implementação básica do jogo.
 - Gráficos e sons iniciais.
 - Funcionalidade de pontuação.
-[Baixar JAR](https://github.com/m4rco0/fruti_ninja2.0/releases/download/v1.0.0/fruti-ninja.jarr)
+[Baixar JAR](https://github.com/m4rco0/fruti_ninja2.0/releases/download/v1.0.0/fruti-ninja.jar)
 
 ## java install
 ### Windows
