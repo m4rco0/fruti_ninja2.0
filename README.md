@@ -14,3 +14,6 @@ sudo apt-get install openjdk-22-jdk
 sudo apt-get install openjdk-17-jre (optional)
 ~~~
 
+## Download jar
+
+[beta-fruti-ninja](https://github.com/m4rco0/fruti_ninja2.0/releases/download/untagged-e6e3bc5458f5c9e7e69b/fruti_ninja2.0.jar)
